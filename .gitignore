@@ -122,3 +122,4 @@ dist
 # VSCode settings
 .vscode/
 doc.txt
+frontend/src/index.css
