@@ -3,15 +3,18 @@
   "version": "1.0.0",
   "description": "A web page of Brew4You Coffee shop",
   "main": "server.js",
+  "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "compile-scss": "node-sass ./frontend/src/index.scss -o ./frontend/src"
+    "compile-css": "node-sass ./frontend/src/index.scss -o ./frontend/src",
+    "start": "npm run compile-css && node backend/server",
+    "server": "npm run compile-css && nodemon backend/server"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/giangnguyen13/Brew4You.git"
   },
-  "author": "",
+  "author": "giangnguyen13",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/giangnguyen13/Brew4You/issues"
