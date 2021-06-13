@@ -29,23 +29,26 @@ const Header = () => {
     <header className='container d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3 mb-4 border-bottom'>
       <a
         href='/'
-        className='d-flex align-items-center col-md-3 mb-2 mb-md-0 text-dark text-decoration-none'
+        className='d-flex align-items-center mb-2 mb-md-0 text-dark text-decoration-none'
       >
         <img width={40} height={40} src={logo} alt='App logo' />
         &nbsp;
-        <span class='fs-4'>Brew4You</span>
+        <span className='fs-4'>Brew4You</span>
       </a>
 
-      <ul class='nav nav-pills'>
+      <ul className='nav nav-pills'>
         {appLinks.map((link) => (
-          <li class='nav-item' id={link.id}>
-            <Link to={link.url} className='nav-link mx-1'>
+          <li className='nav-item' key={link.id}>
+            <Link
+              to={link.url}
+              className={`nav-link mx-1 ${link.id === 1 ? "active" : ""}`}
+            >
               {link.displayText}
             </Link>
           </li>
         ))}
       </ul>
-      <div className='col-md-3 text-end'>
+      <div className='text-end'>
         <Link to='/cart' className='btn btn-outline-primary mx-2'>
           <i className='fas fa-shopping-cart'></i>
         </Link>
