@@ -123,3 +123,4 @@ dist
 .vscode/
 doc.txt
 frontend/src/index.css
+frontend/public/images/products-img

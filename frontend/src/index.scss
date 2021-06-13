@@ -1,20 +1,37 @@
-body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
-    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
+// Customize Bootstrap params
+/* -------begin customization-------- */
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
-    monospace;
-}
+/* simply assign the value */
+$primary: #b35900;
 
+/* -------end customization-------- */
+
+/* finally, import Bootstrap to set the changes! */
+@import "../node_modules/bootstrap/scss/bootstrap";
+
+// Custom App css style
 #app-spinner {
   width: "100px";
   height: "100px";
   margin: "auto";
   display: "block";
+}
+
+/* MARKETING CONTENT
+-------------------------------------------------- */
+
+/* Center align the text within the three columns below the carousel */
+.feature-product {
+  margin-top: 4rem;
+  h2 {
+    font-weight: 400;
+  }
+  .col-lg-4 {
+    margin-bottom: 1.5rem;
+    text-align: center;
+    p {
+      margin-right: 0.75rem;
+      margin-left: 0.75rem;
+    }
+  }
 }

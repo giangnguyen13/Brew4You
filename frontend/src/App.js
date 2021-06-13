@@ -9,9 +9,11 @@ function App() {
   return (
     <Router>
       <Header />
-      <main className='py-3 container'>
-        <Switch></Switch>
-        <Route path='/' exact component={HomeScreen} />
+      <main>
+        <Container>
+          <Switch></Switch>
+          <Route path='/' exact component={HomeScreen} />
+        </Container>
       </main>
       <Footer />
     </Router>
