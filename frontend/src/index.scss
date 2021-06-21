@@ -2,7 +2,7 @@
 /* -------begin customization-------- */
 
 /* simply assign the value */
-$primary: #b35900;
+$primary: #ab7a5f;
 
 /* -------end customization-------- */
 
@@ -34,4 +34,52 @@ $primary: #b35900;
       margin-left: 0.75rem;
     }
   }
+}
+
+/* ================ PAGES HEADER ================== */
+.section-pagetop {
+  padding: 45px 0;
+}
+
+.btn-primary {
+  color: #ffffff;
+}
+
+.product-list-image {
+  text-align: center;
+  margin-top: 0.5rem;
+}
+
+.product-list-link {
+  text-decoration: none;
+  color: black;
+  :hover {
+    color: black;
+    img {
+      opacity: 0.3;
+    }
+    .middle {
+      opacity: 1;
+    }
+  }
+}
+
+.middle {
+  transition: 0.5s ease;
+  opacity: 0;
+  position: absolute;
+  top: 28%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+}
+
+.text {
+  background-color: #ab7a5f;
+  color: white;
+  font-size: 24px;
+  padding-top: 12px;
+  border-radius: 50%;
+  width: 4rem;
+  height: 4rem;
 }

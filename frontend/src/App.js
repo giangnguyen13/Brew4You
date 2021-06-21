@@ -4,6 +4,7 @@ import { Switch, BrowserRouter as Router, Route } from "react-router-dom";
 import Footer from "./components/Footer";
 import Header from "./components/Header";
 import HomeScreen from "./screens/HomeScreen";
+import ProductListScreen from "./screens/ProductListScreen";
 
 function App() {
   return (
@@ -11,8 +12,10 @@ function App() {
       <Header />
       <main>
         <Container>
-          <Switch></Switch>
-          <Route path='/' exact component={HomeScreen} />
+          <Switch>
+            <Route path='/' exact component={HomeScreen} />
+            <Route path='/menu' exact component={ProductListScreen} />
+          </Switch>
         </Container>
       </main>
       <Footer />
