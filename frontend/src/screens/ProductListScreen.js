@@ -1,6 +1,7 @@
 import React from "react";
 import PageBreadcrumb from "../components/PageBreadcrumb";
 import Product from "../components/Product";
+import Pagination from "../components/Pagination";
 
 import { products } from "../data";
 
@@ -22,6 +23,9 @@ const ProductListScreen = () => {
                   .map((product) => (
                     <Product product={product} key={product.productId} />
                   ))}
+              </div>
+              <div className='row'>
+                <Pagination />
               </div>
             </div>
           </div>

@@ -29,7 +29,7 @@ const Product = ({ product }) => {
         </Link>
         <div className='card-body'>
           <Link to={`/products/${productId}`} className='product-list-link'>
-            <h4 className='text-center'>{title}</h4>
+            <h6 className='text-center'>{title}</h6>
           </Link>
           <Rating rating={2.5} />
           <b style={{ fontSize: "18px" }}>${price}</b>
