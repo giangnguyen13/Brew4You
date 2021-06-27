@@ -36,7 +36,7 @@ const Header = () => {
         <span className='fs-4'>Brew4You</span>
       </a>
 
-      <ul className='nav nav-pills'>
+      <ul className='nav nav-pills' style={{ flexWrap: "nowrap" }}>
         {appLinks.map((link) => (
           <li className='nav-item' key={link.id}>
             <Link

@@ -2,7 +2,7 @@ import React from "react";
 import PageBreadcrumb from "../components/PageBreadcrumb";
 import Product from "../components/Product";
 import Pagination from "../components/Pagination";
-
+import ProductFilter from "../components/ProductFilter";
 import { products } from "../data";
 
 const ProductListScreen = () => {
@@ -13,11 +13,11 @@ const ProductListScreen = () => {
         <div className='container'>
           <div className='row'>
             {/* This should be a search category component */}
-            <div className='col-md-3'>
-              <h1>Filter sidebar</h1>
+            <div className='col-md-2 product-filter'>
+              <ProductFilter />
             </div>
-            <div className='col-md-9'>
-              <div className='row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3'>
+            <div className='col-md-10'>
+              <div className='row row-cols-1 row-cols-sm-2 row-cols-md-2 row-cols-lg-3 row-cols-xl-4 g-3'>
                 {products
                   .filter((product) => product.productId <= 12)
                   .map((product) => (

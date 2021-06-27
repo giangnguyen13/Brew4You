@@ -14,12 +14,7 @@ const Product = ({ product }) => {
       <div className='card shadow-sm'>
         <Link to={`/products/${productId}`} className='product-list-link'>
           <div className='product-list-image'>
-            <img
-              src={`../images/products-img/${productImage}`}
-              alt={title}
-              width='200'
-              height='200'
-            />
+            <img src={`../images/products-img/${productImage}`} alt={title} />
             <div className='middle'>
               <div className='text'>
                 <i className='fas fa-search'></i>

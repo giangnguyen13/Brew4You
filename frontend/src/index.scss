@@ -48,6 +48,10 @@ $primary: #ab7a5f;
 .product-list-image {
   text-align: center;
   margin-top: 0.5rem;
+  img {
+    width: 200px;
+    height: 200px;
+  }
 }
 
 .product-list-link {
@@ -75,11 +79,39 @@ $primary: #ab7a5f;
 }
 
 .text {
-  background-color: #ab7a5f;
+  background-color: $primary;
   color: white;
   font-size: 24px;
   padding-top: 12px;
   border-radius: 50%;
   width: 4rem;
   height: 4rem;
+}
+
+.search-category {
+  .list-group-item {
+    border: none;
+    padding: 0.5rem 0rem;
+  }
+  .active {
+    background-color: white;
+    border-bottom: 1px solid;
+    color: $primary;
+    border-color: $primary;
+  }
+}
+
+.rating-link {
+  text-decoration: none;
+  color: black;
+  small {
+    padding-left: 0.25rem;
+  }
+}
+
+.product-filter {
+  .card {
+    border: none;
+    padding: 1rem 0rem;
+  }
 }
