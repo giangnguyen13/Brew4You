@@ -9,7 +9,7 @@ const ProductListScreen = () => {
   return (
     <>
       <PageBreadcrumb />
-      <div className='album py-5'>
+      <div className='album'>
         <div className='container'>
           <div className='row'>
             {/* This should be a search category component */}

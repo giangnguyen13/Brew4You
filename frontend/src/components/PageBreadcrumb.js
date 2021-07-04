@@ -2,7 +2,7 @@ import React from "react";
 
 const PageBreadcrumb = () => {
   return (
-    <section className='section-pagetop bg-light'>
+    <section className='section-pagetop bg-light mb-5'>
       <div className='container'>
         <h2 className='title-page'>Dynamic content</h2>
         <nav>

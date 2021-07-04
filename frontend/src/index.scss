@@ -38,7 +38,7 @@ $primary: #ab7a5f;
 
 /* ================ PAGES HEADER ================== */
 .section-pagetop {
-  padding: 45px 0;
+  padding: 20px 0;
 }
 
 .btn-primary {
@@ -114,4 +114,10 @@ $primary: #ab7a5f;
     border: none;
     padding: 1rem 0rem;
   }
+}
+
+.login-form {
+  width: 100%;
+  max-width: 350px;
+  margin: auto;
 }
