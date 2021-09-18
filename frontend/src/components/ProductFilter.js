@@ -72,7 +72,7 @@ const ProductFilter = () => {
           </Link>
         </div>
       </div>
-      <div className='d-grid gap-2'>
+      <div className='d-grid gap-2 mb-2'>
         <button className='btn btn-block btn-danger'>
           Clear filter &nbsp;<i className='fas fa-trash-alt'></i>
         </button>
