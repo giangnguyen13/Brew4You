@@ -8,7 +8,11 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "compile-css": "node-sass ./frontend/src/index.scss -o ./frontend/src",
     "start": "npm run compile-css && node backend/server",
-    "server": "npm run compile-css && nodemon backend/server"
+    "server": "npm run compile-css && nodemon backend/server",
+    "client": "npm start --prefix frontend",
+    "dev": "concurrently \"npm run server\" \"npm run client\"",
+    "data:import": "node backend/seeder",
+    "data:destroy": "node backend/seeder --d"
   },
   "repository": {
     "type": "git",
