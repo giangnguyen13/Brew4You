@@ -1,0 +1,42 @@
+{
+  "name": "brew4you",
+  "version": "1.0.0",
+  "description": "A web page of Brew4You Coffee shop",
+  "main": "server.js",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "compile-css": "node-sass ./frontend/src/index.scss -o ./frontend/src",
+    "start": "npm run compile-css && node backend/server",
+    "server": "npm run compile-css && nodemon backend/server",
+    "client": "npm run compile-css && npm start --prefix frontend",
+    "dev": "concurrently \"npm run server\" \"npm run client\"",
+    "data:import": "node backend/seeder",
+    "data:destroy": "node backend/seeder --d"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/giangnguyen13/Brew4You.git"
+  },
+  "author": "giangnguyen13",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/giangnguyen13/Brew4You/issues"
+  },
+  "homepage": "https://github.com/giangnguyen13/Brew4You#readme",
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "express-async-handler": "^1.1.4",
+    "jsonwebtoken": "^8.5.1",
+    "mongoose": "^5.12.5",
+    "morgan": "^1.10.0",
+    "multer": "^1.4.2",
+    "node-sass": "^6.0.0"
+  },
+  "devDependencies": {
+    "concurrently": "^6.0.2",
+    "nodemon": "^2.0.7"
+  }
+}

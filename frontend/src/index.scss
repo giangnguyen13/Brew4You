@@ -1,0 +1,171 @@
+// Customize Bootstrap params
+/* -------begin customization-------- */
+
+/* simply assign the value */
+$primary: #ab7a5f;
+
+/* -------end customization-------- */
+
+/* finally, import Bootstrap to set the changes! */
+@import "../node_modules/bootstrap/scss/bootstrap";
+
+// Custom App css style
+#app-spinner {
+  width: "100px";
+  height: "100px";
+  margin: "auto";
+  display: "block";
+}
+
+/* MARKETING CONTENT
+-------------------------------------------------- */
+
+/* Center align the text within the three columns below the carousel */
+.feature-product {
+  margin-top: 4rem;
+  h2 {
+    font-weight: 400;
+  }
+  .col-lg-4 {
+    margin-bottom: 1.5rem;
+    text-align: center;
+    p {
+      margin-right: 0.75rem;
+      margin-left: 0.75rem;
+    }
+  }
+}
+
+/* ================ PAGES HEADER ================== */
+.section-pagetop {
+  padding: 20px 0;
+}
+
+.btn-primary {
+  color: #ffffff;
+}
+
+.product-list-image {
+  text-align: center;
+  margin-top: 0.5rem;
+  img {
+    width: 200px;
+    height: 200px;
+  }
+}
+
+.product-list-link {
+  text-decoration: none;
+  color: black;
+  :hover {
+    color: black;
+    img {
+      opacity: 0.3;
+    }
+    .middle {
+      opacity: 1;
+    }
+  }
+}
+
+.middle {
+  transition: 0.5s ease;
+  opacity: 0;
+  position: absolute;
+  top: 28%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+}
+
+.text {
+  background-color: $primary;
+  color: white;
+  font-size: 24px;
+  padding-top: 12px;
+  border-radius: 50%;
+  width: 4rem;
+  height: 4rem;
+}
+
+.search-category {
+  .list-group-item {
+    border: none;
+    padding: 0.5rem 0rem;
+  }
+  .active {
+    background-color: white;
+    border-bottom: 1px solid;
+    color: $primary;
+    border-color: $primary;
+  }
+}
+
+.rating-link {
+  text-decoration: none;
+  color: black;
+  small {
+    padding-left: 0.25rem;
+  }
+}
+
+.product-filter {
+  .card {
+    border: none;
+    padding: 1rem 0rem;
+  }
+}
+
+.login-form {
+  width: 100%;
+  max-width: 350px;
+  margin: auto;
+}
+
+/* ================== PAGE DETAILS ==================  */
+.gallery-wrap {
+  .img-big-wrap {
+    margin-bottom: 10px;
+    border-radius: $border-radius;
+    overflow: hidden;
+    background-color: #fff;
+    // height:450px;
+    a {
+      text-align: center;
+      display: block;
+    }
+    img {
+      // height: 450px;
+      width: 650px;
+      display: inline-block;
+      cursor: zoom-in;
+    }
+  }
+  .thumbs-wrap {
+    text-align: center;
+    // margin-bottom: 20px;
+    .item-thumb {
+      width: 60px;
+      height: 60px;
+      border: 1px solid #ddd;
+      border-radius: 6px;
+      margin: 3px;
+      display: inline-block;
+      overflow: hidden;
+    }
+    img {
+      max-height: 100%;
+      object-fit: cover;
+      border-radius: 4px;
+      cursor: zoom-in;
+      &:hover {
+        filter: brightness(1.1);
+        cursor: zoom-in;
+      }
+    }
+  }
+}
+
+.comment-section {
+  margin-bottom: 1rem;
+}
