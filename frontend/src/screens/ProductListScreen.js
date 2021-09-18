@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useEffect } from "react";
+import axios from "axios";
 import PageBreadcrumb from "../components/PageBreadcrumb";
 import Product from "../components/Product";
 import Pagination from "../components/Pagination";
@@ -6,6 +7,15 @@ import ProductFilter from "../components/ProductFilter";
 import { products } from "../data";
 
 const ProductListScreen = () => {
+  const getProducts = async () => {
+    console.log("call api");
+    const { data } = await axios.get(`/api/products`);
+    console.log(data);
+  };
+  useEffect(() => {
+    getProducts();
+    return () => {};
+  }, []);
   return (
     <>
       <PageBreadcrumb />
