@@ -8,10 +8,11 @@ An website of Brew4You coffee shop that allows coffee lovers get the beloved dri
 
 ### If you newly cloned it from github
 
-1. Create `.env` file from `.env.example` file
-1. `npm install` to install node packages for server
+1. Create `.env` file, then copy the content from `.env.example` file
 1. `cd frontend` && `npm install` to install node packages for client
+1. `cd ../` && `npm install` to install node packages for server
 1. `npm run data:import` to seed static data for products,staffs and users.
+1. For product images, go to shared folder, download `products-img` folder and place to `frontend/public/images` folder
 1. `npm run dev` to run the application, default URL is [3000](http://localhost:3000/)
 
 ## Other commands
