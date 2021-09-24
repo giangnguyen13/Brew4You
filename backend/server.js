@@ -5,6 +5,7 @@ import path from "path";
 import connectDB from "./config/db.js";
 import { notFound, errorHandler } from "./middleware/error.middleware.js";
 import productRoutes from "./routes/product.route.js";
+import userRoutes from "./routes/user.route.js";
 
 // Load ENV variable to process.env variable
 dotenv.config();
@@ -21,7 +22,7 @@ if (process.env.NODE_ENV === "development") {
 app.use(express.json());
 
 app.use("/api/products", productRoutes);
-// app.use("/api/users", userRoutes);
+app.use("/api/users", userRoutes);
 // app.use("/api/orders", orderRoutes);
 // app.use("/api/upload", uploadRoutes);
 
