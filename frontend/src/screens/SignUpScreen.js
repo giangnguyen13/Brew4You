@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 
+import { register } from "../actions/userActions";
+
 import PageBreadcrumb from "../components/PageBreadcrumb";
 
 const SignUpScreen = () => {
@@ -40,6 +42,7 @@ const SignUpScreen = () => {
 
   const submitHandler = (e) => {
     e.preventDefault();
+    register(user);
     console.log("Dispatch sign up action");
   };
   return (
