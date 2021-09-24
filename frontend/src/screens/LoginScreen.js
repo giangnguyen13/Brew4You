@@ -1,15 +1,25 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 
+import { login } from "../actions/userActions";
+
 import PageBreadcrumb from "../components/PageBreadcrumb";
 
 const LoginScreen = () => {
   const [errorMessage, setErrorMessage] = useState("");
+  const [credential, setCredential] = useState({ email: "", password: "" });
 
   const submitHandler = (e) => {
     e.preventDefault();
+    login(credential.email, credential.password);
     console.log("Dispatch login action");
     setErrorMessage("Your credentials doesn't match our records");
+  };
+
+  const handleChange = (e) => {
+    const name = e.target.name;
+    const value = e.target.value;
+    setCredential({ ...credential, [name]: value });
   };
   return (
     <>
@@ -28,6 +38,10 @@ const LoginScreen = () => {
                 placeholder='example@example.com'
                 aria-label='example@example.com'
                 aria-describedby='email'
+                id='email'
+                name='email'
+                value={credential.email}
+                onChange={handleChange}
               />
             </div>
             <div className='input-group'>
@@ -35,11 +49,15 @@ const LoginScreen = () => {
                 <i className='fa fa-lock'></i>
               </span>
               <input
-                type='text'
+                type='password'
                 className='form-control'
                 placeholder='Enter your password'
                 aria-label='Enter your password'
                 aria-describedby='password'
+                id='password'
+                name='password'
+                value={credential.password}
+                onChange={handleChange}
               />
             </div>
             {errorMessage && (
