@@ -34,7 +34,9 @@ const Header = () => {
   };
   const handleLogin = () => {
     const currentPage = window.location.pathname;
-    window.location.href = `/login?redirectUrl=${window.location.pathname}`;
+    window.location.href = `/login?redirectUrl=${encodeURIComponent(
+      currentPage
+    )}`;
   };
 
   return (
