@@ -7,6 +7,13 @@
  */
 const constants = Object.freeze({
   PAGE_LENGTH: 12,
+  PRODUCT_RATING: {
+    1: "Poor",
+    2: "Fair",
+    3: "Good",
+    4: "Very Good",
+    5: "Excellent",
+  },
 });
 
 export default constants;

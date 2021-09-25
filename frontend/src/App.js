@@ -30,7 +30,9 @@ function App() {
       <main>
         <Container>
           <Switch>
-            <Route path='/products/:id' component={ProductScreen} />
+            <Route path='/products/:id'>
+              <ProductScreen loggedIn={loggedIn} />
+            </Route>
             <Route path='/menu' exact component={ProductListScreen} />
             <Route path='/login' exact component={LoginScreen} />
             <Route path='/signup' exact component={SignUpScreen} />
