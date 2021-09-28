@@ -12,13 +12,13 @@ const ProductListScreen = () => {
         <ProgressBar variant='warning' now={33} key={2} />
         <ProgressBar striped variant='info' now={30} key={3} />
       </ProgressBar>
-      <br/>
-      
-      <div class='d-flex justify-content-between'>
-      <p class="h5">Prepared your drink</p>
-      <p class="h5">Out for develivery</p>
-      <p class="h5">Arriving</p>
-                </div>
+      <br />
+
+      <div className='d-flex justify-content-between'>
+        <p className='h5'>Prepared your drink</p>
+        <p className='h5'>Out for develivery</p>
+        <p className='h5'>Arriving</p>
+      </div>
     </>
   );
 };

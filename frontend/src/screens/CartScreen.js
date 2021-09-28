@@ -36,13 +36,16 @@ const ProductListScreen = () => {
           <div className='row'>
             <div className='col-md-10'>
               {products.map((item) => (
-                <div class='d-flex justify-content-between' key={item.title}>
+                <div
+                  className='d-flex justify-content-between'
+                  key={item.title}
+                >
                   <div>{item.title}</div>
                   <div>${item.price}</div>
                 </div>
               ))}
               <hr />
-              <div class='d-flex justify-content-between'>
+              <div className='d-flex justify-content-between'>
                 <div>Total cost</div>
                 <div>${total}</div>
               </div>
