@@ -1,16 +1,36 @@
-import React, { useState } from "react";
+import React, { useState, useParams } from "react";
 import Rating from "../components/Rating";
 import StarRating from "../components/StarRating";
 import { Link } from "react-router-dom";
 import { ListGroup, Button, Form } from "react-bootstrap";
 import { products } from "../data";
+import Session from "../sessionService";
 // import { Label, Form } from "react-bootstrap";
 // import FloatingLabel from "react-bootstrap/FormLabel"
 
-const ProductScreen = () => {
+
+const ProductScreen = ({match}) => {
+  let cart = Session.getCart();
+  const id = match.params.id;
   const { title, price, content, productImage } = products[0];
   const [review, setReview] = useState({ userId: "", rating: "", comment: "" });
   const [customerReview, setCustomerReview] = useState(1);
+
+  const handleAddToCart = () => {
+    //get current product by id
+    const product = products.find(item =>item.productId ==  match.params.id);
+    console.log("products ", products.find(item => item.productId ==  match.params.id));
+    //  const product = products[0];
+      console.log("Current cart: ", Session.getCart());
+      if(cart === "" || cart === null){
+        let initCart = [];
+        initCart.push(product);
+        Session.setCart(initCart);
+      }else{
+        cart.push(product);
+        Session.setCart(cart);
+      }
+    }
   const hoverRating = (value) => {
     setCustomerReview(value);
     console.log(customerReview);
@@ -18,13 +38,13 @@ const ProductScreen = () => {
   const handleChange = (e) => {
     const name = e.target.name;
     const value = e.target.value;
-
     setReview({ ...review, [name]: value });
   };
   const submitHandler = (e) => {
     e.preventDefault();
     console.log("submit comment");
   };
+
   return (
     <div className='card' style={{ border: "none" }}>
       {/* <div className='d-grid gap-2 d-md-block'></div> */}
@@ -293,6 +313,7 @@ const ProductScreen = () => {
                     id='addToCartBtn'
                     type='button'
                     className='btn btn-primary'
+                    onClick={handleAddToCart}
                   >
                     <i className='fas fa-shopping-cart'></i> Add - {`$${4.95}`}
                   </button>

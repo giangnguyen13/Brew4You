@@ -1,25 +1,16 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import Rating from "./Rating";
 import { Link } from "react-router-dom";
 
 const Product = ({ product }) => {
   const { productId, title, price, productImage } = product;
 
-  const addToCartHandler = (e) => {
-    e.preventDefault();
-    console.log(`add product #${productId} to cart action`);
-  };
   return (
     <div className='col'>
       <div className='card shadow-sm'>
         <Link to={`/products/${productId}`} className='product-list-link'>
           <div className='product-list-image'>
             <img src={`../images/products-img/${productImage}`} alt={title} />
-            <div className='middle'>
-              <div className='text'>
-                <i className='fas fa-search'></i>
-              </div>
-            </div>
           </div>
         </Link>
         <div className='card-body'>
@@ -30,12 +21,11 @@ const Product = ({ product }) => {
           <b style={{ fontSize: "18px" }}>${price}</b>
           <div className='d-flex justify-content-center mt-1'>
             <button
-              id='addToCartBtn'
+              id='addToWishListBtn'
               type='button'
               className='btn btn-primary'
-              onClick={addToCartHandler}
             >
-              <i className='fas fa-shopping-cart'></i> Add to cart
+              <i className='fas fa-heart'></i> Add to Wishlist
             </button>
           </div>
         </div>
