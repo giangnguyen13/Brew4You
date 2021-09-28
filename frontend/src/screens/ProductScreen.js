@@ -1,15 +1,13 @@
 import React, { useState, useParams } from "react";
 import Rating from "../components/Rating";
-import StarRating from "../components/StarRating";
+import ProductReview from "../components/ProductReview";
 import { Link } from "react-router-dom";
-import { ListGroup, Button, Form } from "react-bootstrap";
 import { products } from "../data";
 import Session from "../sessionService";
 // import { Label, Form } from "react-bootstrap";
 // import FloatingLabel from "react-bootstrap/FormLabel"
 
-
-const ProductScreen = ({match}) => {
+const ProductScreen = ({ match }) => {
   let cart = Session.getCart();
   const id = match.params.id;
   const { title, price, content, productImage } = products[0];
@@ -18,19 +16,22 @@ const ProductScreen = ({match}) => {
 
   const handleAddToCart = () => {
     //get current product by id
-    const product = products.find(item =>item.productId ==  match.params.id);
-    console.log("products ", products.find(item => item.productId ==  match.params.id));
+    const product = products.find((item) => item.productId == match.params.id);
+    console.log(
+      "products ",
+      products.find((item) => item.productId == match.params.id)
+    );
     //  const product = products[0];
-      console.log("Current cart: ", Session.getCart());
-      if(cart === "" || cart === null){
-        let initCart = [];
-        initCart.push(product);
-        Session.setCart(initCart);
-      }else{
-        cart.push(product);
-        Session.setCart(cart);
-      }
+    console.log("Current cart: ", Session.getCart());
+    if (cart === "" || cart === null) {
+      let initCart = [];
+      initCart.push(product);
+      Session.setCart(initCart);
+    } else {
+      cart.push(product);
+      Session.setCart(cart);
     }
+  };
   const hoverRating = (value) => {
     setCustomerReview(value);
     console.log(customerReview);
@@ -47,8 +48,7 @@ const ProductScreen = ({match}) => {
 
   return (
     <div className='card' style={{ border: "none" }}>
-      {/* <div className='d-grid gap-2 d-md-block'></div> */}
-      <div className='col-2 col-sm-3'>
+      <div className='col-lg-2 col-sm-3'>
         <Link to='/menu' className='btn btn-primary'>
           Back to menu
         </Link>
@@ -92,120 +92,7 @@ const ProductScreen = ({match}) => {
               </a>
             </div>
           </article>
-          <ListGroup variant='flush'>
-            <ListGroup.Item>
-              <h4>Write a Customer Review</h4>
-              <Form onSubmit={submitHandler}>
-                <Form.Group className='comment-section'>
-                  <Form.Label htmlFor='rating'>Rating</Form.Label>
-                  <div className='my-3'>
-                    <button
-                      type='button'
-                      className='btn'
-                      onMouseOver={() => hoverRating(1)}
-                    >
-                      <i
-                        style={{ color: "#fecf0a" }}
-                        className={`far fa-star ${
-                          customerReview >= 1 ? "star-fill" : "star-empty"
-                        }`}
-                      ></i>
-                    </button>
-                    <button
-                      type='button'
-                      className='btn'
-                      onMouseOver={() => hoverRating(2)}
-                    >
-                      <i
-                        style={{ color: "#fecf0a" }}
-                        className={`far fa-star ${
-                          customerReview >= 2 ? "star-fill" : "star-empty"
-                        }`}
-                      ></i>
-                    </button>
-                    <button
-                      type='button'
-                      className='btn'
-                      onMouseOver={() => hoverRating(3)}
-                    >
-                      <i
-                        style={{ color: "#fecf0a" }}
-                        className={`far fa-star ${
-                          customerReview >= 3 ? "star-fill" : "star-empty"
-                        }`}
-                      ></i>
-                    </button>
-                    <button
-                      type='button'
-                      className='btn'
-                      onMouseOver={() => hoverRating(4)}
-                    >
-                      <i
-                        style={{ color: "#fecf0a" }}
-                        className={`far fa-star ${
-                          customerReview >= 4 ? "star-fill" : "star-empty"
-                        }`}
-                      ></i>
-                    </button>
-                    <button
-                      type='button'
-                      className='btn'
-                      onMouseOver={() => hoverRating(5)}
-                    >
-                      <i
-                        style={{ color: "#fecf0a" }}
-                        className={`far fa-star ${
-                          customerReview >= 5 ? "star-fill" : "star-empty"
-                        }`}
-                      ></i>
-                    </button>
-                    &nbsp;- {customerReview}
-                  </div>
-                  <Form.Control
-                    as='select'
-                    name='rating'
-                    onChange={handleChange}
-                  >
-                    <option value='5'>
-                      &#9733;&#9733;&#9733;&#9733;&#9733; - Excellent
-                    </option>
-                    <option value='4'>
-                      &#9733;&#9733;&#9733;&#9733;&#9734; - Very Good
-                    </option>
-                    <option value='3'>
-                      &#9733;&#9733;&#9733;&#9734;&#9734; - Good
-                    </option>
-                    <option value='2'>
-                      &#9733;&#9733;&#9734;&#9734;&#9734; - Fair
-                    </option>
-                    <option value='1'>
-                      &#9733;&#9734;&#9734;&#9734;&#9734; - Poor
-                    </option>
-                  </Form.Control>
-                </Form.Group>
-                <Form.Group className='comment-section'>
-                  <Form.Label htmlFor='comment'>Comment (optional)</Form.Label>
-                  <Form.Control
-                    as='textarea'
-                    row='5'
-                    name='comment'
-                    placeholder='Leave us what you think about this product'
-                    onChange={handleChange}
-                  ></Form.Control>
-                </Form.Group>
-                <Button type='submit' variant='primary' className='float-end'>
-                  Create Review
-                </Button>
-              </Form>
-              {/* {userInfo ? (
-
-              ) : (
-                <Message>
-                  Please <Link to='/login'>sign in</Link> to write your review
-                </Message>
-              )} */}
-            </ListGroup.Item>
-          </ListGroup>
+          <ProductReview loggedIn={loggedIn} />
         </aside>
         <main className='col-md-6 border-left'>
           <article className='content-body'>
