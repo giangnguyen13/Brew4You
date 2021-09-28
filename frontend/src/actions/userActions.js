@@ -1,4 +1,5 @@
 import axios from "axios";
+import { user_config } from "../config/auth";
 
 export const login = async (email, password) => {
   try {
@@ -46,8 +47,18 @@ export const register = async (user) => {
   }
 };
 
+export const getLoggedUserProfile = async () => {
+  try {
+    const { data } = await axios.get(`/api/users/profile`, user_config);
+    return data;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 export const logout = async () => {
   localStorage.removeItem("userInfo");
+  window.location.href = "/";
 };
 
 /**
