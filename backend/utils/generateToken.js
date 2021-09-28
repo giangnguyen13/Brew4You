@@ -12,7 +12,7 @@ const generateToken = (userId) => {
  */
 export const getExpiredTokenDate = () => {
   var dt = new Date();
-  dt.setHours(dt.getHours() + process.env.JWT_TOKEN_EXPIRED_IN_HOUR);
+  dt.setHours(process.env.JWT_TOKEN_EXPIRED_IN_HOUR);
   return dt.getTime();
 };
 
