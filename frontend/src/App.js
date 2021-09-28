@@ -10,6 +10,8 @@ import LoginScreen from "./screens/LoginScreen";
 import SignUpScreen from "./screens/SignUpScreen";
 import ForgotPasswordScreen from "./screens/ForgotPasswordScreen";
 import ProductScreen from "./screens/ProductScreen";
+import CartScreen from "./screens/CartScreen";
+import TrackingScreen from "./screens/TrackingScreen";
 
 function App() {
   // Set up app name from ENV file
@@ -22,6 +24,8 @@ function App() {
       <main>
         <Container>
           <Switch>
+            <Route path='/track-order' component={TrackingScreen} />
+            <Route path='/carts' component={CartScreen} />
             <Route path='/products/:id' component={ProductScreen} />
             <Route path='/menu' exact component={ProductListScreen} />
             <Route path='/login' exact component={LoginScreen} />
