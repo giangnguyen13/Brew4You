@@ -11,6 +11,11 @@ const Product = ({ product }) => {
         <Link to={`/products/${productId}`} className='product-list-link'>
           <div className='product-list-image'>
             <img src={`../images/products-img/${productImage}`} alt={title} />
+            <div className='middle'>
+              <div className='text'>
+                <i className='fas fa-search'></i>
+              </div>
+            </div>
           </div>
         </Link>
         <div className='card-body'>

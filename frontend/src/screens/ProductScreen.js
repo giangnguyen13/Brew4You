@@ -1,25 +1,22 @@
-import React, { useState, useParams } from "react";
+import React from "react";
+import { useParams } from "react-router-dom";
 import Rating from "../components/Rating";
 import ProductReview from "../components/ProductReview";
 import { Link } from "react-router-dom";
 import { products } from "../data";
 import Session from "../sessionService";
-// import { Label, Form } from "react-bootstrap";
-// import FloatingLabel from "react-bootstrap/FormLabel"
 
-const ProductScreen = ({ match }) => {
+const ProductScreen = ({ loggedIn }) => {
   let cart = Session.getCart();
-  const id = match.params.id;
+  const { id } = useParams();
   const { title, price, content, productImage } = products[0];
-  const [review, setReview] = useState({ userId: "", rating: "", comment: "" });
-  const [customerReview, setCustomerReview] = useState(1);
 
   const handleAddToCart = () => {
     //get current product by id
-    const product = products.find((item) => item.productId == match.params.id);
+    const product = products.find((item) => item.productId == id);
     console.log(
       "products ",
-      products.find((item) => item.productId == match.params.id)
+      products.find((item) => item.productId == id)
     );
     //  const product = products[0];
     console.log("Current cart: ", Session.getCart());
@@ -31,19 +28,6 @@ const ProductScreen = ({ match }) => {
       cart.push(product);
       Session.setCart(cart);
     }
-  };
-  const hoverRating = (value) => {
-    setCustomerReview(value);
-    console.log(customerReview);
-  };
-  const handleChange = (e) => {
-    const name = e.target.name;
-    const value = e.target.value;
-    setReview({ ...review, [name]: value });
-  };
-  const submitHandler = (e) => {
-    e.preventDefault();
-    console.log("submit comment");
   };
 
   return (
