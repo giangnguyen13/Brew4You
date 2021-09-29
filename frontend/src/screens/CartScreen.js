@@ -40,11 +40,14 @@ const ProductListScreen = () => {
                 <div className='row'>
                   <div className='col-lg-10 offset-lg-1'>
                     <div className='cart_container'></div>
+                    <div className='cart_title'>
+                      <small> 10 item(s) in your cart </small>
+                    </div>
+                    {/* To DO
+                      Implement the design for mobile
+                    */}
                     {products.map((product) => (
                       <div key={product.productId}>
-                        <div className='cart_title'>
-                          <small> 10 item(s) in your cart </small>
-                        </div>
                         <div className='cart_items'>
                           <ul className='cart_list'>
                             <li className='cart_item clearfix'>
@@ -97,31 +100,29 @@ const ProductListScreen = () => {
                             </li>
                           </ul>
                         </div>
-                        <div className='order_total'>
-                          <div className='order_total_content text-md-right'>
-                            <div className='order_total_title'>
-                              Order Summary:
-                            </div>
-                            <div className='order_total_amount'>₹22000</div>
-                          </div>
-                        </div>
-                        <div className='cart_buttons'>
-                          {" "}
-                          <button
-                            type='button'
-                            className='button cart_button_clear'
-                          >
-                            Continue Shopping
-                          </button>{" "}
-                          <button
-                            type='button'
-                            className='button cart_button_checkout'
-                          >
-                            Proceed to checkout
-                          </button>{" "}
-                        </div>
                       </div>
                     ))}
+                    <div className='order_total'>
+                      <div className='order_total_content text-md-right'>
+                        <div className='order_total_title'>Order Summary:</div>
+                        <div className='order_total_amount'>₹22000</div>
+                      </div>
+                    </div>
+                    <div className='cart_buttons'>
+                      {" "}
+                      <button
+                        type='button'
+                        className='button cart_button_clear'
+                      >
+                        Continue Shopping
+                      </button>{" "}
+                      <button
+                        type='button'
+                        className='button cart_button_checkout'
+                      >
+                        Proceed to checkout
+                      </button>{" "}
+                    </div>
                   </div>
                 </div>
               </div>
