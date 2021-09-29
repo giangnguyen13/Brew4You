@@ -11,8 +11,8 @@ const LoginScreen = () => {
   const submitHandler = (e) => {
     e.preventDefault();
     login(credential.email, credential.password);
-    console.log("Dispatch login action");
-    setErrorMessage("Your credentials doesn't match our records");
+    // console.log("Dispatch login action");
+    // setErrorMessage("Your credentials doesn't match our records");
   };
 
   const handleChange = (e) => {
