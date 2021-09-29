@@ -4,6 +4,7 @@ import Pagination from "../components/Pagination";
 import ProductFilter from "../components/ProductFilter";
 import { products } from "../data";
 import { useParams } from "react-router";
+import Header from '../components/Header'
 
 const ProductListScreen = () => {
   const [filterBy, setFilterBy] = useState(null);
@@ -15,6 +16,7 @@ const ProductListScreen = () => {
   
   return (
     <>
+          <Header />
       <div className='album'>
         <div className='container'>
           <div className='row'>

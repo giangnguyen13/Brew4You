@@ -13,7 +13,7 @@ export const products = [
     productId: 2,
     title: "Iced Cold Brew",
     content:
-      "Our signature Iced Cold Brew coffeee is freshly brewed directly over ice, locking the aromatics and delivering a smoother taste than traditional Iced coffeee. Served over ice.",
+      "Our signature Iced Cold Brew coffee is freshly brewed directly over ice, locking the aromatics and delivering a smoother taste than traditional Iced coffee. Served over ice.",
     price: 2.49,
     productImage: "iced_brewed.png",
     type: "coffee"
@@ -54,7 +54,7 @@ export const products = [
     content:
       "The perfect balance of rich espresso, combined with cold milk and poured over ice.",
     price: 3.24,
-    productImage: "ice-coffeee.png",
+    productImage: "ice-coffee.png",
     type: "latte"
 
   },
