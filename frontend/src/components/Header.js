@@ -14,7 +14,7 @@ const Header = () => {
     },
     {
       id: 2,
-      url: "/menu",
+      url: "/menu/all",
       displayText: "Menu",
     },
     {

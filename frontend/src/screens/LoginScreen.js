@@ -3,7 +3,6 @@ import { Link } from "react-router-dom";
 
 import { login } from "../actions/userActions";
 
-import PageBreadcrumb from "../components/PageBreadcrumb";
 
 const LoginScreen = () => {
   const [errorMessage, setErrorMessage] = useState("");
@@ -23,7 +22,6 @@ const LoginScreen = () => {
   };
   return (
     <>
-      <PageBreadcrumb />
       <div className='login-form card'>
         <div className='card-body'>
           <form className='text-center' onSubmit={submitHandler}>

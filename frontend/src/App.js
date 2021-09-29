@@ -23,7 +23,7 @@ function App() {
         <Container>
           <Switch>
             <Route path='/products/:id' component={ProductScreen} />
-            <Route path='/menu' exact component={ProductListScreen} />
+            <Route path='/menu/:s' exact component={ProductListScreen} />
             <Route path='/login' exact component={LoginScreen} />
             <Route path='/signup' exact component={SignUpScreen} />
             <Route
