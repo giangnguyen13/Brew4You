@@ -1,11 +1,34 @@
 import React from "react";
+import { useParams } from "react-router-dom";
 import Rating from "../components/Rating";
 import ProductReview from "../components/ProductReview";
 import { Link } from "react-router-dom";
 import { products } from "../data";
+import Session from "../sessionService";
 
 const ProductScreen = ({ loggedIn }) => {
+  let cart = Session.getCart();
+  const { id } = useParams();
   const { title, price, content, productImage } = products[0];
+
+  const handleAddToCart = () => {
+    //get current product by id
+    const product = products.find((item) => item.productId == id);
+    console.log(
+      "products ",
+      products.find((item) => item.productId == id)
+    );
+    //  const product = products[0];
+    console.log("Current cart: ", Session.getCart());
+    if (cart === "" || cart === null) {
+      let initCart = [];
+      initCart.push(product);
+      Session.setCart(initCart);
+    } else {
+      cart.push(product);
+      Session.setCart(cart);
+    }
+  };
 
   return (
     <div className='card' style={{ border: "none" }}>
@@ -161,6 +184,7 @@ const ProductScreen = ({ loggedIn }) => {
                     id='addToCartBtn'
                     type='button'
                     className='btn btn-primary'
+                    onClick={handleAddToCart}
                   >
                     <i className='fas fa-shopping-cart'></i> Add - {`$${4.95}`}
                   </button>

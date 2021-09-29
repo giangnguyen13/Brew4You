@@ -16,6 +16,8 @@ import LoginScreen from "./screens/LoginScreen";
 import SignUpScreen from "./screens/SignUpScreen";
 import ForgotPasswordScreen from "./screens/ForgotPasswordScreen";
 import ProductScreen from "./screens/ProductScreen";
+import CartScreen from "./screens/CartScreen";
+import TrackingScreen from "./screens/TrackingScreen";
 import ProfileScreen from "./screens/ProfileScreen";
 
 function App() {
@@ -30,6 +32,8 @@ function App() {
       <main>
         <Container>
           <Switch>
+            <Route path='/track-order' component={TrackingScreen} />
+            <Route path='/carts' component={CartScreen} />
             <Route path='/products/:id'>
               <ProductScreen loggedIn={loggedIn} />
             </Route>
