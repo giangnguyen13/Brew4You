@@ -10,7 +10,6 @@ import generateToken, { getExpiredTokenDate } from "../utils/generateToken.js";
 const authUser = asyncHandler(async (req, res) => {
   const { email, password } = req.body;
   const user = await User.findOne({ email: email });
-  console.log(req.body, user);
   if (user && (await user.matchPassword(password))) {
     res.json({
       name: `${user.firstName} ${user.lastName}`,
@@ -29,7 +28,6 @@ const authUser = asyncHandler(async (req, res) => {
  * @access      Public
  */
 const registerUser = asyncHandler(async (req, res) => {
-  console.log(req.body);
   const { firstName, lastName, email, password } = req.body;
   const userExist = await User.findOne({ email: email });
 
@@ -59,4 +57,23 @@ const registerUser = asyncHandler(async (req, res) => {
   }
 });
 
-export { authUser, registerUser };
+/**
+ * @desc        Get user profile
+ * @route       GET /api/users/profile
+ * @access      Private
+ */
+const getUserProfile = asyncHandler(async (req, res) => {
+  const user = await User.findById(req.user._id);
+  if (user) {
+    res.json({
+      firstName: user.firstName,
+      lastName: user.lastName,
+      email: user.email,
+    });
+  } else {
+    res.status(404);
+    throw new Error("User not found");
+  }
+});
+
+export { authUser, registerUser, getUserProfile };

@@ -7,15 +7,16 @@ import ProductFilter from "../components/ProductFilter";
 import { products } from "../data";
 
 const ProductListScreen = () => {
+
   const getProducts = async () => {
-    console.log("call api");
     const { data } = await axios.get(`/api/products`);
-    console.log(data);
+    console.log("List products: ",data);
   };
+
   useEffect(() => {
     getProducts();
-    return () => {};
   }, []);
+
   return (
     <>
       <PageBreadcrumb />
