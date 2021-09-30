@@ -6,9 +6,21 @@ import { products } from "../data";
 import { useParams } from "react-router";
 import Header from '../components/Header'
 
+
+
 const ProductListScreen = () => {
   const [filterBy, setFilterBy] = useState(null);
   const {s} = useParams() //Params filter [Coffee, Tea, Breakfast, all]
+
+  const searchFilterProducts = (product) => {
+    const title = product.title.toLowerCase()
+    const filter = filterBy.toLowerCase();
+    return product.type.includes(filter) || title.includes(filter)
+  }
+
+  const categoryFilterProducts = (product) => {
+    return product.type.includes(s)
+  }
 
   useEffect(() => {
     setFilterBy()
@@ -28,7 +40,7 @@ const ProductListScreen = () => {
               <div className='row row-cols-1 row-cols-sm-2 row-cols-md-2 row-cols-lg-3 row-cols-xl-4 g-3'>
                 {filterBy ?
                 products
-                  .filter((product) => (product.type.includes(filterBy)))
+                  .filter(searchFilterProducts)
                   .map((product) => {
                     return(
                       <Product product={product} key={product.productId} />
@@ -38,7 +50,7 @@ const ProductListScreen = () => {
                   ) :
                   s !== "all" ?  
                   products
-                  .filter((product) => (product.type.includes(s)))
+                  .filter(categoryFilterProducts)
                   .map((product) => (
                     <Product product={product} key={product.productId} />
                   ))
