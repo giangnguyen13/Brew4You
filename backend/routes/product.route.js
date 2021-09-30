@@ -28,7 +28,7 @@ router.route('/api/products')
   .get(getProducts)             // list products
   .post(createProduct);       // create a new product
 
-// find one product by its productId
+
 router.route('/api/products/:productId')
   .get(getProductById)        // get a product by its productId
   .put(updateProduct)         // update a product by its productId
