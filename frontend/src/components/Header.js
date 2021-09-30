@@ -65,7 +65,7 @@ const Header = (props) => {
         ))}
       </ul>
       <div className='text-end'>
-        <Link to='/cart' className='btn btn-outline-primary mx-2'>
+        <Link to='/carts' className='btn btn-outline-primary mx-2'>
           <i className='fas fa-shopping-cart'></i>
         </Link>
 
