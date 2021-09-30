@@ -10,12 +10,12 @@ const Pagination = () => {
             Previous
           </Link>
         </li>
-        <li className='page-item'>
+        <li className='page-item active'>
           <Link className='page-link' to={`#`}>
             1
           </Link>
         </li>
-        <li className='page-item active'>
+        <li className='page-item '>
           <Link className='page-link' to={`#`}>
             2
           </Link>

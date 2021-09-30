@@ -16,6 +16,7 @@ import LoginScreen from "./screens/LoginScreen";
 import SignUpScreen from "./screens/SignUpScreen";
 import ForgotPasswordScreen from "./screens/ForgotPasswordScreen";
 import ProductScreen from "./screens/ProductScreen";
+import AboutUsScreen from "./screens/AboutUsScreen";
 import CartScreen from "./screens/CartScreen";
 import TrackingScreen from "./screens/TrackingScreen";
 import ProfileScreen from "./screens/ProfileScreen";
@@ -28,16 +29,16 @@ function App() {
   }, []);
   return (
     <Router>
-      <Header />
       <main>
         <Container>
           <Switch>
+            <Route path='/menu/:s' exact component={ProductListScreen} />
+            <Route path='/about' exact component={AboutUsScreen} />
             <Route path='/track-order' component={TrackingScreen} />
             <Route path='/carts' component={CartScreen} />
             <Route path='/products/:id'>
               <ProductScreen loggedIn={loggedIn} />
             </Route>
-            <Route path='/menu' exact component={ProductListScreen} />
             <Route path='/login' exact component={LoginScreen} />
             <Route path='/signup' exact component={SignUpScreen} />
             <Route path='/profile' exact>
