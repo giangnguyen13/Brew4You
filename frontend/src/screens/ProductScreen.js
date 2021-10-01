@@ -1,25 +1,24 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import axios from "axios";
 import { useParams } from "react-router-dom";
 import Rating from "../components/Rating";
 import ProductReview from "../components/ProductReview";
 import { Link } from "react-router-dom";
-import { products } from "../data";
+// import { products } from "../data";
 import Header from "../components/Header";
 import Session from "../sessionService";
 
 const ProductScreen = ({ loggedIn }) => {
   let cart = Session.getCart();
+  const [product, setProduct] = useState({});
   const { id } = useParams();
-  const { title, price, content, productImage } = products.filter(p => p.productId === parseInt(id))[0]; //To be replaced - MongoAtlas
+  const getProduct = async (id) => {
+    const { data } = await axios.get(`/api/products/${id}`);
+    console.log(data);
+    setProduct(data.product);
+  };
 
   const handleAddToCart = () => {
-    //get current product by id
-    const product = products.find((item) => item.productId == id);
-    console.log(
-      "products ",
-      products.find((item) => item.productId == id)
-    );
-    //  const product = products[0];
     console.log("Current cart: ", Session.getCart());
     if (cart === "" || cart === null) {
       let initCart = [];
@@ -31,9 +30,13 @@ const ProductScreen = ({ loggedIn }) => {
     }
   };
 
+  useEffect(() => {
+    getProduct(id);
+  }, []);
+
   return (
     <div className='card' style={{ border: "none" }}>
-            <Header />
+      <Header />
 
       <div className='col-lg-2 col-sm-3'>
         <Link to='/menu/all' className='btn btn-primary'>
@@ -46,35 +49,35 @@ const ProductScreen = ({ loggedIn }) => {
             <div className='img-big-wrap'>
               <a href='/home'>
                 <img
-                  alt={`${productImage}`}
+                  src={`../images/products-img/${product.productImage}`}
+                  alt={`${product.productImage}`}
                   className='mt-3'
-                  src='https://dl.airtable.com/.attachments/7a50daf83875879b373d91ebb9bb6012/c1695f7e/z-extra-3.jpeg'
                 />
               </a>
             </div>
             <div className='thumbs-wrap'>
               <a href='/home' className='item-thumb'>
                 <img
-                  alt={`${productImage}`}
-                  src='https://dl.airtable.com/.attachments/7a50daf83875879b373d91ebb9bb6012/c1695f7e/z-extra-3.jpeg'
+                  alt={`${product.productImage}`}
+                  src={`../images/products-img/${product.productImage}`}
                 />
               </a>
               <a href='/home' className='item-thumb'>
                 <img
-                  alt={`${productImage}`}
-                  src='https://dl.airtable.com/.attachments/7a50daf83875879b373d91ebb9bb6012/c1695f7e/z-extra-3.jpeg'
+                  alt={`${product.productImage}`}
+                  src={`../images/products-img/${product.productImage}`}
                 />
               </a>
               <a href='/home' className='item-thumb'>
                 <img
-                  alt={`${productImage}`}
-                  src='https://dl.airtable.com/.attachments/7a50daf83875879b373d91ebb9bb6012/c1695f7e/z-extra-3.jpeg'
+                  alt={`${product.productImage}`}
+                  src={`../images/products-img/${product.productImage}`}
                 />
               </a>
               <a href='/home' className='item-thumb'>
                 <img
-                  alt={`${productImage}`}
-                  src='https://dl.airtable.com/.attachments/7a50daf83875879b373d91ebb9bb6012/c1695f7e/z-extra-3.jpeg'
+                  alt={`${product.productImage}`}
+                  src={`../images/products-img/${product.productImage}`}
                 />
               </a>
             </div>
@@ -83,14 +86,14 @@ const ProductScreen = ({ loggedIn }) => {
         </aside>
         <main className='col-md-6 border-left'>
           <article className='content-body'>
-            <h1 className='product-title'>{title}</h1>
+            <h1 className='product-title'>{product.name}</h1>
             <div className='my-3'>
               <Rating rating={3.8} totalReviews={139} />
             </div>
             <div className='mb-3'>
-              <h4>${price}</h4>
+              <h4>${product.price}</h4>
             </div>
-            <p>{content}</p>
+            <p>{product.description}</p>
             <div className='row mb-2'>
               <div className='col-sm-3'>
                 <b>Category</b>
@@ -189,7 +192,8 @@ const ProductScreen = ({ loggedIn }) => {
                     className='btn btn-primary'
                     onClick={handleAddToCart}
                   >
-                    <i className='fas fa-shopping-cart'></i> Add - {`$${4.95}`}
+                    <i className='fas fa-shopping-cart'></i> Add -{" "}
+                    {`$${product.price}`}
                   </button>
                   &nbsp;
                   <button

@@ -3,14 +3,14 @@ import Rating from "./Rating";
 import { Link } from "react-router-dom";
 
 const Product = ({ product }) => {
-  const { productId, title, price, productImage } = product;
+  const { _id, name, price, productImage } = product;
 
   return (
     <div className='col'>
       <div className='card shadow-sm'>
-        <Link to={`/products/${productId}`} className='product-list-link'>
+        <Link to={`/products/${_id}`} className='product-list-link'>
           <div className='product-list-image'>
-            <img src={`../images/products-img/${productImage}`} alt={title} />
+            <img src={`../images/products-img/${productImage}`} alt={name} />
             <div className='middle'>
               <div className='text'>
                 <i className='fas fa-search'></i>
@@ -19,8 +19,8 @@ const Product = ({ product }) => {
           </div>
         </Link>
         <div className='card-body'>
-          <Link to={`/products/${productId}`} className='product-list-link'>
-            <h6 className='text-center'>{title}</h6>
+          <Link to={`/products/${_id}`} className='product-list-link'>
+            <h6 className='text-center'>{name}</h6>
           </Link>
           <Rating rating={2.5} />
           <b style={{ fontSize: "18px" }}>${price}</b>

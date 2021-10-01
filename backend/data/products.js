@@ -7,6 +7,7 @@ const products = [
     productImage: "caffe_latte.png",
     rating: 0,
     numReviews: 0,
+    category: "coffee",
   },
   {
     name: "Iced Cold Brew",
@@ -16,6 +17,7 @@ const products = [
     productImage: "iced_brewed.png",
     rating: 0,
     numReviews: 0,
+    category: "coffee",
   },
   {
     name: "Iced Caramel Macchiato",
@@ -25,6 +27,7 @@ const products = [
     productImage: "iced_macchiato.png",
     rating: 0,
     numReviews: 0,
+    category: "coffee",
   },
   {
     name: "Brewed Iced Tea",
@@ -34,6 +37,7 @@ const products = [
     productImage: "ice_tea.png",
     rating: 0,
     numReviews: 0,
+    category: "tea",
   },
   {
     name: "Espresso",
@@ -43,6 +47,7 @@ const products = [
     productImage: "espresso.png",
     rating: 0,
     numReviews: 0,
+    category: "coffee",
   },
   {
     name: "Iced Caffe Latte",
@@ -52,6 +57,7 @@ const products = [
     productImage: "ice-coffee.png",
     rating: 0,
     numReviews: 0,
+    category: "coffee",
   },
   {
     name: "Americano",
@@ -61,6 +67,7 @@ const products = [
     productImage: "americano.png",
     rating: 0,
     numReviews: 0,
+    category: "coffee",
   },
   {
     name: "Espresso Frappuccino",
@@ -70,6 +77,7 @@ const products = [
     productImage: "frappe.png",
     rating: 0,
     numReviews: 0,
+    category: "coffee",
   },
   {
     name: "Cappuccino",
@@ -79,6 +87,7 @@ const products = [
     productImage: "cappuccino.png",
     rating: 0,
     numReviews: 0,
+    category: "coffee",
   },
   {
     name: "Steeped Tea",
@@ -88,6 +97,7 @@ const products = [
     productImage: "steeped_tea.png",
     rating: 0,
     numReviews: 0,
+    category: "tea",
   },
   {
     name: "Chai Latte",
@@ -97,6 +107,7 @@ const products = [
     productImage: "chai_latte.png",
     rating: 0,
     numReviews: 0,
+    category: "coffee",
   },
   {
     name: "Hot Chocolate",
@@ -106,6 +117,7 @@ const products = [
     productImage: "hot_chocolate.png",
     rating: 0,
     numReviews: 0,
+    category: "coffee",
   },
   {
     name: "White Hot Chocolate",
@@ -115,6 +127,7 @@ const products = [
     productImage: "white_chocolate.png",
     rating: 0,
     numReviews: 0,
+    category: "coffee",
   },
   {
     name: "Vanilla Bean Frappuccino",
@@ -124,6 +137,7 @@ const products = [
     productImage: "vanilla_frappe.png",
     rating: 0,
     numReviews: 0,
+    category: "coffee",
   },
   {
     name: "Flat White",
@@ -132,6 +146,7 @@ const products = [
     productImage: "flat_white.png",
     rating: 0,
     numReviews: 0,
+    category: "coffee",
   },
   {
     name: "Caffe Mocha",
@@ -141,6 +156,7 @@ const products = [
     productImage: "mocha.png",
     rating: 0,
     numReviews: 0,
+    category: "coffee",
   },
   {
     name: "Butter Croissant",
@@ -149,6 +165,7 @@ const products = [
     productImage: "croissant.png",
     rating: 0,
     numReviews: 0,
+    category: "breakfast",
   },
   {
     name: "Banana Loaf",
@@ -157,6 +174,7 @@ const products = [
     productImage: "banana_loaf.png",
     rating: 0,
     numReviews: 0,
+    category: "breakfast",
   },
   {
     name: "Double Chocolate Brownie",
@@ -166,6 +184,7 @@ const products = [
     productImage: "brownie.png",
     rating: 0,
     numReviews: 0,
+    category: "breakfast",
   },
   {
     name: "Everything Bagel",
@@ -175,6 +194,7 @@ const products = [
     productImage: "bagel.png",
     rating: 0,
     numReviews: 0,
+    category: "breakfast",
   },
   {
     name: "Ham & Cheddar Sandwich",
@@ -184,6 +204,7 @@ const products = [
     productImage: "sandwich.png",
     rating: 0,
     numReviews: 0,
+    category: "breakfast",
   },
 ];
 

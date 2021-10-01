@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import axios from "axios";
 import PageBreadcrumb from "../components/PageBreadcrumb";
 import Pagination from "../components/Pagination";
@@ -14,6 +15,10 @@ const ProductListScreen = () => {
     const list = cart.filter((item) => item !== null);
     console.log("List in sesison storage: ", list);
     setProducts(list);
+  };
+
+  const handleCheckout = () => {
+    console.log("move to checkout screen");
   };
 
   const totalPrice = () => {
@@ -47,31 +52,35 @@ const ProductListScreen = () => {
                       Implement the design for mobile
                     */}
                     {products.map((product) => (
-                      <div key={product.productId}>
+                      <div key={product._id}>
                         <div className='cart_items'>
                           <ul className='cart_list'>
                             <li className='cart_item clearfix'>
                               <div className='cart_item_image'>
                                 <img
                                   src={`../images/products-img/${product.productImage}`}
-                                  alt={product.title}
+                                  alt={product.name}
                                 />
                               </div>
                               <div className='cart_item_info d-flex flex-md-row flex-column justify-content-between'>
                                 <div className='cart_item_name cart_info_col'>
                                   <div className='cart_item_title'>Name</div>
                                   <div className='cart_item_text'>
-                                    {product.title}
+                                    {product.name}
                                   </div>
                                 </div>
                                 <div className='cart_item_color cart_info_col'>
                                   <div className='cart_item_title'>Details</div>
                                   <div className='cart_item_text'>
-                                    <li>Size: Small</li>
-                                    <li>Ice: Hot</li>
-                                    <li>Sweetness: 100% Sugar</li>
-                                    <li>Tea Base: Oolong Tea</li>
-                                    <li>Topping: Caramel Pudding</li>
+                                    <span>Size: Small</span>
+                                    <br />
+                                    <span>Ice: Hot</span>
+                                    <br />
+                                    <span>Sweetness: 100% Sugar</span>
+                                    <br />
+                                    <span>Tea Base: Oolong Tea</span>
+                                    <br />
+                                    <span>Topping: Caramel Pudding</span>
                                   </div>
                                 </div>
                                 <div className='cart_item_quantity cart_info_col'>
@@ -109,19 +118,16 @@ const ProductListScreen = () => {
                       </div>
                     </div>
                     <div className='cart_buttons'>
-                      {" "}
-                      <button
-                        type='button'
-                        className='button cart_button_clear'
-                      >
+                      <Link to='/menu/all' className='button cart_button_clear'>
                         Continue Shopping
-                      </button>{" "}
+                      </Link>
                       <button
                         type='button'
                         className='button cart_button_checkout'
+                        onClick={handleCheckout}
                       >
                         Proceed to checkout
-                      </button>{" "}
+                      </button>
                     </div>
                   </div>
                 </div>

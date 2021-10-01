@@ -16,7 +16,6 @@ const reviewSchema = mongoose.Schema(
 
 const productSchema = mongoose.Schema(
   {
-    productId: { type: String, unique: true, required: true },
     updatedBy: {
       type: mongoose.Schema.Types.ObjectId,
       required: true,
@@ -30,11 +29,15 @@ const productSchema = mongoose.Schema(
       type: String,
       required: true,
     },
-    // // do we need this?
-    // category: {
-    //   type: String,
-    //   required: true,
-    // },
+    productImageThumbnails: [
+      {
+        type: String,
+      },
+    ],
+    category: {
+      type: String,
+      required: true,
+    },
     description: {
       type: String,
       required: true,

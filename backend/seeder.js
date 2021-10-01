@@ -17,6 +17,10 @@ dotenv.config();
 
 connectDB();
 
+/**
+ * If you have any issue with seeding the data
+ * Drop the database first
+ */
 const importData = async () => {
   try {
     await Staff.deleteMany({});
