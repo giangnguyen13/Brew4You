@@ -7,6 +7,8 @@ import { products } from "../data";
 import { useParams } from "react-router";
 import Header from "../components/Header";
 
+
+
 const ProductListScreen = () => {
   const [filterBy, setFilterBy] = useState(null);
   const { s } = useParams(); //Params filter [Coffee, Tea, Breakfast, all]
@@ -14,6 +16,16 @@ const ProductListScreen = () => {
     const { data } = await axios.get(`/api/products`);
     console.log("List products: ", data);
   };
+
+  const searchFilterProducts = (product) => {
+    const title = product.title.toLowerCase()
+    const filter = filterBy.toLowerCase();
+    return product.type.includes(filter) || title.includes(filter)
+  }
+
+  const categoryFilterProducts = (product) => {
+    return product.type.includes(s)
+  }
 
   useEffect(() => {
     setFilterBy();
@@ -35,23 +47,29 @@ const ProductListScreen = () => {
             </div>
             <div className='col-md-10'>
               <div className='row row-cols-1 row-cols-sm-2 row-cols-md-2 row-cols-lg-3 row-cols-xl-4 g-3'>
-                {filterBy
-                  ? products
-                      .filter((product) => product.type.includes(filterBy))
-                      .map((product) => {
-                        return (
-                          <Product product={product} key={product.productId} />
-                        );
-                      })
-                  : s !== "all"
-                  ? products
-                      .filter((product) => product.type.includes(s))
-                      .map((product) => (
-                        <Product product={product} key={product.productId} />
-                      ))
-                  : products.map((product) => (
+                {filterBy ?
+                products
+                  .filter(searchFilterProducts)
+                  .map((product) => {
+                    return(
                       <Product product={product} key={product.productId} />
-                    ))}
+                    )
+                  }
+                  
+                  ) :
+                  s !== "all" ?  
+                  products
+                  .filter(categoryFilterProducts)
+                  .map((product) => (
+                    <Product product={product} key={product.productId} />
+                  ))
+                  :  products
+                  .map((product) => (
+                    <Product product={product} key={product.productId} />
+                  ))
+}
+                  
+            
               </div>
               <div className='row'>
                 <Pagination />

@@ -36,9 +36,7 @@ function App() {
             <Route path='/about' exact component={AboutUsScreen} />
             <Route path='/track-order' component={TrackingScreen} />
             <Route path='/carts' component={CartScreen} />
-            <Route path='/products/:id'>
-              <ProductScreen loggedIn={loggedIn} />
-            </Route>
+            <Route path='/products/:id' component={() => ProductScreen(loggedIn)}/>
             <Route path='/login' exact component={LoginScreen} />
             <Route path='/signup' exact component={SignUpScreen} />
             <Route path='/profile' exact>
