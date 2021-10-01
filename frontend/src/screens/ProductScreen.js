@@ -1,35 +1,47 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import Rating from "../components/Rating";
 import ProductReview from "../components/ProductReview";
 import { Link } from "react-router-dom";
-import { products } from "../data";
 import Header from "../components/Header";
 import Session from "../sessionService";
+import { api } from "../services/api/config";
+import { END_POINTS } from "../services/api/endpoints";
 
 const ProductScreen = ({ loggedIn }) => {
-  let cart = Session.getCart();
+  const [product, setProduct] = useState({})
   const { id } = useParams();
-  const { title, price, content, productImage } = products.filter(p => p.productId === parseInt(id))[0]; //To be replaced - MongoAtlas
+  // let cart = Session.getCart();
 
-  const handleAddToCart = () => {
-    //get current product by id
-    const product = products.find((item) => item.productId == id);
-    console.log(
-      "products ",
-      products.find((item) => item.productId == id)
-    );
-    //  const product = products[0];
-    console.log("Current cart: ", Session.getCart());
-    if (cart === "" || cart === null) {
-      let initCart = [];
-      initCart.push(product);
-      Session.setCart(initCart);
-    } else {
-      cart.push(product);
-      Session.setCart(cart);
-    }
-  };
+  const getProductById = async () => {
+    await api.get(`${END_POINTS.GET_PRODUCT_BY_ID}/${id}`).then(response => {
+      setProduct(response?.data?.product)
+    }).catch(err => {
+      alert(`An error occurred: ${err.message}`)
+    })
+  }
+  useEffect(() => {
+    getProductById(id)
+  }, [])
+  
+  // const handleAddToCart = () => {
+  //   //get current product by id
+  //   const product = products.find((item) => item.productId == id);
+  //   console.log(
+  //     "products ",
+  //     products.find((item) => item.productId == id)
+  //   );
+  //   //  const product = products[0];
+  //   console.log("Current cart: ", Session.getCart());
+  //   if (cart === "" || cart === null) {
+  //     let initCart = [];
+  //     initCart.push(product);
+  //     Session.setCart(initCart);
+  //   } else {
+  //     cart.push(product);
+  //     Session.setCart(cart);
+  //   }
+  // };
 
   return (
     <div className='card' style={{ border: "none" }}>
@@ -46,7 +58,7 @@ const ProductScreen = ({ loggedIn }) => {
             <div className='img-big-wrap'>
               <a href='/home'>
                 <img
-                  alt={`${productImage}`}
+                  alt={`${product.image}`}
                   className='mt-3'
                   src='https://dl.airtable.com/.attachments/7a50daf83875879b373d91ebb9bb6012/c1695f7e/z-extra-3.jpeg'
                 />
@@ -55,25 +67,25 @@ const ProductScreen = ({ loggedIn }) => {
             <div className='thumbs-wrap'>
               <a href='/home' className='item-thumb'>
                 <img
-                  alt={`${productImage}`}
+                  alt={`${product.image}`}
                   src='https://dl.airtable.com/.attachments/7a50daf83875879b373d91ebb9bb6012/c1695f7e/z-extra-3.jpeg'
                 />
               </a>
               <a href='/home' className='item-thumb'>
                 <img
-                  alt={`${productImage}`}
+                  alt={`${product.image}`}
                   src='https://dl.airtable.com/.attachments/7a50daf83875879b373d91ebb9bb6012/c1695f7e/z-extra-3.jpeg'
                 />
               </a>
               <a href='/home' className='item-thumb'>
                 <img
-                  alt={`${productImage}`}
+                  alt={`${product.image}`}
                   src='https://dl.airtable.com/.attachments/7a50daf83875879b373d91ebb9bb6012/c1695f7e/z-extra-3.jpeg'
                 />
               </a>
               <a href='/home' className='item-thumb'>
                 <img
-                  alt={`${productImage}`}
+                  alt={`${product.image}`}
                   src='https://dl.airtable.com/.attachments/7a50daf83875879b373d91ebb9bb6012/c1695f7e/z-extra-3.jpeg'
                 />
               </a>
@@ -83,14 +95,14 @@ const ProductScreen = ({ loggedIn }) => {
         </aside>
         <main className='col-md-6 border-left'>
           <article className='content-body'>
-            <h1 className='product-title'>{title}</h1>
+            <h1 className='product-title'>{product.title}</h1>
             <div className='my-3'>
               <Rating rating={3.8} totalReviews={139} />
             </div>
             <div className='mb-3'>
-              <h4>${price}</h4>
+              <h4>${product.price}</h4>
             </div>
-            <p>{content}</p>
+            <p>{product.description}</p>
             <div className='row mb-2'>
               <div className='col-sm-3'>
                 <b>Category</b>
@@ -187,7 +199,7 @@ const ProductScreen = ({ loggedIn }) => {
                     id='addToCartBtn'
                     type='button'
                     className='btn btn-primary'
-                    onClick={handleAddToCart}
+                    // onClick={handleAddToCart}
                   >
                     <i className='fas fa-shopping-cart'></i> Add - {`$${4.95}`}
                   </button>

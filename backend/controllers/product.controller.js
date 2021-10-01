@@ -18,10 +18,11 @@ const getProducts = asyncHandler(async (req, res) => {
  * @access      Public
  */
 const getProductById = asyncHandler(async (req, res, next) => {
-    console.log('productId: ', req.params.productId);
+    const productId = req.params.productId
+    console.log('productId: ', productId);
     await Product.findOne(
         {
-            _id: req.params.productId,
+            _id: productId,
         },
         (err, product) => {
             if (err) {
