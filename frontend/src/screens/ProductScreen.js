@@ -4,12 +4,13 @@ import Rating from "../components/Rating";
 import ProductReview from "../components/ProductReview";
 import { Link } from "react-router-dom";
 import { products } from "../data";
+import Header from "../components/Header";
 import Session from "../sessionService";
 
 const ProductScreen = ({ loggedIn }) => {
   let cart = Session.getCart();
   const { id } = useParams();
-  const { title, price, content, productImage } = products[0];
+  const { title, price, content, productImage } = products.filter(p => p.productId === parseInt(id))[0]; //To be replaced - MongoAtlas
 
   const handleAddToCart = () => {
     //get current product by id
@@ -32,8 +33,10 @@ const ProductScreen = ({ loggedIn }) => {
 
   return (
     <div className='card' style={{ border: "none" }}>
+            <Header />
+
       <div className='col-lg-2 col-sm-3'>
-        <Link to='/menu' className='btn btn-primary'>
+        <Link to='/menu/all' className='btn btn-primary'>
           Back to menu
         </Link>
       </div>

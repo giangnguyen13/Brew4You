@@ -42,7 +42,9 @@ class LocalStore {
 
     clear = () =>{
         sessionStorage.clear();
-    }    
+    }
+    
+  
   }
   
   const LocalStoreClass = new LocalStore();
