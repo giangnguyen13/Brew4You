@@ -42,8 +42,9 @@ const destroyData = async () => {
   }
 };
 
-if (process.argv[2] === "--d") {
-  destroyData();
-} else {
+if (process.argv[2] === "--i") {
   importData();
+} 
+if(process.argv[2] === "--d"){
+  destroyData();
 }

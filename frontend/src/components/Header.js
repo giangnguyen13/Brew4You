@@ -1,6 +1,7 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
+import { BsFillPersonFill } from "react-icons/bs";
 import { Dropdown, DropdownButton, ButtonGroup } from "react-bootstrap";
-import { Link, useParams } from "react-router-dom";
+import { Link } from "react-router-dom";
 import logo from "../images/logo.png";
 import { isAuthenticated, logout } from "../actions/userActions";
 
@@ -74,14 +75,9 @@ const Header = (props) => {
             as={ButtonGroup}
             id={`profile-dropdown`}
             size='sm'
-            variant='primary'
+            variant='outline-primary'
             title={
-              <img
-                src='https://miro.medium.com/max/1400/1*mk1-6aYaf_Bes1E3Imhc0A.jpeg'
-                alt='user name'
-                height={38}
-                width={40}
-              />
+              <BsFillPersonFill size={22}/>
             }
           >
             <Dropdown.Item href='/profile'>Profile</Dropdown.Item>
