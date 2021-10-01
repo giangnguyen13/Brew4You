@@ -16,6 +16,7 @@ const reviewSchema = mongoose.Schema(
 
 const productSchema = mongoose.Schema(
   {
+    productId: { type: String, unique: true, required: true },
     updatedBy: {
       type: mongoose.Schema.Types.ObjectId,
       required: true,
