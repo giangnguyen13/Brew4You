@@ -6,30 +6,23 @@ import User from "./models/user.model.js";
 import Product from "./models/product.model.js";
 import Staff from "./models/staff.model.js";
 import connectDB from "./config/db.js";
-
 dotenv.config();
 
-connectDB();
-
-const importData = async () => {
+export const importData = async () => {
   try {
-    await Staff.deleteMany({});
-    await Product.deleteMany({});
-    await User.deleteMany({});
-
-    await User.insertMany(users);
-
-    const staffUser = await Staff.insertMany(staffs);
+    await connectDB()
+    await destroyData()
+    await User.insertMany(users).then().catch(e => console.log(e.message));
+    const staffUser = await Staff.insertMany(staffs).then().catch(e => console.log(e.message));
     const creatorId = staffUser[0]._id;
 
     const sampleProducts = products.map((product) => {
       return { ...product, updatedBy: creatorId };
     });
-
+    console.log(sampleProducts)
     await Product.insertMany(sampleProducts);
 
     console.log("Data imported");
-    process.exit();
   } catch (error) {
     console.log(error);
     process.exit(1);
@@ -38,12 +31,11 @@ const importData = async () => {
 
 const destroyData = async () => {
   try {
-    await Staff.deleteMany({});
-    await Product.deleteMany({});
-    await User.deleteMany({});
+    await Staff.deleteMany({}).then().catch(e => console.info(e.message));
+    await Product.deleteMany({}).then().catch(e => console.info(e.message));
+    await User.deleteMany({}).then().catch(e => console.info(e.message));
 
     console.log("Data destroyed");
-    process.exit();
   } catch (error) {
     console.log(error);
     process.exit(1);

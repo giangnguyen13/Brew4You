@@ -16,25 +16,24 @@ const reviewSchema = mongoose.Schema(
 
 const productSchema = mongoose.Schema(
   {
-    productId: { type: String, unique: true, required: true },
     updatedBy: {
       type: mongoose.Schema.Types.ObjectId,
       required: true,
       ref: "Staff",
     },
-    name: {
+    title: {
+      type: String,
+      required: true,
+      unique: true
+    },
+    image: {
       type: String,
       required: true,
     },
-    productImage: {
+    category: {
       type: String,
       required: true,
     },
-    // // do we need this?
-    // category: {
-    //   type: String,
-    //   required: true,
-    // },
     description: {
       type: String,
       required: true,
