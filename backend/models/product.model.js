@@ -54,6 +54,12 @@ const productSchema = mongoose.Schema(
       required: true,
       default: 0,
     },
+    productAttributes: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "ProductAttribute",
+      },
+    ],
   },
   {
     timestamps: true,

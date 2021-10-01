@@ -5,9 +5,10 @@
  *
  * // Sample usage
  * import constants from "./config/constants.js";
- * constant.ORDER_STAGE_CART will return 'Cart' as the value
+ * constants.ORDER_STAGE_CART will return 'Cart' as the value
  */
 const constants = Object.freeze({
+  ORDER_STAGE_CREATED: "Created",
   ORDER_STAGE_CART: "Cart",
   ORDER_STAGE_PAID: "Paid",
   ORDER_STATUS_ORDERED: 1,
