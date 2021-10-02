@@ -17,8 +17,9 @@ const CartScreen = () => {
         "Content-Type": "application/json",
       },
     };
+    // return id of the created order
     const { data } = await axios.post("/api/orders", cart, config);
-    console.log(data);
+    window.location.href = `/checkout/${data}`;
   };
 
   const totalPrice = () => {

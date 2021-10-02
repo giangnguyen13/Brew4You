@@ -19,9 +19,16 @@ const createOrder = asyncHandler(async (req, res) => {
       actionAt: Date.now(),
     };
 
+    const taxPrice = itemPrice * constants.TAX_RATE;
+    const shippingPrice = itemPrice * constants.SHIPPING_RATE;
+    const totalPrice = taxPrice + shippingPrice + itemPrice;
+
     const order = await Order.create({
       orderItems: orderItems,
-      itemsPrice: itemPrice,
+      itemsPrice: itemPrice.toFixed(2),
+      taxPrice: taxPrice.toFixed(2),
+      shippingPrice: shippingPrice.toFixed(2),
+      totalPrice: totalPrice.toFixed(2),
       orderStatus: [orderStatus],
     });
     res.json(order._id);

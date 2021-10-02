@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-
+import Header from "../components/Header";
 import { login } from "../actions/userActions";
 
 const LoginScreen = () => {
@@ -21,6 +21,7 @@ const LoginScreen = () => {
   };
   return (
     <>
+      <Header />
       <div className='login-form card mt-5'>
         <div className='card-body'>
           <form className='text-center' onSubmit={submitHandler}>

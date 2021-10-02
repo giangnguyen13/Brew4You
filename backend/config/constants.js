@@ -16,7 +16,8 @@ const constants = Object.freeze({
   ORDER_STATUS_SHIPPED: 3,
   ORDER_STATUS_DELIVERED: 4,
   TRACKING_RAND_LENGTH: 10,
-  TAX_RATE: 1.13,
+  TAX_RATE: 0.13,
+  SHIPPING_RATE: 0.05,
   ROLE_ADMIN: "Administrator",
 });
 
