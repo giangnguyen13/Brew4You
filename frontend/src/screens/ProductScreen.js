@@ -8,14 +8,19 @@ import Session from "../sessionService";
 import { api } from "../services/api/config";
 import { END_POINTS } from "../services/api/endpoints";
 import { getLoggedUserProfile } from "../actions/userActions";
+import Toast from 'react-bootstrap/Toast'
+import { MdNotificationsActive } from "react-icons/md";
 
 const ProductScreen = ({ loggedIn }) => {
   const [product, setProduct] = useState({})
   const { id } = useParams();
+  const [shouldDisplayNotification, setShouldDisplayNotification] = useState(false)
+  const [notification, setNotification] = useState()
   // let cart = Session.getCart();
 
   const getProductById = async () => {
     await api.get(`${END_POINTS.GET_PRODUCT_BY_ID}/${id}`).then(response => {
+      
       setProduct(response?.data?.product)
     }).catch(err => {
       alert(`An error occurred: ${err.message}`)
@@ -32,7 +37,13 @@ const ProductScreen = ({ loggedIn }) => {
       product,
       user: _id
     }).then(response => {
-      alert(JSON.stringify(response))
+      if(response?.data?.error && response?.data?.code === 400) {
+        setNotification({message: response?.data?.message, variant: 'danger'})
+        setShouldDisplayNotification(!shouldDisplayNotification)
+      }
+    }).catch(err => {
+      setNotification({message: err.message, variant: 'info'})
+      setShouldDisplayNotification(!shouldDisplayNotification)
     })
   }
   // const handleAddToCart = () => {
@@ -233,6 +244,18 @@ const ProductScreen = ({ loggedIn }) => {
           <h3>Customer Reviews</h3>
         </div>
       </div>
+      {notification && shouldDisplayNotification &&
+        <div style={{position: 'fixed', bottom: 10, right: 4}}>
+              <Toast  onClose={() => setShouldDisplayNotification(false)} show={shouldDisplayNotification} delay={3000} autohide>
+              <Toast.Header>
+              <MdNotificationsActive/>
+                <strong className="me-auto">Notification</strong>
+                <small>Now</small>
+              </Toast.Header>
+              <Toast.Body>{notification.message}</Toast.Body>
+            </Toast>
+            </div>
+           }
     </div>
   );
 };

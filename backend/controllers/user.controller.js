@@ -105,9 +105,15 @@ const addProductToWishlist = asyncHandler(async (req, res) => {
   const {product, user} = req.body
   const userExist = await User.findById(user);
   if (userExist) {
-    await User.updateOne({_id: user}, { $push: {wishlist: product} }).then(response => {
-      console.log(response)
+    const productInWishlist = await User.findOne({wishlist: {$in: [product._id]}}).populate('wishlist')
+    //Product is already in the wishlist
+    if(productInWishlist){
+      res.json({error: true, code: 400, message: 'Product already in your wishlist'})
+    } else{
+      await User.updateOne({_id: user}, { $push: {wishlist: product} }).then(response => {
+      res.status(200).json({error: false, code: 200, message: 'product added to wishlist'})
     })
+    }
   } else {
     res.status(404);
     throw new Error("User not found");

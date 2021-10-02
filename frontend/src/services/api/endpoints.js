@@ -18,6 +18,8 @@ export const END_POINTS = {
 
     /* USER ROUTE */
 
+    //POST
+    USER_LOGIN: '/user/login',
     //GET
     GET_USER_WISHLIST: '/user/wishlist',
     //PUT

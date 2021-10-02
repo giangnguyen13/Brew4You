@@ -7,23 +7,37 @@ import Header from "../components/Header";
 import { api } from "../services/api/config";
 import { END_POINTS } from "../services/api/endpoints";
 import { getLoggedUserProfile } from "../actions/userActions";
-
-
+import { MdNotificationsActive } from "react-icons/md";
+import Toast from 'react-bootstrap/Toast'
 
 const ProductListScreen = () => {
   const [filterBy, setFilterBy] = useState(null);
   const [products, setProducts] = useState([]);
+  const [shouldDisplayNotification, setShouldDisplayNotification] = useState(false)
+  const [notification, setNotification] = useState()
+
   const { s } = useParams(); //Params filter [Coffee, Tea, Breakfast, all]
   
   const _handleAddToWishlist = async (product) => {
-    const {_id} = await getLoggedUserProfile()
+    const {_id} = await getLoggedUserProfile() || {}
+    if(_id) {
+      await api.put(END_POINTS.ADD_PRODUCT_WISHLIST, {
+        product,
+        user: _id
+      }).then(response => {
+        if(response?.data?.error && response?.data?.code === 400) {
+          setNotification({message: response?.data?.message, variant: 'danger'})
+          setShouldDisplayNotification(!shouldDisplayNotification)
+        }
+      }).catch(err => {
+        setNotification({message: err.message, variant: 'info'})
+        setShouldDisplayNotification(!shouldDisplayNotification)
+      })
+    }
+    else{
+      alert("Please login to perform this action!")
 
-    await api.put(END_POINTS.ADD_PRODUCT_WISHLIST, {
-      product,
-      user: _id
-    }).then(response => {
-      alert(JSON.stringify(response))
-    })
+    }
   }
 
   const getProducts = async () => {
@@ -60,12 +74,15 @@ const ProductListScreen = () => {
       <Header />
       <div className='album'>
         <div className='container'>
+        
           <div className='row'>
             {/* This should be a search category component */}
             <div className='col-md-2 product-filter'>
               <ProductFilter filter={setFilterBy} />
+              
             </div>
             <div className='col-md-10'>
+          
               <div className='row row-cols-1 row-cols-sm-2 row-cols-md-2 row-cols-lg-3 row-cols-xl-4 g-3'>
                 {filterBy ?
                 products
@@ -91,12 +108,33 @@ const ProductListScreen = () => {
                   
             
               </div>
+             
+                  {/* // <Alert  variant={notification.variant} onClose={() => setShouldDisplayNotification(!shouldDisplayNotification)}>
+                  //   {notification.message}
+                    
+                  //   {setTimeout(() => {
+                  //     setShouldDisplayNotification(!shouldDisplayNotification)
+                  //   }, 3000)}
+                  // </Alert>} */}
+                  
               <div className='row'>
                 <Pagination />
               </div>
             </div>
           </div>
         </div>
+        {notification && shouldDisplayNotification &&
+        <div style={{position: 'fixed', bottom: 10, right: 4}}>
+              <Toast  onClose={() => setShouldDisplayNotification(false)} show={shouldDisplayNotification} delay={3000} autohide>
+              <Toast.Header>
+              <MdNotificationsActive/>
+                <strong className="me-auto">Notification</strong>
+                <small>Now</small>
+              </Toast.Header>
+              <Toast.Body>{notification.message}</Toast.Body>
+            </Toast>
+            </div>
+           }
       </div>
     </>
   );
