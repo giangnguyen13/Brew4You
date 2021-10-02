@@ -115,4 +115,30 @@ const addProductToWishlist = asyncHandler(async (req, res) => {
 
 })
 
-export { authUser, registerUser, getUserProfile, addProductToWishlist, getUserWishlist };
+  /**
+ * @desc        Remove product fro wishlist
+ * @route       DELETE /api/users/wishlist
+ * @access      Private
+ */
+   const removeProductFromWishlist = asyncHandler(async (req, res) => {
+    const user = await User.findById(req.user._id);
+    if (user) {
+      const {_id} = req.body
+      console.log(`Product id: ${_id}`)
+      await User.updateOne({_id: user._id}, { $pull: {wishlist: _id}}).then(response => {
+        console.log(`Product removed from wishlist ${JSON.stringify(response)}`)
+        res.status(200).json({user})
+      }).catch(err => {
+        console.log(`An error occurred while trying to remove the product from the wishlist: ${err.message}`)
+         res.status(err.code)
+
+      })
+      res.status(200)
+    } else {
+      res.status(401);
+      throw new Error("Unauthorized");
+    }
+  
+  })
+
+export { authUser, registerUser, getUserProfile, addProductToWishlist, getUserWishlist, removeProductFromWishlist };

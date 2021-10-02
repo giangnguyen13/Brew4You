@@ -75,3 +75,11 @@ export const isAuthenticated = () => {
   }
   return false;
 };
+
+export const getToken = () => {
+  if(isAuthenticated()) {
+    const user = JSON.parse(localStorage.getItem("userInfo"));
+    return user.token
+  }
+  return null
+}

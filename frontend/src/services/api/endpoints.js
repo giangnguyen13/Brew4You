@@ -17,10 +17,12 @@ export const END_POINTS = {
 
 
     /* USER ROUTE */
-    
+
     //GET
     GET_USER_WISHLIST: '/user/wishlist',
     //PUT
-    ADD_PRODUCT_WISHLIST: '/user/wishlist'
+    ADD_PRODUCT_WISHLIST: '/user/wishlist',
+    //DELETE
+    DELETE_PRODUCT_WISHLIST: '/user/wishlist'
     
 }

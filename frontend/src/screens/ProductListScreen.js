@@ -6,6 +6,7 @@ import { useParams } from "react-router";
 import Header from "../components/Header";
 import { api } from "../services/api/config";
 import { END_POINTS } from "../services/api/endpoints";
+import { getLoggedUserProfile } from "../actions/userActions";
 
 
 
@@ -14,6 +15,17 @@ const ProductListScreen = () => {
   const [products, setProducts] = useState([]);
   const { s } = useParams(); //Params filter [Coffee, Tea, Breakfast, all]
   
+  const _handleAddToWishlist = async (product) => {
+    const {_id} = await getLoggedUserProfile()
+
+    await api.put(END_POINTS.ADD_PRODUCT_WISHLIST, {
+      product,
+      user: _id
+    }).then(response => {
+      alert(JSON.stringify(response))
+    })
+  }
+
   const getProducts = async () => {
    await api.get(END_POINTS.GET_ALL_PRODUCTS).then(response => {
      const products = response?.data?.products
@@ -60,7 +72,7 @@ const ProductListScreen = () => {
                   .filter(searchFilterProducts)
                   .map((product) => {
                     return(
-                      <Product product={product} key={product.productId} />
+                      <Product  product={product} key={product.productId} onClick={() => _handleAddToWishlist(product)} />
                     )
                   }
                   
@@ -69,11 +81,11 @@ const ProductListScreen = () => {
                   products
                   .filter(categoryFilterProducts)
                   .map((product) => (
-                    <Product product={product} key={product.productId} />
+                    <Product product={product} key={product.productId} onClick={() => _handleAddToWishlist(product)} />
                   ))
                   :  products
                   .map((product) => (
-                    <Product product={product} key={product.productId} />
+                    <Product product={product} key={product.productId} onClick={() => _handleAddToWishlist(product)}/>
                   ))
 }
                   
