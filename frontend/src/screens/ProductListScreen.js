@@ -29,6 +29,10 @@ const ProductListScreen = () => {
           setNotification({message: response?.data?.message, variant: 'danger'})
           setShouldDisplayNotification(!shouldDisplayNotification)
         }
+        else {
+          setNotification({message: 'Product Added To Your Wishlist!', variant: 'info'})
+          setShouldDisplayNotification(!shouldDisplayNotification)
+        }
       }).catch(err => {
         setNotification({message: err.message, variant: 'info'})
         setShouldDisplayNotification(!shouldDisplayNotification)
@@ -125,7 +129,7 @@ const ProductListScreen = () => {
         </div>
         {notification && shouldDisplayNotification &&
         <div style={{position: 'fixed', bottom: 10, right: 4}}>
-              <Toast  onClose={() => setShouldDisplayNotification(false)} show={shouldDisplayNotification} delay={3000} autohide>
+              <Toast  onClose={() => setShouldDisplayNotification(false)} show={shouldDisplayNotification} delay={3000} autohide bg={notification.variant}>
               <Toast.Header>
               <MdNotificationsActive/>
                 <strong className="me-auto">Notification</strong>

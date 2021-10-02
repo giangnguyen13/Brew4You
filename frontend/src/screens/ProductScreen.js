@@ -41,6 +41,10 @@ const ProductScreen = ({ loggedIn }) => {
         setNotification({message: response?.data?.message, variant: 'danger'})
         setShouldDisplayNotification(!shouldDisplayNotification)
       }
+      else {
+        setNotification({message: 'Product Added To Your Wishlist!', variant: 'info'})
+        setShouldDisplayNotification(!shouldDisplayNotification)
+      }
     }).catch(err => {
       setNotification({message: err.message, variant: 'info'})
       setShouldDisplayNotification(!shouldDisplayNotification)
