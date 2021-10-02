@@ -9,7 +9,7 @@ import {
 } from "react-router-dom";
 import { isAuthenticated } from "./actions/userActions";
 import Footer from "./components/Footer";
-import Header from "./components/Header";
+// import Header from "./components/Header";
 import HomeScreen from "./screens/HomeScreen";
 import ProductListScreen from "./screens/ProductListScreen";
 import LoginScreen from "./screens/LoginScreen";
@@ -21,6 +21,7 @@ import CartScreen from "./screens/CartScreen";
 import TrackingScreen from "./screens/TrackingScreen";
 import ProfileScreen from "./screens/ProfileScreen";
 import CheckoutScreen from "./screens/CheckoutScreen";
+import WishListScreen from "./screens/WishListScreen";
 
 function App() {
   const [loggedIn, setLoggedIn] = useState(isAuthenticated());
@@ -44,6 +45,9 @@ function App() {
             />
             <Route path='/login' exact component={LoginScreen} />
             <Route path='/signup' exact component={SignUpScreen} />
+            <Route path='/wishlist' exact>
+              {loggedIn ? <WishListScreen /> : <Redirect to='/login' />}
+            </Route>
             <Route path='/profile' exact>
               {loggedIn ? <ProfileScreen /> : <Redirect to='/login' />}
             </Route>

@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import Header from "../components/Header";
 import { login } from "../actions/userActions";
+import Header from "../components/Header";
 
 const LoginScreen = () => {
   const [errorMessage, setErrorMessage] = useState("");
@@ -37,6 +38,7 @@ const LoginScreen = () => {
                 aria-label='example@example.com'
                 aria-describedby='email'
                 id='email'
+                required
                 name='email'
                 value={credential.email}
                 onChange={handleChange}
@@ -54,6 +56,7 @@ const LoginScreen = () => {
                 aria-describedby='password'
                 id='password'
                 name='password'
+                required
                 value={credential.password}
                 onChange={handleChange}
               />

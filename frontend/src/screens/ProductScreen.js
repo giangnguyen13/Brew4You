@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
 import { useParams } from "react-router-dom";
 import Rating from "../components/Rating";
 import ProductReview from "../components/ProductReview";
 import { Link } from "react-router-dom";
-// import { products } from "../data";
 import Header from "../components/Header";
 import Session from "../sessionService";
+import { api } from "../services/api/config";
+import { END_POINTS } from "../services/api/endpoints";
+import { getLoggedUserProfile } from "../actions/userActions";
 
 const ProductScreen = ({ loggedIn }) => {
   let cart = Session.getCart();
@@ -89,8 +90,8 @@ const ProductScreen = ({ loggedIn }) => {
             <div className='img-big-wrap'>
               <a href='/home'>
                 <img
-                  src={`../images/products-img/${product.productImage}`}
-                  alt={`${product.productImage}`}
+                  src={`../images/products-img/${product.image}`}
+                  alt={`${product.image}`}
                   className='mt-3'
                 />
               </a>
@@ -98,26 +99,26 @@ const ProductScreen = ({ loggedIn }) => {
             <div className='thumbs-wrap'>
               <a href='/home' className='item-thumb'>
                 <img
-                  alt={`${product.productImage}`}
-                  src={`../images/products-img/${product.productImage}`}
+                  alt={`${product.image}`}
+                  src={`../images/products-img/${product.image}`}
                 />
               </a>
               <a href='/home' className='item-thumb'>
                 <img
-                  alt={`${product.productImage}`}
-                  src={`../images/products-img/${product.productImage}`}
+                  alt={`${product.image}`}
+                  src={`../images/products-img/${product.image}`}
                 />
               </a>
               <a href='/home' className='item-thumb'>
                 <img
-                  alt={`${product.productImage}`}
-                  src={`../images/products-img/${product.productImage}`}
+                  alt={`${product.image}`}
+                  src={`../images/products-img/${product.image}`}
                 />
               </a>
               <a href='/home' className='item-thumb'>
                 <img
-                  alt={`${product.productImage}`}
-                  src={`../images/products-img/${product.productImage}`}
+                  alt={`${product.image}`}
+                  src={`../images/products-img/${product.image}`}
                 />
               </a>
             </div>
@@ -126,7 +127,7 @@ const ProductScreen = ({ loggedIn }) => {
         </aside>
         <main className='col-md-6 border-left'>
           <article className='content-body'>
-            <h1 className='product-title'>{product.name}</h1>
+            <h1 className='product-title'>{product.title}</h1>
             <div className='my-3'>
               <Rating rating={3.8} totalReviews={139} />
             </div>
@@ -200,6 +201,7 @@ const ProductScreen = ({ loggedIn }) => {
                   &nbsp;
                   <button
                     id='addToWishListBtn'
+                    onClick={_handleAddToWishlist}
                     type='button'
                     className='btn btn-primary'
                   >

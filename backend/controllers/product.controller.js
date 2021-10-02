@@ -9,7 +9,7 @@ import ProductAttribute from "../models/productAttribute.model.js";
  * @access      Public
  */
 const getProducts = asyncHandler(async (req, res) => {
-  const products = await Product.find({}).limit(12);
+  const products = await Product.find({});
   res.status(200).json({ products });
 });
 
@@ -20,7 +20,7 @@ const getProducts = asyncHandler(async (req, res) => {
  */
 const getProductById = asyncHandler(async (req, res, next) => {
   const id = req.params.productId;
-  const product = await Product.findOne({ _id: id })
+  await Product.findOne({ _id: id })
     .populate("productAttributes")
     .exec((err, product) => {
       if (err) {

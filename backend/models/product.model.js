@@ -21,11 +21,16 @@ const productSchema = mongoose.Schema(
       required: true,
       ref: "Staff",
     },
-    name: {
+    title: {
+      type: String,
+      required: true,
+      unique: true,
+    },
+    image: {
       type: String,
       required: true,
     },
-    productImage: {
+    category: {
       type: String,
       required: true,
     },
@@ -34,10 +39,6 @@ const productSchema = mongoose.Schema(
         type: String,
       },
     ],
-    category: {
-      type: String,
-      required: true,
-    },
     description: {
       type: String,
       required: true,
