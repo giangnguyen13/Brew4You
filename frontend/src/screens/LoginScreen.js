@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 
 import { login } from "../actions/userActions";
+import Header from "../components/Header";
 
 
 const LoginScreen = () => {
@@ -22,6 +23,7 @@ const LoginScreen = () => {
   };
   return (
     <>
+    <Header/>
       <div className='login-form card'>
         <div className='card-body'>
           <form className='text-center' onSubmit={submitHandler}>
@@ -37,6 +39,7 @@ const LoginScreen = () => {
                 aria-label='example@example.com'
                 aria-describedby='email'
                 id='email'
+                required
                 name='email'
                 value={credential.email}
                 onChange={handleChange}
@@ -54,6 +57,7 @@ const LoginScreen = () => {
                 aria-describedby='password'
                 id='password'
                 name='password'
+                required
                 value={credential.password}
                 onChange={handleChange}
               />

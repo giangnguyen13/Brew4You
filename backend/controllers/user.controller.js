@@ -69,6 +69,7 @@ const getUserProfile = asyncHandler(async (req, res) => {
       firstName: user.firstName,
       lastName: user.lastName,
       email: user.email,
+      _id: user._id
     });
   } else {
     res.status(404);
@@ -76,4 +77,68 @@ const getUserProfile = asyncHandler(async (req, res) => {
   }
 });
 
-export { authUser, registerUser, getUserProfile };
+/**
+ * @desc        Get user's wishlist
+ * @route       GET /api/users/wishlist
+ * @access      Private
+ */
+
+ const getUserWishlist = asyncHandler(async (req, res) => {
+  const userId = req.query.user
+  const user = await User.findOne({_id: userId}, {wishlist: 1}).populate('wishlist');
+  if (user) {
+    res.status(200).json({ wishlist: user.wishlist });
+  } else {
+    res.status(404);
+    throw new Error("User not found");
+  }
+
+})
+
+/**
+ * @desc        Add product to wishlist
+ * @route       PUT /api/users/wishlist
+ * @access      Private
+ */
+
+const addProductToWishlist = asyncHandler(async (req, res) => {
+  const {product, user} = req.body
+  const userExist = await User.findById(user);
+  if (userExist) {
+    await User.updateOne({_id: user}, { $push: {wishlist: product} }).then(response => {
+      console.log(response)
+    })
+  } else {
+    res.status(404);
+    throw new Error("User not found");
+  }
+
+})
+
+  /**
+ * @desc        Remove product fro wishlist
+ * @route       DELETE /api/users/wishlist
+ * @access      Private
+ */
+   const removeProductFromWishlist = asyncHandler(async (req, res) => {
+    const user = await User.findById(req.user._id);
+    if (user) {
+      const {_id} = req.body
+      console.log(`Product id: ${_id}`)
+      await User.updateOne({_id: user._id}, { $pull: {wishlist: _id}}).then(response => {
+        console.log(`Product removed from wishlist ${JSON.stringify(response)}`)
+        res.status(200).json({user})
+      }).catch(err => {
+        console.log(`An error occurred while trying to remove the product from the wishlist: ${err.message}`)
+         res.status(err.code)
+
+      })
+      res.status(200)
+    } else {
+      res.status(401);
+      throw new Error("Unauthorized");
+    }
+  
+  })
+
+export { authUser, registerUser, getUserProfile, addProductToWishlist, getUserWishlist, removeProductFromWishlist };

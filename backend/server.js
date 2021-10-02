@@ -6,8 +6,8 @@ import connectDB from "./config/db.js";
 import { notFound, errorHandler } from "./middleware/error.middleware.js";
 import productRoutes from "./routes/product.route.js";
 import userRoutes from "./routes/user.route.js";
-
-// Load ENV variable to process.env variable
+import  {importData, destroyData} from './seeder.js'
+import cors from 'cors'
 dotenv.config();
 
 connectDB();
@@ -20,9 +20,11 @@ if (process.env.NODE_ENV === "development") {
 }
 
 app.use(express.json());
-
+app.use(cors({origin: true, credentials: true}));
 app.use(productRoutes);
-app.use("/api/users", userRoutes);
+
+
+app.use("/api/user", userRoutes);
 // app.use("/api/orders", orderRoutes);
 // app.use("/api/upload", uploadRoutes);
 
@@ -45,5 +47,5 @@ const PORT = process.env.SERVER_PORT || 5000;
 
 app.listen(
   PORT,
-  console.log(`Server running in ${process.env.NODE_ENV} mode at port ${PORT}`)
+  console.log(`Server running in ${process.env.NODE_ENV} mode on port ${PORT} `)
 );
