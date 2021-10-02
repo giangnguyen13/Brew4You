@@ -77,10 +77,11 @@ const Header = (props) => {
             size='sm'
             variant='outline-primary'
             title={
-              <BsFillPersonFill size={22}/>
+              <BsFillPersonFill size={25}/>
             }
           >
-            <Dropdown.Item href='/profile'>Profile</Dropdown.Item>
+            <Dropdown.Item href='/profile'>My Account</Dropdown.Item>
+            <Dropdown.Item href='/wishlist'>My Wish List</Dropdown.Item>
             <Dropdown.Divider />
             <Dropdown.Item onClick={handleLogout}>Logout</Dropdown.Item>
           </DropdownButton>

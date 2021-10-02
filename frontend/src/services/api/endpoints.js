@@ -1,4 +1,5 @@
 export const END_POINTS = {
+    /* PRODUCT ROUTE */
     // GET
     GET_ALL_PRODUCTS: '/products',
 
@@ -11,6 +12,15 @@ export const END_POINTS = {
     UPDATE_PRODUCT_BY_ID : '/products',
 
     // DELETE
-    DELETE_PRODUCT_BY_ID: '/products'
+    DELETE_PRODUCT_BY_ID: '/products',
+
+
+
+    /* USER ROUTE */
+    
+    //GET
+    GET_USER_WISHLIST: '/user/wishlist',
+    //PUT
+    ADD_PRODUCT_WISHLIST: '/user/wishlist'
     
 }

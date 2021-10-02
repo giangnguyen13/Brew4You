@@ -7,6 +7,7 @@ import Header from "../components/Header";
 import Session from "../sessionService";
 import { api } from "../services/api/config";
 import { END_POINTS } from "../services/api/endpoints";
+import { getLoggedUserProfile } from "../actions/userActions";
 
 const ProductScreen = ({ loggedIn }) => {
   const [product, setProduct] = useState({})
@@ -24,6 +25,16 @@ const ProductScreen = ({ loggedIn }) => {
     getProductById(id)
   }, [])
   
+  const _handleAddToWishlist = async () => {
+    const {_id} = await getLoggedUserProfile()
+
+    await api.put(END_POINTS.ADD_PRODUCT_WISHLIST, {
+      product,
+      user: _id
+    }).then(response => {
+      alert(JSON.stringify(response))
+    })
+  }
   // const handleAddToCart = () => {
   //   //get current product by id
   //   const product = products.find((item) => item.productId == id);
@@ -60,7 +71,7 @@ const ProductScreen = ({ loggedIn }) => {
                 <img
                   alt={`${product.image}`}
                   className='mt-3'
-                  src='https://dl.airtable.com/.attachments/7a50daf83875879b373d91ebb9bb6012/c1695f7e/z-extra-3.jpeg'
+                  src={product.image}
                 />
               </a>
             </div>
@@ -68,26 +79,22 @@ const ProductScreen = ({ loggedIn }) => {
               <a href='/home' className='item-thumb'>
                 <img
                   alt={`${product.image}`}
-                  src='https://dl.airtable.com/.attachments/7a50daf83875879b373d91ebb9bb6012/c1695f7e/z-extra-3.jpeg'
-                />
+                  src={product.image}                />
               </a>
               <a href='/home' className='item-thumb'>
                 <img
                   alt={`${product.image}`}
-                  src='https://dl.airtable.com/.attachments/7a50daf83875879b373d91ebb9bb6012/c1695f7e/z-extra-3.jpeg'
-                />
+                  src={product.image}                />
               </a>
               <a href='/home' className='item-thumb'>
                 <img
                   alt={`${product.image}`}
-                  src='https://dl.airtable.com/.attachments/7a50daf83875879b373d91ebb9bb6012/c1695f7e/z-extra-3.jpeg'
-                />
+                  src={product.image}                />
               </a>
               <a href='/home' className='item-thumb'>
                 <img
                   alt={`${product.image}`}
-                  src='https://dl.airtable.com/.attachments/7a50daf83875879b373d91ebb9bb6012/c1695f7e/z-extra-3.jpeg'
-                />
+                  src={product.image}                />
               </a>
             </div>
           </article>
@@ -206,6 +213,7 @@ const ProductScreen = ({ loggedIn }) => {
                   &nbsp;
                   <button
                     id='addToWishListBtn'
+                    onClick={_handleAddToWishlist}
                     type='button'
                     className='btn btn-primary'
                   >

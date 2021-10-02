@@ -14,6 +14,7 @@ const reviewSchema = mongoose.Schema(
   { timestamps: true }
 );
 
+
 const productSchema = mongoose.Schema(
   {
     updatedBy: {
@@ -59,6 +60,7 @@ const productSchema = mongoose.Schema(
     timestamps: true,
   }
 );
+
 
 const Product = mongoose.model("Product", productSchema);
 

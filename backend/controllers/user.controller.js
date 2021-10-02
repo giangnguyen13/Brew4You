@@ -69,6 +69,7 @@ const getUserProfile = asyncHandler(async (req, res) => {
       firstName: user.firstName,
       lastName: user.lastName,
       email: user.email,
+      _id: user._id
     });
   } else {
     res.status(404);
@@ -76,4 +77,42 @@ const getUserProfile = asyncHandler(async (req, res) => {
   }
 });
 
-export { authUser, registerUser, getUserProfile };
+/**
+ * @desc        Get user's wishlist
+ * @route       GET /api/users/wishlist
+ * @access      Private
+ */
+
+ const getUserWishlist = asyncHandler(async (req, res) => {
+  const userId = req.query.user
+  const user = await User.findOne({_id: userId}, {wishlist: 1}).populate('wishlist');
+  if (user) {
+    res.status(200).json({ wishlist: user.wishlist });
+  } else {
+    res.status(404);
+    throw new Error("User not found");
+  }
+
+})
+
+/**
+ * @desc        Add product to wishlist
+ * @route       PUT /api/users/wishlist
+ * @access      Private
+ */
+
+const addProductToWishlist = asyncHandler(async (req, res) => {
+  const {product, user} = req.body
+  const userExist = await User.findById(user);
+  if (userExist) {
+    await User.updateOne({_id: user}, { $push: {wishlist: product} }).then(response => {
+      console.log(response)
+    })
+  } else {
+    res.status(404);
+    throw new Error("User not found");
+  }
+
+})
+
+export { authUser, registerUser, getUserProfile, addProductToWishlist, getUserWishlist };

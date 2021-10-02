@@ -29,7 +29,7 @@ export const importData = async () => {
   }
 };
 
-const destroyData = async () => {
+export const destroyData = async () => {
   try {
     await Staff.deleteMany({}).then().catch(e => console.info(e.message));
     await Product.deleteMany({}).then().catch(e => console.info(e.message));
@@ -42,9 +42,9 @@ const destroyData = async () => {
   }
 };
 
+if (process.argv[2] === "--d") {
+  destroyData();
+} 
 if (process.argv[2] === "--i") {
   importData();
-} 
-if(process.argv[2] === "--d"){
-  destroyData();
 }

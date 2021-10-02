@@ -1,5 +1,5 @@
-import axios from "axios";
 import { user_config } from "../config/auth";
+import { api } from "../services/api/config";
 
 export const login = async (email, password) => {
   try {
@@ -9,7 +9,7 @@ export const login = async (email, password) => {
       },
     };
 
-    const { data } = await axios.post(
+    const { data } = await api.post(
       "/api/users/login",
       {
         email,
@@ -37,7 +37,7 @@ export const register = async (user) => {
       },
     };
 
-    const { data } = await axios.post("/api/users", user, config);
+    const { data } = await api.post("/users", user, config);
 
     localStorage.setItem("userInfo", JSON.stringify(data));
 
@@ -49,7 +49,7 @@ export const register = async (user) => {
 
 export const getLoggedUserProfile = async () => {
   try {
-    const { data } = await axios.get(`/api/users/profile`, user_config);
+    const { data } = await api.get(`/user/profile`, user_config);
     return data;
   } catch (error) {
     console.log(error);
