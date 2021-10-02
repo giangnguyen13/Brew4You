@@ -17,12 +17,19 @@ const ProductScreen = ({ loggedIn }) => {
   const [quantity, setQuantity] = useState(1);
   const [total, setTotal] = useState(0);
   const { id } = useParams();
-  const getProduct = async (id) => {
-    const { data } = await axios.get(`/api/products/${id}`);
-    setProduct(data.product);
-    setTotal(data.product.price);
-    const attributes = data.product.productAttributes;
-    setProductAttributes(attributes);
+
+  const getProductById = async () => {
+    await api
+      .get(`${END_POINTS.GET_PRODUCT_BY_ID}/${id}`)
+      .then((response) => {
+        setProduct(response?.data?.product);
+        setTotal(response?.data?.product?.price);
+        const attributes = response?.data?.product?.productAttributes;
+        setProductAttributes(attributes);
+      })
+      .catch((err) => {
+        alert(`An error occurred: ${err.message}`);
+      });
 
     // Assign default value for custom drink size
     let details = [];
@@ -43,7 +50,7 @@ const ProductScreen = ({ loggedIn }) => {
       setDrinkDetails(newDetails);
     }
   };
-
+  // ENHANCEMENT: notify user with alert when item is added to cart
   const handleAddToCart = () => {
     let details = [];
     for (let index = 0; index < drinkDetails.length; index += 2) {
@@ -51,10 +58,10 @@ const ProductScreen = ({ loggedIn }) => {
     }
     const addedProduct = {
       product: product._id,
-      name: product.name,
+      name: product.title,
       quantity: quantity,
       price: product.price,
-      image: product.productImage,
+      image: product.image,
       productDetails: details,
     };
 
@@ -71,8 +78,22 @@ const ProductScreen = ({ loggedIn }) => {
     console.log("Current cart: ", Session.getCart());
   };
 
+  const _handleAddToWishlist = async () => {
+    const { _id } = await getLoggedUserProfile();
+
+    await api
+      .put(END_POINTS.ADD_PRODUCT_WISHLIST, {
+        product,
+        user: _id,
+      })
+      .then((response) => {
+        // ENHANCEMENT: change to alert instead of browser alert
+        alert(JSON.stringify(response));
+      });
+  };
+
   useEffect(() => {
-    getProduct(id);
+    getProductById();
   }, []);
 
   return (
