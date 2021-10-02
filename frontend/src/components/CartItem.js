@@ -2,7 +2,8 @@ import React from "react";
 import { Link } from "react-router-dom";
 
 const CartItem = (props) => {
-  const { product, name, quantity, price, image, drinkDetails } = props.product;
+  const { product, name, quantity, price, image, productDetails } =
+    props.product;
   return (
     <div className='cart_items'>
       <ul className='cart_list'>
@@ -25,7 +26,7 @@ const CartItem = (props) => {
             <div className='cart_item_color cart_info_col'>
               <div className='cart_item_title'>Details</div>
               <div className='cart_item_text'>
-                {drinkDetails.map((value, index) => (
+                {productDetails.map((value, index) => (
                   <React.Fragment key={index}>
                     <span>{value}</span>
                     <br />

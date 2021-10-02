@@ -1,11 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
-import PageBreadcrumb from "../components/PageBreadcrumb";
+import Header from "../components/Header";
 import CartItem from "../components/CartItem";
-import Pagination from "../components/Pagination";
-import ProductFilter from "../components/ProductFilter";
 import Session from "../sessionService";
+import OrderPriceSum from "../components/OrderPriceSum";
 
 const CartScreen = () => {
   const [total, setTotal] = useState(0);
@@ -23,10 +22,15 @@ const CartScreen = () => {
   };
 
   const totalPrice = () => {
-    const itemPrice = cart
-      .map((item) => item.price * item.quantity)
-      .reduce((prev, current) => prev + current);
-    setTotal(itemPrice);
+    console.log(cart === []);
+    if (cart.length === 0) {
+      setTotal(0);
+    } else {
+      const itemPrice = cart
+        .map((item) => item.price * item.quantity)
+        .reduce((prev, current) => prev + current);
+      setTotal(itemPrice.toFixed(2));
+    }
   };
 
   useEffect(() => {
@@ -36,7 +40,7 @@ const CartScreen = () => {
 
   return (
     <>
-      <PageBreadcrumb />
+      <Header />
       <div className='album'>
         <div className='container'>
           <div className='row'>
@@ -56,17 +60,10 @@ const CartScreen = () => {
                     {cart.map((product) => (
                       <CartItem key={product._id} product={product} />
                     ))}
-                    <div
-                      className='order_total offset-md-8'
-                      style={{ maxWidth: "fit-content" }}
-                    >
-                      <div className='order_total_content text-md-right'>
-                        <div className='order_total_title'>
-                          Order Summary (Subtotal):
-                        </div>
-                        <div className='order_total_amount'>{`$ ${total}`}</div>
-                      </div>
-                    </div>
+                    <OrderPriceSum
+                      text={"Order Summary (Subtotal):"}
+                      amount={total}
+                    />
                     <div className='cart_buttons'>
                       <Link to='/menu/all' className='button cart_button_clear'>
                         Continue Shopping
@@ -75,6 +72,7 @@ const CartScreen = () => {
                         type='button'
                         className='button cart_button_checkout'
                         onClick={handleCheckout}
+                        disabled={totalItem === 0}
                       >
                         Proceed to checkout
                       </button>

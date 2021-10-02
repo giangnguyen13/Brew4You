@@ -47,8 +47,7 @@ const SignUpScreen = () => {
   };
   return (
     <>
-      <PageBreadcrumb />
-      <div className='login-form card'>
+      <div className='login-form card mt-5'>
         <div className='card-body'>
           <form className='text-center' onSubmit={submitHandler}>
             <h1 className='h3 mb-3 fw-normal'>Create Account</h1>

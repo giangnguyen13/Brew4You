@@ -54,7 +54,7 @@ const ProductScreen = ({ loggedIn }) => {
       quantity: quantity,
       price: product.price,
       image: product.productImage,
-      drinkDetails: details,
+      productDetails: details,
     };
 
     if (cart === "" || cart === null) {

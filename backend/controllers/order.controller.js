@@ -38,7 +38,6 @@ const createOrder = asyncHandler(async (req, res) => {
 const getOrderById = asyncHandler(async (req, res) => {
   try {
     const id = req.params.orderId;
-    console.log(id);
     const order = await Order.findById(id);
     res.json(order);
   } catch (error) {
