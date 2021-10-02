@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import Rating from "./Rating";
 import { Link } from "react-router-dom";
 
@@ -24,15 +24,15 @@ const Product = ({ product, isWishList }) => {
           </Link>
           <Rating rating={2.5} />
           <b style={{ fontSize: "18px" }}>${price}</b>
-          {!isWishList &&  <div className='d-flex justify-content-center mt-1'>
+         <div className='d-flex justify-content-center mt-1'>
             <button
               id='addToWishListBtn'
               type='button'
               className='btn btn-primary'
             >
-              <i className='fas fa-heart'></i> Add to Wishlist
+              <i className='fas fa-heart'></i> {isWishList ? "Remove from Wishlist" : "Add to Wishlist"} 
             </button>
-          </div>}
+          </div>
         
         </div>
       </div>
