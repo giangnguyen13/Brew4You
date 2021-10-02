@@ -1,9 +1,6 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-
 import { register } from "../actions/userActions";
-import Header from "../components/Header";
-
 import Header from "../components/Header";
 
 const SignUpScreen = () => {

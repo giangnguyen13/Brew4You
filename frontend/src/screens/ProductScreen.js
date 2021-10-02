@@ -26,18 +26,18 @@ const ProductScreen = ({ loggedIn }) => {
         setTotal(response?.data?.product?.price);
         const attributes = response?.data?.product?.productAttributes;
         setProductAttributes(attributes);
+
+        // Assign default value for custom drink size
+        let details = [];
+        attributes.forEach((element) => {
+          details.push(element.displayText);
+          details.push(element.dropdownValues[0] ?? "");
+        });
+        setDrinkDetails(details);
       })
       .catch((err) => {
         alert(`An error occurred: ${err.message}`);
       });
-
-    // Assign default value for custom drink size
-    let details = [];
-    attributes.forEach((element) => {
-      details.push(element.displayText);
-      details.push(element.dropdownValues[0] ?? "");
-    });
-    setDrinkDetails(details);
   };
 
   const handleDrinkDetailsChange = (attributeName, value) => {

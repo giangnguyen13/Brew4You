@@ -11,7 +11,9 @@ import productAttributes from "./data/productAttributes.js";
 import User from "./models/user.model.js";
 import Product from "./models/product.model.js";
 import Staff from "./models/staff.model.js";
-import connectDB from "./config/db.js";
+import ProductAttribute from "./models/productAttribute.model.js";
+import Order from "./models/order.model.js";
+
 dotenv.config();
 /**
  * In case of issue with database
@@ -39,7 +41,7 @@ export const importData = async () => {
         productAttributes: attributes,
       };
     });
-    console.log(sampleProducts);
+
     await Product.insertMany(sampleProducts);
 
     console.log("Data imported");
@@ -60,6 +62,12 @@ export const destroyData = async () => {
     await User.deleteMany({})
       .then()
       .catch((e) => console.info(e.message));
+    await ProductAttribute.deleteMany({})
+      .then()
+      .catch((e) => console.info(e.message));
+    await Order.deleteMany({})
+      .then()
+      .catch((e) => console.info(e.message));
 
     console.log("Data destroyed");
   } catch (error) {
@@ -70,7 +78,9 @@ export const destroyData = async () => {
 
 if (process.argv[2] === "--d") {
   destroyData();
+  process.exit(1);
 }
 if (process.argv[2] === "--i") {
   importData();
+  process.exit(1);
 }
