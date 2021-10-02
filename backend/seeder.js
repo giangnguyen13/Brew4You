@@ -32,13 +32,19 @@ const importData = async () => {
 
     const staffUser = await Staff.insertMany(staffs);
     const creatorId = staffUser[0]._id;
+    let attributes = await ProductAttribute.insertMany(productAttributes);
+
+    attributes = attributes.map((item) => item._id);
 
     const sampleProducts = products.map((product) => {
-      return { ...product, updatedBy: creatorId };
+      return {
+        ...product,
+        updatedBy: creatorId,
+        productAttributes: attributes,
+      };
     });
 
     await Product.insertMany(sampleProducts);
-    await ProductAttribute.insertMany(productAttributes);
 
     console.log("Data imported");
     process.exit();

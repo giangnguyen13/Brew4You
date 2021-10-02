@@ -19,23 +19,17 @@ const getProducts = asyncHandler(async (req, res) => {
  * @access      Public
  */
 const getProductById = asyncHandler(async (req, res, next) => {
-  console.log("productId: ", req.params.productId);
-  const productAttributes = await ProductAttribute.find({});
-  await Product.findOne(
-    {
-      _id: req.params.productId,
-    },
-    (err, product) => {
+  const id = req.params.productId;
+  const product = await Product.findOne({ _id: id })
+    .populate("productAttributes")
+    .exec((err, product) => {
       if (err) {
         console.log(err);
         return next(err);
       } else {
-        // console.log(product);
-        // product.productAttributes = productAttributes.map((item) => item._id);
         res.status(200).json({ product });
       }
-    }
-  );
+    });
 });
 
 /**

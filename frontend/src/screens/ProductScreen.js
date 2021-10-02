@@ -10,24 +10,64 @@ import Session from "../sessionService";
 
 const ProductScreen = ({ loggedIn }) => {
   let cart = Session.getCart();
+  const [drinkDetails, setDrinkDetails] = useState([]);
   const [product, setProduct] = useState({});
+  const [productAttributes, setProductAttributes] = useState([]);
+  const [quantity, setQuantity] = useState(1);
+  const [total, setTotal] = useState(0);
   const { id } = useParams();
   const getProduct = async (id) => {
     const { data } = await axios.get(`/api/products/${id}`);
-    console.log(data);
     setProduct(data.product);
+    setTotal(data.product.price);
+    const attributes = data.product.productAttributes;
+    setProductAttributes(attributes);
+
+    // Assign default value for custom drink size
+    let details = [];
+    attributes.forEach((element) => {
+      details.push(element.displayText);
+      details.push(element.dropdownValues[0] ?? "");
+    });
+    setDrinkDetails(details);
+  };
+
+  const handleDrinkDetailsChange = (attributeName, value) => {
+    const attributeIndex = drinkDetails.indexOf(attributeName);
+    if (attributeIndex === -1) {
+      setDrinkDetails([...drinkDetails, attributeName, value]);
+    } else {
+      let newDetails = [...drinkDetails];
+      newDetails[attributeIndex + 1] = value;
+      setDrinkDetails(newDetails);
+    }
   };
 
   const handleAddToCart = () => {
-    console.log("Current cart: ", Session.getCart());
+    let details = [];
+    for (let index = 0; index < drinkDetails.length; index += 2) {
+      details.push(`${drinkDetails[index]}: ${drinkDetails[index + 1]}`);
+    }
+    const addedProduct = {
+      product: product._id,
+      name: product.name,
+      quantity: quantity,
+      price: product.price,
+      image: product.productImage,
+      drinkDetails: details,
+    };
+
     if (cart === "" || cart === null) {
       let initCart = [];
-      initCart.push(product);
+
+      initCart.push(addedProduct);
       Session.setCart(initCart);
     } else {
-      cart.push(product);
+      cart.push(addedProduct);
       Session.setCart(cart);
     }
+
+    console.log("Current cart: ", Session.getCart());
   };
 
   useEffect(() => {
@@ -98,7 +138,7 @@ const ProductScreen = ({ loggedIn }) => {
               <div className='col-sm-3'>
                 <b>Category</b>
               </div>
-              <div className='col-sm-9'>Coffee</div>
+              <div className='col-sm-9'>{product.category}</div>
             </div>
             <div className='row mb-2'>
               <div className='col-sm-3'>
@@ -110,90 +150,52 @@ const ProductScreen = ({ loggedIn }) => {
             <h3 className='mb-3'>Custom your drink</h3>
             <div className='row mb-2'>
               <div className='col-sm-12'>
-                <div className='form-floating my-3'>
-                  <select
-                    className='form-select'
-                    id='floatingSelect'
-                    aria-label='Floating label select example'
-                  >
-                    <option>Small</option>
-                    <option>Medium</option>
-                    <option>Large</option>
-                  </select>
-                  <label htmlFor='floatingSelect'>Drink Size</label>
-                </div>
-                <div className='form-floating my-3'>
-                  <select
-                    className='form-select '
-                    id='floatingSelect'
-                    aria-label='Floating label select example'
-                  >
-                    <option>Hot</option>
-                    <option>Warm</option>
-                    <option>100% Ice</option>
-                    <option>70% Ice</option>
-                    <option>50% Ice</option>
-                    <option>30% Ice</option>
-                    <option>0% Ice</option>
-                  </select>
-                  <label htmlFor='floatingSelect'>Ice Level</label>
-                </div>
-                <div className='form-floating my-3'>
-                  <select
-                    className='form-select'
-                    id='floatingSelect'
-                    aria-label='Floating label select example'
-                  >
-                    <option>100% Sugar</option>
-                    <option>70% Sugar</option>
-                    <option>50% Sugar</option>
-                    <option>30% Sugar</option>
-                    <option>0% Sugar</option>
-                  </select>
-                  <label htmlFor='floatingSelect'>Sweetness</label>
-                </div>
-                <div className='form-floating my-3'>
-                  <select
-                    className='form-select'
-                    id='floatingSelect'
-                    aria-label='Floating label select example'
-                  >
-                    <option>Black Tea</option>
-                    <option>Oolong Tea</option>
-                    <option>Green Tea</option>
-                  </select>
-                  <label htmlFor='floatingSelect'>Tea Base Choice</label>
-                </div>
-                <div className='form-floating my-3'>
-                  <select
-                    className='form-select'
-                    id='floatingSelect'
-                    aria-label='Floating label select example'
-                  >
-                    <option>None</option>
-                    <option>Pearl</option>
-                    <option>Sago</option>
-                    <option>Grass Jelly</option>
-                    <option>Aiyu Jelly </option>
-                    <option>Caramel Pudding</option>
-                    <option>Golden Jell</option>
-                    <option>Red Bean</option>
-                  </select>
-                  <label htmlFor='floatingSelect'>Topping (+$0.35)</label>
-                </div>
+                {productAttributes.map(
+                  ({ _id, displayText, dropdownValues }) => (
+                    <div className='form-floating my-3' key={_id}>
+                      <select
+                        className='form-select'
+                        id={_id}
+                        name={_id}
+                        aria-label='Floating label select example'
+                        onChange={(e) =>
+                          handleDrinkDetailsChange(displayText, e.target.value)
+                        }
+                      >
+                        {dropdownValues.map((value) => (
+                          <option key={value} value={value}>
+                            {value}
+                          </option>
+                        ))}
+                      </select>
+                      <label htmlFor={_id}>{displayText}</label>
+                    </div>
+                  )
+                )}
               </div>
             </div>
             <div className='row mb-2'>
               <div className='col-sm-12'>
                 <div className='d-flex justify-content-center mt-3'>
+                  <input
+                    type='number'
+                    min={1}
+                    step={1}
+                    id='quantity'
+                    name='quantity'
+                    value={quantity}
+                    onChange={(e) => {
+                      setQuantity(e.target.value);
+                      setTotal((e.target.value * product.price).toFixed(2));
+                    }}
+                  />
                   <button
                     id='addToCartBtn'
                     type='button'
                     className='btn btn-primary'
                     onClick={handleAddToCart}
                   >
-                    <i className='fas fa-shopping-cart'></i> Add -{" "}
-                    {`$${product.price}`}
+                    <i className='fas fa-shopping-cart'></i> Add - {`$${total}`}
                   </button>
                   &nbsp;
                   <button

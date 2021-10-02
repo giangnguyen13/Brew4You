@@ -1,27 +1,11 @@
 import mongoose from "mongoose";
-import constants from "./config/constants.js";
-
-const orderStatusSchema = mongoose.Schema(
-  {
-    stage: {
-      type: String,
-      required: true,
-      default: constants.ORDER_STAGE_CREATED,
-    },
-    order: {
-      type: mongoose.Schema.Types.ObjectId,
-      required: true,
-      ref: "Order",
-    },
-  },
-  { timestamps: true }
-);
+import constants from "../config/constants.js";
 
 const orderSchema = mongoose.Schema(
   {
     user: {
       type: mongoose.Schema.Types.ObjectId,
-      required: true,
+      required: false,
       ref: "User",
     },
     orderItems: [
@@ -35,37 +19,39 @@ const orderSchema = mongoose.Schema(
           required: true,
           ref: "Product",
         },
+        productDetails: [{ type: String, required: true }],
       },
     ],
     shippingAddress: {
-      address: { type: String, required: true },
-      city: { type: String, required: true },
-      postalCode: { type: String, required: true },
-      country: { type: String, required: true },
+      address: { type: String, default: "" },
+      city: { type: String, default: "" },
+      postalCode: { type: String, default: "" },
+      country: { type: String, default: "" },
     },
     itemsPrice: {
       type: Number,
-      required: true,
       default: 0.0,
     },
     taxPrice: {
       type: Number,
-      required: true,
       default: 0.0,
     },
     shippingPrice: {
       type: Number,
-      required: true,
       default: 0.0,
     },
     totalPrice: {
       type: Number,
-      required: true,
       default: 0.0,
     },
     // To log all the activity of the order
     // Example: when order is created, paid, processed, delivered, finished
-    orderStatus: [orderStatusSchema],
+    orderStatus: [
+      {
+        stage: { type: String, required: true },
+        actionAt: { type: Date, default: Date.now() },
+      },
+    ],
   },
   {
     timestamps: true,
