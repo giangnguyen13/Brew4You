@@ -1,39 +1,59 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
 import Product from "../components/Product";
 import Pagination from "../components/Pagination";
 import ProductFilter from "../components/ProductFilter";
-import { products } from "../data";
 import { useParams } from "react-router";
 import Header from "../components/Header";
+import { api } from "../services/api/config";
+import { END_POINTS } from "../services/api/endpoints";
+import { getLoggedUserProfile } from "../actions/userActions";
 
 
 
 const ProductListScreen = () => {
   const [filterBy, setFilterBy] = useState(null);
+  const [products, setProducts] = useState([]);
   const { s } = useParams(); //Params filter [Coffee, Tea, Breakfast, all]
+  
+  const _handleAddToWishlist = async (product) => {
+    const {_id} = await getLoggedUserProfile()
+
+    await api.put(END_POINTS.ADD_PRODUCT_WISHLIST, {
+      product,
+      user: _id
+    }).then(response => {
+      alert(JSON.stringify(response))
+    })
+  }
+
   const getProducts = async () => {
-    const { data } = await axios.get(`/api/products`);
-    console.log("List products: ", data);
+   await api.get(END_POINTS.GET_ALL_PRODUCTS).then(response => {
+     const products = response?.data?.products
+      setProducts(products)
+    }).catch(err => {
+      alert(err.message)
+    })
   };
 
   const searchFilterProducts = (product) => {
     const title = product.title.toLowerCase()
     const filter = filterBy.toLowerCase();
-    return product.type.includes(filter) || title.includes(filter)
+    return product.category.includes(filter) || title.includes(filter)
   }
 
   const categoryFilterProducts = (product) => {
-    return product.type.includes(s)
+     return product.category.includes(s)
   }
+
+  useEffect(() => {
+    getProducts();
+  }, []);
 
   useEffect(() => {
     setFilterBy();
   }, [s]);
 
-  useEffect(() => {
-    getProducts();
-  }, []);
+ 
 
   return (
     <>
@@ -52,7 +72,7 @@ const ProductListScreen = () => {
                   .filter(searchFilterProducts)
                   .map((product) => {
                     return(
-                      <Product product={product} key={product.productId} />
+                      <Product  product={product} key={product.productId} onClick={() => _handleAddToWishlist(product)} />
                     )
                   }
                   
@@ -61,11 +81,11 @@ const ProductListScreen = () => {
                   products
                   .filter(categoryFilterProducts)
                   .map((product) => (
-                    <Product product={product} key={product.productId} />
+                    <Product product={product} key={product.productId} onClick={() => _handleAddToWishlist(product)} />
                   ))
                   :  products
                   .map((product) => (
-                    <Product product={product} key={product.productId} />
+                    <Product product={product} key={product.productId} onClick={() => _handleAddToWishlist(product)}/>
                   ))
 }
                   

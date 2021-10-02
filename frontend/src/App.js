@@ -20,6 +20,7 @@ import AboutUsScreen from "./screens/AboutUsScreen";
 import CartScreen from "./screens/CartScreen";
 import TrackingScreen from "./screens/TrackingScreen";
 import ProfileScreen from "./screens/ProfileScreen";
+import WishListScreen from "./screens/WishListScreen";
 
 function App() {
   const [loggedIn, setLoggedIn] = useState(isAuthenticated());
@@ -39,6 +40,9 @@ function App() {
             <Route path='/products/:id' component={() => ProductScreen(loggedIn)}/>
             <Route path='/login' exact component={LoginScreen} />
             <Route path='/signup' exact component={SignUpScreen} />
+            <Route path='/wishlist' exact>
+            {loggedIn ? <WishListScreen /> : <Redirect to='/login' />}
+            </Route>
             <Route path='/profile' exact>
               {loggedIn ? <ProfileScreen /> : <Redirect to='/login' />}
             </Route>
