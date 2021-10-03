@@ -1,28 +1,32 @@
 export const END_POINTS = {
-    /* PRODUCT ROUTE */
-    // GET
-    GET_ALL_PRODUCTS: '/products',
+  /* PRODUCT ROUTE */
+  // GET
+  GET_ALL_PRODUCTS: "/products",
 
-    GET_PRODUCT_BY_ID: '/products',
-    
-    // POST
-    CREATE_PRODUCT:'/products',
+  GET_PRODUCT_BY_ID: "/products",
 
-    // PUT
-    UPDATE_PRODUCT_BY_ID : '/products',
+  // POST
+  CREATE_PRODUCT: "/products",
 
-    // DELETE
-    DELETE_PRODUCT_BY_ID: '/products',
+  // PUT
+  UPDATE_PRODUCT_BY_ID: "/products",
 
+  // DELETE
+  DELETE_PRODUCT_BY_ID: "/products",
 
+  /* USER ROUTE */
 
-    /* USER ROUTE */
+  //GET
+  GET_USER_WISHLIST: "/user/wishlist",
+  //PUT
+  ADD_PRODUCT_WISHLIST: "/user/wishlist",
+  //DELETE
+  DELETE_PRODUCT_WISHLIST: "/user/wishlist",
 
-    //GET
-    GET_USER_WISHLIST: '/user/wishlist',
-    //PUT
-    ADD_PRODUCT_WISHLIST: '/user/wishlist',
-    //DELETE
-    DELETE_PRODUCT_WISHLIST: '/user/wishlist'
-    
-}
+  /* LOGIN ROUTE */
+  POST_USER_LOGIN: "/user/login",
+  POST_USER_SIGNUP: "/user",
+
+  /* USER PROFILE ROUTE */
+  GET_USER_PROFILE: "/user/profile",
+};
