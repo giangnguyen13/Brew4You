@@ -11,7 +11,7 @@ export const login = async (email, password) => {
     };
 
     const { data } = await api.post(
-      END_POINTS.USER_LOGIN,
+      END_POINTS.POST_USER_LOGIN,
       {
         email,
         password,
@@ -38,7 +38,8 @@ export const register = async (user) => {
       },
     };
 
-    const { data } = await api.post("/user", user, config);
+
+    const { data } = await api.post(END_POINTS.POST_USER_SIGNUP, user, config);
 
     localStorage.setItem("userInfo", JSON.stringify(data));
 
@@ -50,9 +51,9 @@ export const register = async (user) => {
 
 export const getLoggedUserProfile = async () => {
   try {
-    const { data } = await api.get(`/user/profile`, user_config);
-    if(data){
-      return data;
+    const { data } = await api.get(END_POINTS.GET_USER_PROFILE, user_config);
+    if(data) {
+    return data
     }
     return null
   } catch (error) {
@@ -82,9 +83,9 @@ export const isAuthenticated = () => {
 };
 
 export const getToken = () => {
-  if(isAuthenticated()) {
+  if (isAuthenticated()) {
     const user = JSON.parse(localStorage.getItem("userInfo"));
-    return user.token
+    return user.token;
   }
-  return null
-}
+  return null;
+};

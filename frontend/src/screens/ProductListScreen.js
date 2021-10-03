@@ -10,6 +10,7 @@ import { getLoggedUserProfile } from "../actions/userActions";
 import { MdNotificationsActive } from "react-icons/md";
 import Toast from 'react-bootstrap/Toast'
 
+
 const ProductListScreen = () => {
   const [filterBy, setFilterBy] = useState(null);
   const [products, setProducts] = useState([]);
@@ -17,8 +18,9 @@ const ProductListScreen = () => {
   const [notification, setNotification] = useState()
 
   const { s } = useParams(); //Params filter [Coffee, Tea, Breakfast, all]
-  
+
   const _handleAddToWishlist = async (product) => {
+
     const {_id} = await getLoggedUserProfile() || {}
     if(_id) {
       await api.put(END_POINTS.ADD_PRODUCT_WISHLIST, {
@@ -45,23 +47,26 @@ const ProductListScreen = () => {
   }
 
   const getProducts = async () => {
-   await api.get(END_POINTS.GET_ALL_PRODUCTS).then(response => {
-     const products = response?.data?.products
-      setProducts(products)
-    }).catch(err => {
-      alert(err.message)
-    })
+    await api
+      .get(END_POINTS.GET_ALL_PRODUCTS)
+      .then((response) => {
+        const products = response?.data?.products;
+        setProducts(products);
+      })
+      .catch((err) => {
+        alert(err.message);
+      });
   };
 
   const searchFilterProducts = (product) => {
-    const title = product.title.toLowerCase()
+    const title = product.name.toLowerCase();
     const filter = filterBy.toLowerCase();
-    return product.category.includes(filter) || title.includes(filter)
-  }
+    return product.category.includes(filter) || title.includes(filter);
+  };
 
   const categoryFilterProducts = (product) => {
-     return product.category.includes(s)
-  }
+    return product.category.includes(s);
+  };
 
   useEffect(() => {
     getProducts();
@@ -70,8 +75,6 @@ const ProductListScreen = () => {
   useEffect(() => {
     setFilterBy();
   }, [s]);
-
- 
 
   return (
     <>
@@ -88,38 +91,36 @@ const ProductListScreen = () => {
             <div className='col-md-10'>
           
               <div className='row row-cols-1 row-cols-sm-2 row-cols-md-2 row-cols-lg-3 row-cols-xl-4 g-3'>
-                {filterBy ?
-                products
-                  .filter(searchFilterProducts)
-                  .map((product) => {
-                    return(
-                      <Product  product={product} key={product.productId} onClick={() => _handleAddToWishlist(product)} />
-                    )
-                  }
-                  
-                  ) :
-                  s !== "all" ?  
-                  products
-                  .filter(categoryFilterProducts)
-                  .map((product) => (
-                    <Product product={product} key={product.productId} onClick={() => _handleAddToWishlist(product)} />
-                  ))
-                  :  products
-                  .map((product) => (
-                    <Product product={product} key={product.productId} onClick={() => _handleAddToWishlist(product)}/>
-                  ))
-}
-                  
-            
+                {filterBy
+                  ? products.filter(searchFilterProducts).map((product) => {
+                      return (
+                        <Product
+                          product={product}
+                          key={product.productId}
+                          onClick={() => _handleAddToWishlist(product)}
+                        />
+                      );
+                    })
+                  : s !== "all"
+                  ? products
+                      .filter(categoryFilterProducts)
+                      .map((product) => (
+                        <Product
+                          product={product}
+                          key={product.productId}
+                          onClick={() => _handleAddToWishlist(product)}
+                        />
+                      ))
+                  : products.map((product) => (
+                      <Product
+                        product={product}
+                        key={product.productId}
+                        onClick={() => _handleAddToWishlist(product)}
+                      />
+                    ))}
               </div>
              
-                  {/* // <Alert  variant={notification.variant} onClose={() => setShouldDisplayNotification(!shouldDisplayNotification)}>
-                  //   {notification.message}
-                    
-                  //   {setTimeout(() => {
-                  //     setShouldDisplayNotification(!shouldDisplayNotification)
-                  //   }, 3000)}
-                  // </Alert>} */}
+  
                   
               <div className='row'>
                 <Pagination />

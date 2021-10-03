@@ -1,10 +1,7 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-
 import { register } from "../actions/userActions";
 import Header from "../components/Header";
-
-import PageBreadcrumb from "../components/PageBreadcrumb";
 
 const SignUpScreen = () => {
   const [passwordError, setPasswordError] = useState(false);
@@ -48,7 +45,7 @@ const SignUpScreen = () => {
   };
   return (
     <>
-    <Header/>
+      <Header />
       <div className='login-form card'>
         <div className='card-body'>
           <form className='text-center' onSubmit={submitHandler}>
