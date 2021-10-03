@@ -42,7 +42,7 @@ const WishListScreen = () => {
      {wishlist.length > 0 && <h1>You have {wishlist.length} items in your wishlist!</h1>} 
       <ListGroup>
     {wishlist.length > 0 ?
-            wishlist.map((product) => (<Product key={product._id} product={product} isWishList  onClick={() => removeFromWishList(product._id)} />))
+            wishlist.map((product) => (<Product style={{margin: 10}} key={product._id} product={product} isWishList  onClick={() => removeFromWishList(product._id)} />))
             : <h1><AiOutlineClear/> Looks Like Your Wishlist Is Empty  </h1>}
     </ListGroup>
     </>
