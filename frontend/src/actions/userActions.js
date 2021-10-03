@@ -38,6 +38,7 @@ export const register = async (user) => {
       },
     };
 
+
     const { data } = await api.post(END_POINTS.POST_USER_SIGNUP, user, config);
 
     localStorage.setItem("userInfo", JSON.stringify(data));
@@ -51,9 +52,13 @@ export const register = async (user) => {
 export const getLoggedUserProfile = async () => {
   try {
     const { data } = await api.get(END_POINTS.GET_USER_PROFILE, user_config);
-    return data;
+    if(data) {
+    return data
+    }
+    return null
   } catch (error) {
     console.log(error);
+    return null
   }
 };
 

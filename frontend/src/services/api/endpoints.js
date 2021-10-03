@@ -18,15 +18,12 @@ export const END_POINTS = {
 
   //GET
   GET_USER_WISHLIST: "/user/wishlist",
+    GET_USER_PROFILE: "/user/profile",
   //PUT
   ADD_PRODUCT_WISHLIST: "/user/wishlist",
   //DELETE
   DELETE_PRODUCT_WISHLIST: "/user/wishlist",
-
-  /* LOGIN ROUTE */
+ //POST
   POST_USER_LOGIN: "/user/login",
   POST_USER_SIGNUP: "/user",
-
-  /* USER PROFILE ROUTE */
-  GET_USER_PROFILE: "/user/profile",
 };

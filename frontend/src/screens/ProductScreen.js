@@ -8,6 +8,8 @@ import Session from "../sessionService";
 import { api } from "../services/api/config";
 import { END_POINTS } from "../services/api/endpoints";
 import { getLoggedUserProfile } from "../actions/userActions";
+import Toast from 'react-bootstrap/Toast'
+import { MdNotificationsActive } from "react-icons/md";
 
 const ProductScreen = ({ loggedIn }) => {
   let cart = Session.getCart();
@@ -17,6 +19,9 @@ const ProductScreen = ({ loggedIn }) => {
   const [quantity, setQuantity] = useState(1);
   const [total, setTotal] = useState(0);
   const { id } = useParams();
+  const [shouldDisplayNotification, setShouldDisplayNotification] = useState(false)
+  const [notification, setNotification] = useState()
+  // let cart = Session.getCart();
 
   const getProductById = async () => {
     await api
@@ -81,17 +86,43 @@ const ProductScreen = ({ loggedIn }) => {
   const _handleAddToWishlist = async () => {
     const { _id } = await getLoggedUserProfile();
 
-    await api
-      .put(END_POINTS.ADD_PRODUCT_WISHLIST, {
-        product,
-        user: _id,
-      })
-      .then((response) => {
-        // ENHANCEMENT: change to alert instead of browser alert
-        alert(JSON.stringify(response));
-      });
-  };
-
+ 
+    await api.put(END_POINTS.ADD_PRODUCT_WISHLIST, {
+      product,
+      user: _id
+    }).then(response => {
+      if(response?.data?.error && response?.data?.code === 400) {
+        setNotification({message: response?.data?.message, variant: 'danger'})
+        setShouldDisplayNotification(!shouldDisplayNotification)
+      }
+      else {
+        setNotification({message: 'Product Added To Your Wishlist!', variant: 'info'})
+        setShouldDisplayNotification(!shouldDisplayNotification)
+      }
+    }).catch(err => {
+      setNotification({message: err.message, variant: 'info'})
+      setShouldDisplayNotification(!shouldDisplayNotification)
+    })
+  }
+  // const handleAddToCart = () => {
+  //   //get current product by id
+  //   const product = products.find((item) => item.productId == id);
+  //   console.log(
+  //     "products ",
+  //     products.find((item) => item.productId == id)
+  //   );
+  //   //  const product = products[0];
+  //   console.log("Current cart: ", Session.getCart());
+  //   if (cart === "" || cart === null) {
+  //     let initCart = [];
+  //     initCart.push(product);
+  //     Session.setCart(initCart);
+  //   } else {
+  //     cart.push(product);
+  //     Session.setCart(cart);
+  //   }
+  // };
+  
   useEffect(() => {
     getProductById();
   }, []);
@@ -242,6 +273,18 @@ const ProductScreen = ({ loggedIn }) => {
           <h3>Customer Reviews</h3>
         </div>
       </div>
+      {notification && shouldDisplayNotification &&
+        <div style={{position: 'fixed', bottom: 10, right: 4}}>
+              <Toast  onClose={() => setShouldDisplayNotification(false)} show={shouldDisplayNotification} delay={3000} autohide>
+              <Toast.Header>
+              <MdNotificationsActive/>
+                <strong className="me-auto">Notification</strong>
+                <small>Now</small>
+              </Toast.Header>
+              <Toast.Body>{notification.message}</Toast.Body>
+            </Toast>
+            </div>
+           }
     </div>
   );
 };

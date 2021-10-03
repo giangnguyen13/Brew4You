@@ -2,11 +2,11 @@ import React from "react";
 import Rating from "./Rating";
 import { Link } from "react-router-dom";
 
-const Product = ({ product, isWishList, onClick }) => {
+const Product = ({ product, isWishList, onClick, style }) => {
   const { _id, title, price, image } = product;
 
   return (
-    <div className='col'>
+    <div className='col' style={style || {}}>
       <div className='card shadow-sm'>
         <Link to={`/products/${_id}`} className='product-list-link'>
           <div className='product-list-image'>

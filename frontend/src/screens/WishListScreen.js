@@ -7,6 +7,7 @@ import {getLoggedUserProfile} from '../actions/userActions'
 import Product from "../components/Product";
 import { getToken } from "../actions/userActions";
 import { user_config } from "../config/auth";
+import {AiOutlineClear} from 'react-icons/ai'
 
 const WishListScreen = () => {
     const [wishlist, setWishlist] = useState([])
@@ -38,9 +39,12 @@ const WishListScreen = () => {
   return (
     <>
       <Header />
+     {wishlist.length > 0 && <h1>You have {wishlist.length} items in your wishlist!</h1>} 
       <ListGroup>
-      {wishlist.map((product) => (<Product key={product._id} product={product} isWishList  onClick={() => removeFromWishList(product._id)}/>))}
-</ListGroup>
+    {wishlist.length > 0 ?
+            wishlist.map((product) => (<Product style={{margin: 10}} key={product._id} product={product} isWishList  onClick={() => removeFromWishList(product._id)} />))
+            : <h1><AiOutlineClear/> Looks Like Your Wishlist Is Empty  </h1>}
+    </ListGroup>
     </>
   );
 };
