@@ -7,7 +7,7 @@ const products = [
     image: "caffe_latte.png",
     rating: 0,
     numReviews: 0,
-    category: "coffee"
+    category: "coffee",
   },
   {
     title: "Iced Cold Brew",
@@ -17,8 +17,7 @@ const products = [
     image: "iced_brewed.png",
     rating: 0,
     numReviews: 0,
-    category: "coffee"
-
+    category: "coffee",
   },
   {
     title: "Iced Caramel Macchiato",
@@ -28,8 +27,7 @@ const products = [
     image: "iced_macchiato.png",
     rating: 0,
     numReviews: 0,
-    category: "coffee"
-
+    category: "coffee",
   },
   {
     title: "Brewed Iced Tea",
@@ -39,8 +37,7 @@ const products = [
     image: "ice_tea.png",
     rating: 0,
     numReviews: 0,
-    category: "tea"
-
+    category: "tea",
   },
   {
     title: "Espresso",
@@ -50,8 +47,7 @@ const products = [
     image: "espresso.png",
     rating: 0,
     numReviews: 0,
-    category: "coffee"
-
+    category: "coffee",
   },
   {
     title: "Iced Caffe Latte",
@@ -61,8 +57,7 @@ const products = [
     image: "ice-coffee.png",
     rating: 0,
     numReviews: 0,
-    category: "coffee"
-
+    category: "coffee",
   },
   {
     title: "Americano",
@@ -72,8 +67,7 @@ const products = [
     image: "americano.png",
     rating: 0,
     numReviews: 0,
-    category: "coffee"
-
+    category: "coffee",
   },
   {
     title: "Espresso Frappuccino",
@@ -83,8 +77,7 @@ const products = [
     image: "frappe.png",
     rating: 0,
     numReviews: 0,
-    category: "coffee"
-
+    category: "coffee",
   },
   {
     title: "Cappuccino",
@@ -94,8 +87,7 @@ const products = [
     image: "cappuccino.png",
     rating: 0,
     numReviews: 0,
-    category: "coffee"
-
+    category: "coffee",
   },
   {
     title: "Steeped Tea",
@@ -105,8 +97,7 @@ const products = [
     image: "steeped_tea.png",
     rating: 0,
     numReviews: 0,
-    category: "tea"
-
+    category: "tea",
   },
   {
     title: "Chai Latte",
@@ -116,8 +107,7 @@ const products = [
     image: "chai_latte.png",
     rating: 0,
     numReviews: 0,
-    category: "coffee"
-
+    category: "coffee",
   },
   {
     title: "Hot Chocolate",
@@ -127,8 +117,7 @@ const products = [
     image: "hot_chocolate.png",
     rating: 0,
     numReviews: 0,
-    category: "chocolate"
-
+    category: "chocolate",
   },
   {
     title: "White Hot Chocolate",
@@ -138,8 +127,7 @@ const products = [
     image: "white_chocolate.png",
     rating: 0,
     numReviews: 0,
-    category: "chocolate"
-
+    category: "chocolate",
   },
   {
     title: "Vanilla Bean Frappuccino",
@@ -149,8 +137,7 @@ const products = [
     image: "vanilla_frappe.png",
     rating: 0,
     numReviews: 0,
-    category: "frappuccino"
-
+    category: "frappuccino",
   },
   {
     title: "Flat White",
@@ -159,8 +146,7 @@ const products = [
     image: "flat_white.png",
     rating: 0,
     numReviews: 0,
-    category: "coffee"
-
+    category: "coffee",
   },
   {
     title: "Caffe Mocha",
@@ -170,8 +156,7 @@ const products = [
     image: "mocha.png",
     rating: 0,
     numReviews: 0,
-    category: "coffee"
-
+    category: "coffee",
   },
   {
     title: "Butter Croissant",
@@ -180,8 +165,7 @@ const products = [
     image: "croissant.png",
     rating: 0,
     numReviews: 0,
-    category: "breakfast"
-
+    category: "breakfast",
   },
   {
     title: "Banana Loaf",
@@ -190,8 +174,7 @@ const products = [
     image: "banana_loaf.png",
     rating: 0,
     numReviews: 0,
-    category: "breakfast"
-
+    category: "breakfast",
   },
   {
     title: "Double Chocolate Brownie",
@@ -201,8 +184,7 @@ const products = [
     image: "brownie.png",
     rating: 0,
     numReviews: 0,
-    category: "breakfast"
-
+    category: "breakfast",
   },
   {
     title: "Everything Bagel",
@@ -212,8 +194,7 @@ const products = [
     image: "bagel.png",
     rating: 0,
     numReviews: 0,
-    category: "breakfast"
-
+    category: "breakfast",
   },
   {
     title: "Ham & Cheddar Sandwich",
@@ -223,8 +204,7 @@ const products = [
     image: "sandwich.png",
     rating: 0,
     numReviews: 0,
-    category: "breakfast"
-
+    category: "breakfast",
   },
 ];
 
