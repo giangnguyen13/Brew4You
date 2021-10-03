@@ -136,7 +136,7 @@ $primary: #ab7a5f;
     }
     img {
       // height: 450px;
-      width: 650px;
+      width: 35rem;
       display: inline-block;
       cursor: zoom-in;
     }
@@ -266,7 +266,7 @@ $primary: #ab7a5f;
   }
 
   .cart_item_text span {
-    display: inline-block;
+    // display: inline-block;
     width: 20px;
     height: 20px;
     border-radius: 50%;
@@ -331,6 +331,7 @@ $primary: #ab7a5f;
     outline: none;
     cursor: pointer;
     margin-right: 26px;
+    text-decoration: none;
   }
 
   .cart_button_clear:hover {

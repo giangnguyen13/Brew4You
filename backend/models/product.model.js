@@ -14,7 +14,6 @@ const reviewSchema = mongoose.Schema(
   { timestamps: true }
 );
 
-
 const productSchema = mongoose.Schema(
   {
     updatedBy: {
@@ -25,7 +24,7 @@ const productSchema = mongoose.Schema(
     title: {
       type: String,
       required: true,
-      unique: true
+      unique: true,
     },
     image: {
       type: String,
@@ -35,6 +34,11 @@ const productSchema = mongoose.Schema(
       type: String,
       required: true,
     },
+    productImageThumbnails: [
+      {
+        type: String,
+      },
+    ],
     description: {
       type: String,
       required: true,
@@ -55,12 +59,17 @@ const productSchema = mongoose.Schema(
       required: true,
       default: 0,
     },
+    productAttributes: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "ProductAttribute",
+      },
+    ],
   },
   {
     timestamps: true,
   }
 );
-
 
 const Product = mongoose.model("Product", productSchema);
 

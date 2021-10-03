@@ -1,37 +1,47 @@
 import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import axios from "axios";
-import PageBreadcrumb from "../components/PageBreadcrumb";
-import Pagination from "../components/Pagination";
-import ProductFilter from "../components/ProductFilter";
+import Header from "../components/Header";
+import CartItem from "../components/CartItem";
 import Session from "../sessionService";
+import OrderPriceSum from "../components/OrderPriceSum";
 
-const ProductListScreen = () => {
-  const [products, setProducts] = useState([]);
+const CartScreen = () => {
   const [total, setTotal] = useState(0);
   const [cart, setCart] = useState(Session.getCart() ?? []);
+  const [totalItem, setTotalItem] = useState(0);
 
-  const getProducts = () => {
-    const list = cart.filter((item) => item !== null);
-    console.log("List in sesison storage: ", list);
-    setProducts(list);
+  const handleCheckout = async () => {
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    };
+    // return id of the created order
+    const { data } = await axios.post("/api/orders", cart, config);
+    window.location.href = `/checkout/${data}`;
   };
 
   const totalPrice = () => {
-    const sum = cart
-      .filter((item) => item !== null)
-      .map((item) => item.price)
-      .reduce((a, b) => a + b, 0);
-    setTotal(sum);
+    console.log(cart === []);
+    if (cart.length === 0) {
+      setTotal(0);
+    } else {
+      const itemPrice = cart
+        .map((item) => item.price * item.quantity)
+        .reduce((prev, current) => prev + current);
+      setTotal(itemPrice.toFixed(2));
+    }
   };
 
   useEffect(() => {
-    getProducts();
     totalPrice();
+    setTotalItem(cart.length);
   }, []);
 
   return (
     <>
-      <PageBreadcrumb />
+      <Header />
       <div className='album'>
         <div className='container'>
           <div className='row'>
@@ -41,87 +51,32 @@ const ProductListScreen = () => {
                   <div className='col-lg-10 offset-lg-1'>
                     <div className='cart_container'></div>
                     <div className='cart_title'>
-                      <small> 10 item(s) in your cart </small>
+                      <small>{`(${totalItem}) ${
+                        totalItem > 1 ? "items" : "item"
+                      } in your cart`}</small>
                     </div>
                     {/* To DO
                       Implement the design for mobile
                     */}
-                    {products.map((product) => (
-                      <div key={product.productId}>
-                        <div className='cart_items'>
-                          <ul className='cart_list'>
-                            <li className='cart_item clearfix'>
-                              <div className='cart_item_image'>
-                                <img
-                                  src={`../images/products-img/${product.productImage}`}
-                                  alt={product.title}
-                                />
-                              </div>
-                              <div className='cart_item_info d-flex flex-md-row flex-column justify-content-between'>
-                                <div className='cart_item_name cart_info_col'>
-                                  <div className='cart_item_title'>Name</div>
-                                  <div className='cart_item_text'>
-                                    {product.title}
-                                  </div>
-                                </div>
-                                <div className='cart_item_color cart_info_col'>
-                                  <div className='cart_item_title'>Details</div>
-                                  <div className='cart_item_text'>
-                                    <li>Size: Small</li>
-                                    <li>Ice: Hot</li>
-                                    <li>Sweetness: 100% Sugar</li>
-                                    <li>Tea Base: Oolong Tea</li>
-                                    <li>Topping: Caramel Pudding</li>
-                                  </div>
-                                </div>
-                                <div className='cart_item_quantity cart_info_col'>
-                                  <div className='cart_item_title'>
-                                    Quantity
-                                  </div>
-                                  <div className='cart_item_text'>1</div>
-                                </div>
-                                <div className='cart_item_price cart_info_col'>
-                                  <div className='cart_item_title'>Price</div>
-                                  <div className='cart_item_text'>₹22000</div>
-                                </div>
-                                <div className='cart_item_total cart_info_col'>
-                                  <div className='cart_item_title'>Total</div>
-                                  <div className='cart_item_text'>₹22000</div>
-                                </div>
-                                <div className='cart_item_total cart_info_col'>
-                                  <div className='cart_item_title'>&nbsp;</div>
-                                  <div className='cart_item_text'>
-                                    <button className='btn btn-sm'>
-                                      <i className='fas fa-trash'></i>
-                                    </button>
-                                  </div>
-                                </div>
-                              </div>
-                            </li>
-                          </ul>
-                        </div>
-                      </div>
+                    {cart.map((product) => (
+                      <CartItem key={product._id} product={product} />
                     ))}
-                    <div className='order_total'>
-                      <div className='order_total_content text-md-right'>
-                        <div className='order_total_title'>Order Summary:</div>
-                        <div className='order_total_amount'>₹22000</div>
-                      </div>
-                    </div>
+                    <OrderPriceSum
+                      text={"Order Summary (Subtotal):"}
+                      amount={total}
+                    />
                     <div className='cart_buttons'>
-                      {" "}
-                      <button
-                        type='button'
-                        className='button cart_button_clear'
-                      >
+                      <Link to='/menu/all' className='button cart_button_clear'>
                         Continue Shopping
-                      </button>{" "}
+                      </Link>
                       <button
                         type='button'
                         className='button cart_button_checkout'
+                        onClick={handleCheckout}
+                        disabled={totalItem === 0}
                       >
                         Proceed to checkout
-                      </button>{" "}
+                      </button>
                     </div>
                   </div>
                 </div>
@@ -134,4 +89,4 @@ const ProductListScreen = () => {
   );
 };
 
-export default ProductListScreen;
+export default CartScreen;
