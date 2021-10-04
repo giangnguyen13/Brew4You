@@ -4,7 +4,7 @@ import generateToken, { getExpiredTokenDate } from "../utils/generateToken.js";
 
 /**
  * @desc        Auth user & get token
- * @route       POST /api/users/login
+ * @route       POST /api/user/login
  * @access      Public
  */
 const authUser = asyncHandler(async (req, res) => {
@@ -37,17 +37,17 @@ const registerUser = asyncHandler(async (req, res) => {
   }
 
   const user = await User.create({
-    firstName: firstName,
-    lastName: lastName,
-    email: email,
-    password: password,
+    firstName,
+    lastName,
+    email,
+    password,
   });
 
   if (user) {
     res.json({
-      firstName: firstName,
-      lastName: lastName,
-      email: email,
+      firstName,
+      lastName,
+      email,
       token: generateToken(user._id),
       expired: getExpiredTokenDate(),
     });
@@ -59,17 +59,19 @@ const registerUser = asyncHandler(async (req, res) => {
 
 /**
  * @desc        Get user profile
- * @route       GET /api/users/profile
+ * @route       GET /api/user/profile
  * @access      Private
  */
 const getUserProfile = asyncHandler(async (req, res) => {
   const user = await User.findById(req.user._id);
   if (user) {
+    const {firstName, lastName, email, _id, address} = user
     res.json({
-      firstName: user.firstName,
-      lastName: user.lastName,
-      email: user.email,
-      _id: user._id
+      firstName,
+      lastName,
+      email,
+      _id,
+      address
     });
   } else {
     res.status(404);
@@ -77,9 +79,34 @@ const getUserProfile = asyncHandler(async (req, res) => {
   }
 });
 
+
+/**
+ * @desc        Update user profile
+ * @route       PUT /api/user/profile
+ * @access      Private
+ */
+
+const updateUserProfile = asyncHandler(async (req, res) => {
+  const user = await User.findById(req.user._id)
+  if(user) {
+    const {profile} = req.body
+    await User.updateOne({_id: user._id}, {...profile}).then(response => {
+      res.json({error: false, message: 'profile updated', status: 200})
+    }).catch(err => {
+      console.log(`Error while trying to update user profile: ${err.message}`)
+    }) 
+  }
+  else {
+    res.status(401);
+    throw new Error("Unauthorized");
+  }
+
+})
+
+
 /**
  * @desc        Get user's wishlist
- * @route       GET /api/users/wishlist
+ * @route       GET /api/user/wishlist
  * @access      Private
  */
 
@@ -97,7 +124,7 @@ const getUserProfile = asyncHandler(async (req, res) => {
 
 /**
  * @desc        Add product to wishlist
- * @route       PUT /api/users/wishlist
+ * @route       PUT /api/user/wishlist
  * @access      Private
  */
 
@@ -123,7 +150,7 @@ const addProductToWishlist = asyncHandler(async (req, res) => {
 
   /**
  * @desc        Remove product fro wishlist
- * @route       DELETE /api/users/wishlist
+ * @route       DELETE /api/user/wishlist
  * @access      Private
  */
    const removeProductFromWishlist = asyncHandler(async (req, res) => {
@@ -147,4 +174,38 @@ const addProductToWishlist = asyncHandler(async (req, res) => {
   
   })
 
-export { authUser, registerUser, getUserProfile, addProductToWishlist, getUserWishlist, removeProductFromWishlist };
+  /**
+ * @desc        Update User password
+ * @route       patch /api/user/password
+ * @access      Private
+ */
+
+  const updateUserPassword = asyncHandler(async (req, res) => {
+    try {
+      const user = await User.findById(req.user._id);
+      if(user) {
+        const {password} = req.body
+        const {currentPassword, newPassword, confirmPassword} = password
+        if (await user.matchPassword(currentPassword) && newPassword === confirmPassword) {
+            user.password = newPassword
+            user.save()
+          res.json({
+            error: false,
+            message: 'Password updated',
+            code: 200
+          });
+        } else {
+          res.json({
+            error: true,
+            message: `Incorrect password`,
+            code: 401
+          }).status(401);
+        }
+      }
+      
+    } catch(err) {
+      console.log(err.message)
+    }
+  })
+
+export { authUser,updateUserPassword, registerUser, getUserProfile, updateUserProfile, addProductToWishlist, getUserWishlist, removeProductFromWishlist };

@@ -19,8 +19,12 @@ const ProductListScreen = () => {
 
   const { s } = useParams(); //Params filter [Coffee, Tea, Breakfast, all]
 
-  const _handleAddToWishlist = async (product) => {
+  const displayNotification = (message, variant) => {
+    setNotification({message, variant})
+    setShouldDisplayNotification(!shouldDisplayNotification)
+  }
 
+  const _handleAddToWishlist = async (product) => {
     const {_id} = await getLoggedUserProfile() || {}
     if(_id) {
       await api.put(END_POINTS.ADD_PRODUCT_WISHLIST, {
@@ -28,21 +32,18 @@ const ProductListScreen = () => {
         user: _id
       }).then(response => {
         if(response?.data?.error && response?.data?.code === 400) {
-          setNotification({message: response?.data?.message, variant: 'danger'})
-          setShouldDisplayNotification(!shouldDisplayNotification)
+          displayNotification(response?.data?.message, 'danger')
         }
         else {
-          setNotification({message: 'Product Added To Your Wishlist!', variant: 'info'})
-          setShouldDisplayNotification(!shouldDisplayNotification)
+          displayNotification('Product Added To Your Wishlist!', 'info')
         }
       }).catch(err => {
-        setNotification({message: err.message, variant: 'info'})
-        setShouldDisplayNotification(!shouldDisplayNotification)
+        displayNotification(err.message, 'danger')
+
       })
     }
     else{
-      alert("Please login to perform this action!")
-
+      displayNotification('Please login to perform this action!', 'danger')
     }
   }
 
@@ -136,7 +137,7 @@ const ProductListScreen = () => {
                 <strong className="me-auto">Notification</strong>
                 <small>Now</small>
               </Toast.Header>
-              <Toast.Body>{notification.message}</Toast.Body>
+              <Toast.Body className='text-white'>{notification.message}</Toast.Body>
             </Toast>
             </div>
            }

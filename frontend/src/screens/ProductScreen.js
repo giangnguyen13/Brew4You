@@ -21,7 +21,6 @@ const ProductScreen = ({ loggedIn }) => {
   const { id } = useParams();
   const [shouldDisplayNotification, setShouldDisplayNotification] = useState(false)
   const [notification, setNotification] = useState()
-  // let cart = Session.getCart();
 
   const getProductById = async () => {
     await api
@@ -55,7 +54,7 @@ const ProductScreen = ({ loggedIn }) => {
       setDrinkDetails(newDetails);
     }
   };
-  // ENHANCEMENT: notify user with alert when item is added to cart
+
   const handleAddToCart = () => {
     let details = [];
     for (let index = 0; index < drinkDetails.length; index += 2) {
@@ -72,56 +71,46 @@ const ProductScreen = ({ loggedIn }) => {
 
     if (cart === "" || cart === null) {
       let initCart = [];
-
       initCart.push(addedProduct);
       Session.setCart(initCart);
+      displayNotification(`${addedProduct.name} added to cart!`, 'info')
     } else {
       cart.push(addedProduct);
       Session.setCart(cart);
+      displayNotification(`${addedProduct.name} added to cart!`, 'info')
     }
 
     console.log("Current cart: ", Session.getCart());
   };
 
-  const _handleAddToWishlist = async () => {
-    const { _id } = await getLoggedUserProfile();
-
- 
-    await api.put(END_POINTS.ADD_PRODUCT_WISHLIST, {
-      product,
-      user: _id
-    }).then(response => {
-      if(response?.data?.error && response?.data?.code === 400) {
-        setNotification({message: response?.data?.message, variant: 'danger'})
-        setShouldDisplayNotification(!shouldDisplayNotification)
-      }
-      else {
-        setNotification({message: 'Product Added To Your Wishlist!', variant: 'info'})
-        setShouldDisplayNotification(!shouldDisplayNotification)
-      }
-    }).catch(err => {
-      setNotification({message: err.message, variant: 'info'})
-      setShouldDisplayNotification(!shouldDisplayNotification)
-    })
+  const displayNotification = (message, variant) => {
+    setNotification({message, variant})
+    setShouldDisplayNotification(!shouldDisplayNotification)
   }
-  // const handleAddToCart = () => {
-  //   //get current product by id
-  //   const product = products.find((item) => item.productId == id);
-  //   console.log(
-  //     "products ",
-  //     products.find((item) => item.productId == id)
-  //   );
-  //   //  const product = products[0];
-  //   console.log("Current cart: ", Session.getCart());
-  //   if (cart === "" || cart === null) {
-  //     let initCart = [];
-  //     initCart.push(product);
-  //     Session.setCart(initCart);
-  //   } else {
-  //     cart.push(product);
-  //     Session.setCart(cart);
-  //   }
-  // };
+
+  const _handleAddToWishlist = async () => {
+    const {_id} = await getLoggedUserProfile() || {}
+    if(_id) {
+      await api.put(END_POINTS.ADD_PRODUCT_WISHLIST, {
+        product,
+        user: _id
+      }).then(response => {
+        if(response?.data?.error && response?.data?.code === 400) {
+          displayNotification(response?.data?.message, 'danger')
+        }
+        else {
+          displayNotification('Product Added To Your Wishlist!', 'info')
+        }
+      }).catch(err => {
+        displayNotification(err.message, 'danger')
+
+      })
+    }
+   else {
+    displayNotification('Please login to perform this action!', 'danger')
+   }
+  }
+ 
   
   useEffect(() => {
     getProductById();
@@ -275,13 +264,13 @@ const ProductScreen = ({ loggedIn }) => {
       </div>
       {notification && shouldDisplayNotification &&
         <div style={{position: 'fixed', bottom: 10, right: 4}}>
-              <Toast  onClose={() => setShouldDisplayNotification(false)} show={shouldDisplayNotification} delay={3000} autohide>
+              <Toast  onClose={() => setShouldDisplayNotification(false)} show={shouldDisplayNotification} delay={3000} autohide bg={notification.variant}>
               <Toast.Header>
               <MdNotificationsActive/>
                 <strong className="me-auto">Notification</strong>
                 <small>Now</small>
               </Toast.Header>
-              <Toast.Body>{notification.message}</Toast.Body>
+              <Toast.Body className='text-white'>{notification.message}</Toast.Body>
             </Toast>
             </div>
            }
