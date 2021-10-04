@@ -1,43 +1,58 @@
-import React, { useEffect, useState } from "react";
-import PageBreadcrumb from "../components/PageBreadcrumb";
+import React, { useState } from "react";
+import formatDate from "../services/utils/formatDate";
+import { Link } from "react-router-dom";
+import Header from "../components/Header";
 import { FaCheckCircle } from "react-icons/fa";
-import ProgressBar from "react-bootstrap/ProgressBar";
+import { api } from "../services/api/config";
+import { END_POINTS } from "../services/api/endpoints";
 
 const ProductListScreen = () => {
   const [trackingOrder, setTrackingOrder] = useState("");
-  const [displayStatus, setDisplayStatus] = useState(false);
+  const [order, setOrder] = useState(null);
 
-  const handleTracking = () => {
+  const handleTracking = async (e) => {
+    e.preventDefault();
     //API call get status of tracking order
-
-    setDisplayStatus(true);
+    await api
+      .get(`${END_POINTS.GET_ORDER_BY_ID}/${trackingOrder}`)
+      .then((response) => {
+        if (!response?.data?.error) {
+          const data = response.data;
+          setOrder(data);
+          console.log(data.orderItems);
+        }
+      })
+      .catch((err) => {
+        setOrder(null);
+        console.log(err);
+      });
   };
 
   return (
     <>
-      <PageBreadcrumb />
-      <form class='form-inline' action=''>
-        <div class='row justify-content-center'>
-          <div class='col-3'>
+      <Header />
+      <form className='form-inline mb-3' onSubmit={handleTracking}>
+        <div className='row justify-content-left'>
+          <div className='col-md-3'>
             <input
               type='text'
               onChange={(event) => setTrackingOrder(event.target.value)}
               id='order_id'
-              class='form-control'
-              placeholder='Enter tracking number here'
+              className='form-control'
+              placeholder='Enter order number'
             />
           </div>
-          <div class='col-2'>
-            <a id='track_btn' class='btn btn-success' onClick={handleTracking}>
-              Track order
-            </a>
+          <div className='col-md-2'>
+            <button id='track_btn' className='btn btn-primary'>
+              View order detail
+            </button>
           </div>
         </div>
       </form>
-      {displayStatus && (
+      {order && (
         <>
-          <h4 style={{color: "#89624c"}}>Status Updates:</h4>
-          <table class='table table-bordered'>
+          <h4 style={{ color: "#89624c" }}>Order #{order._id}</h4>
+          <table className='table table-bordered'>
             <thead>
               <tr>
                 <th scope='col'>Action</th>
@@ -46,68 +61,50 @@ const ProductListScreen = () => {
               </tr>
             </thead>
             <tbody>
+              {order.orderStatus.map((status) => (
+                <tr key={status._id}>
+                  <td>{status.stage}</td>
+                  <td>
+                    <FaCheckCircle color='#50C878' />
+                  </td>
+                  <td>{formatDate(status.actionAt)}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+          <h4 className='mt-3'>Details</h4>
+          <table className='table' id='table02'>
+            <thead className='table-dark'>
               <tr>
-                <td>Delivered</td>
-                <td>
-                  {" "}
-                  <FaCheckCircle color='#50C878' />
-                </td>
-                <td>
-                  {new Date(Date.now() - 30 * 60 * 1000).toLocaleString(
-                    "en-US"
-                  )}
-                </td>
+                <th scope='col'>Items</th>
+                <th scope='col'>Quantity</th>
+                <th scope='col'>Unit Price</th>
               </tr>
-              <tr>
-                <td>Shipped</td>
-                <td>
-                  {" "}
-                  <FaCheckCircle color='#50C878' />
-                </td>
-                <td>
-                  {new Date(Date.now() - 20 * 60 * 1000).toLocaleString(
-                    "en-US"
-                  )}
-                </td>
-              </tr>
-              <tr>
-                <td>Ready</td>
-                <td>
-                  {" "}
-                  <FaCheckCircle color='#50C878' />
-                </td>
-                <td>
-                  {new Date(Date.now() - 10 * 60 * 1000).toLocaleString(
-                    "en-US"
-                  )}
-                </td>
-              </tr>
-              <tr>
-                <td>Ordered</td>
-                <td>Pending</td>
-                <td></td>
-              </tr>
+            </thead>
+            <tbody>
+              {order.orderItems.map((item) => (
+                <tr key={item._id}>
+                  <td>
+                    <Link
+                      style={{ textDecoration: "none" }}
+                      to={`product/${item.product}`}
+                    >
+                      {item.name}
+                    </Link>
+                    <ul>
+                      {item.productDetails.map((value, index) => (
+                        <li key={index}>{value}</li>
+                      ))}
+                    </ul>
+                  </td>
+                  <td>{item.quantity}</td>
+                  <td>{item.price}</td>
+                </tr>
+              ))}
             </tbody>
           </table>
         </>
       )}
-      <h4 style={{color: "#89624c"}}>Order History</h4>
-      <table class='table' id='table02'>
-        <thead class='table-dark'>
-          <tr>
-            <th scope='col'>Items</th>
-            <th scope='col'>Quantity</th>
-            <th scope='col'>Unit Price</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>Hot Chocolate, Latte</td>
-            <td>1</td>
-            <td>$34</td>
-          </tr>
-        </tbody>
-      </table>
     </>
   );
 };
