@@ -13,6 +13,7 @@ const authUser = asyncHandler(async (req, res) => {
   if (user && (await user.matchPassword(password))) {
     res.json({
       name: `${user.firstName} ${user.lastName}`,
+      address: user.address,
       token: generateToken(user._id),
       expired: getExpiredTokenDate(),
     });
@@ -63,6 +64,7 @@ const registerUser = asyncHandler(async (req, res) => {
  * @access      Private
  */
 const getUserProfile = asyncHandler(async (req, res) => {
+  console.log(`Incoming request: ${JSON.stringify(req.user)}`)
   const user = await User.findById(req.user._id);
   if (user) {
     const {firstName, lastName, email, _id, address} = user
@@ -72,7 +74,7 @@ const getUserProfile = asyncHandler(async (req, res) => {
       email,
       _id,
       address
-    });
+    }).status(200);
   } else {
     res.status(404);
     throw new Error("User not found");
@@ -204,6 +206,11 @@ const addProductToWishlist = asyncHandler(async (req, res) => {
       }
       
     } catch(err) {
+      res.json({
+        error: true,
+        message: err.message,
+        code: err.code
+      }).status(err.code);
       console.log(err.message)
     }
   })
