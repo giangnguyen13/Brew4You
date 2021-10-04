@@ -22,6 +22,7 @@ import TrackingScreen from "./screens/TrackingScreen";
 import ProfileScreen from "./screens/ProfileScreen";
 import CheckoutScreen from "./screens/CheckoutScreen";
 import WishListScreen from "./screens/WishListScreen";
+import SecurityScreen from "./screens/SecurityScreen";
 
 function App() {
   const [loggedIn, setLoggedIn] = useState(isAuthenticated());
@@ -50,6 +51,9 @@ function App() {
             </Route>
             <Route path='/profile' exact>
               {loggedIn ? <ProfileScreen /> : <Redirect to='/login' />}
+            </Route>
+            <Route path='/security' exact>
+              {loggedIn ? <SecurityScreen /> : <Redirect to='/login' />}
             </Route>
             <Route
               path='/forgot-password'

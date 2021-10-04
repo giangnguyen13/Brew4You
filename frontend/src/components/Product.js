@@ -10,12 +10,7 @@ const Product = ({ product, isWishList, onClick, style }) => {
       <div className='card shadow-sm'>
         <Link to={`/products/${_id}`} className='product-list-link'>
           <div className='product-list-image'>
-            {/* 
-            // Supposed to be like that when we host the img online
-            <img src={image} alt={title} /> 
-            for now, just use the hardcoded image path 
-            */}
-            <img src={`../images/products-img/${product.image}`} alt={title} />
+            <img src={image} alt={title} />
             <div className='middle'>
               <div className='text'>
                 <i className='fas fa-search'></i>

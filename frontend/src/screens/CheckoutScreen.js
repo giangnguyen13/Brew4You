@@ -6,11 +6,14 @@ import Header from "../components/Header";
 import CartItem from "../components/CartItem";
 import AddressForm from "../components/AddressForm";
 import OrderPriceSum from "../components/OrderPriceSum";
+import { getLoggedUserProfile } from "../actions/userActions";
 
 const CheckoutScreen = () => {
   const { id } = useParams();
   const [orderItems, setOrderItems] = useState([]);
   const [order, setOrder] = useState({});
+  const [address, setAddress] = useState({})
+  // const user = JSON.parse(localStorage.getItem("userInfo"))
 
   const handleCheckout = async (e) => {
     e.preventDefault();
@@ -25,6 +28,11 @@ const CheckoutScreen = () => {
 
   useEffect(() => {
     getOrder(id);
+    (async() => {
+      await getLoggedUserProfile().then(user => {
+       setAddress(user?.address)
+      })
+    })()
     // clear the session to prepare for new order
     sessionStorage.clear();
   }, []);
@@ -43,20 +51,20 @@ const CheckoutScreen = () => {
                     <div className='cart_title'>
                       <small>Review your order</small>
                     </div>
+                  
                     {/* To DO
                       Implement the design for mobile
                     */}
                     {orderItems.map((product) => (
                       <CartItem key={product._id} product={product} />
                     ))}
-                    <AddressForm></AddressForm>
+                    <AddressForm address={address || {}}/>
                     <OrderPriceSum
                       text={"Subtotal"}
                       amount={order.itemsPrice}
                     />
                     <OrderPriceSum text={"HST"} amount={order.taxPrice} />
-                    {/* might be we can do the Google API 
-                    to calculate the shipping cost based on distance ?? instead of fixed shipping cost */}
+          
                     <OrderPriceSum
                       text={"Shipping Cost"}
                       amount={order.shippingPrice}

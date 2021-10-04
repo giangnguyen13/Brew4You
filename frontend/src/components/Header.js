@@ -80,7 +80,8 @@ const Header = (props) => {
               <BsFillPersonFill size={25}/>
             }
           >
-            <Dropdown.Item href='/profile'>My Account</Dropdown.Item>
+            <Dropdown.Item href='/profile'>My Profile</Dropdown.Item>
+            <Dropdown.Item href='/security'>Security</Dropdown.Item>
             <Dropdown.Item href='/wishlist'>My Wish List</Dropdown.Item>
             <Dropdown.Divider />
             <Dropdown.Item onClick={handleLogout}>Logout</Dropdown.Item>
