@@ -20,7 +20,7 @@ const HomeScreen = () => {
                 cupping and testing our blends means consistently amazing
                 coffee, so your morning starts right every time.
               </p>
-              <Link to='/menu' className='btn btn-primary btn-lg'>
+              <Link to='/menu/all' className='btn btn-primary btn-lg'>
                 Shop Now
               </Link>
             </div>

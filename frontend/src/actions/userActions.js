@@ -29,7 +29,6 @@ export const login = async (email, password) => {
     console.log(error);
   }
 };
-
 export const register = async (user) => {
   try {
     const config = {

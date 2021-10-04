@@ -137,7 +137,7 @@ const ProductListScreen = () => {
                 <strong className="me-auto">Notification</strong>
                 <small>Now</small>
               </Toast.Header>
-              <Toast.Body>{notification.message}</Toast.Body>
+              <Toast.Body className='text-white'>{notification.message}</Toast.Body>
             </Toast>
             </div>
            }

@@ -18,9 +18,12 @@ export const END_POINTS = {
 
   //GET
   GET_USER_WISHLIST: "/user/wishlist",
-    GET_USER_PROFILE: "/user/profile",
+  GET_USER_PROFILE: "/user/profile",
   //PUT
   ADD_PRODUCT_WISHLIST: "/user/wishlist",
+  UPDATE_USER_PROFILE: "/user/profile",
+  UPDATE_USER_PASSWORD: "/user/profile/password",
+
   //DELETE
   DELETE_PRODUCT_WISHLIST: "/user/wishlist",
  //POST
