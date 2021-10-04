@@ -26,7 +26,10 @@ export const END_POINTS = {
 
   //DELETE
   DELETE_PRODUCT_WISHLIST: "/user/wishlist",
- //POST
+  //POST
   POST_USER_LOGIN: "/user/login",
   POST_USER_SIGNUP: "/user",
+
+  /* ORDER ROUTE */
+  GET_ORDER_BY_ID: "/orders",
 };
