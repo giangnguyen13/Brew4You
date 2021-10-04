@@ -9,6 +9,7 @@ import { END_POINTS } from "../services/api/endpoints";
 const ProductListScreen = () => {
   const [trackingOrder, setTrackingOrder] = useState("");
   const [order, setOrder] = useState(null);
+  const [orderFound, setOrderFound] = useState(true);
 
   const handleTracking = async (e) => {
     e.preventDefault();
@@ -18,12 +19,15 @@ const ProductListScreen = () => {
       .then((response) => {
         if (!response?.data?.error) {
           const data = response.data;
+          console.log(data);
           setOrder(data);
+          setOrderFound(true);
           console.log(data.orderItems);
         }
       })
       .catch((err) => {
         setOrder(null);
+        setOrderFound(false);
         console.log(err);
       });
   };
@@ -49,7 +53,12 @@ const ProductListScreen = () => {
           </div>
         </div>
       </form>
-      {order && (
+      {!orderFound && (
+        <h4 className='text-danger'>
+          Oops.! We cannot find the record in our system. Please try again.
+        </h4>
+      )}
+      {order !== null && (
         <>
           <h4 style={{ color: "#89624c" }}>Order #{order._id}</h4>
           <table className='table table-bordered'>
