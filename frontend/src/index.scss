@@ -339,17 +339,21 @@ $primary: #ab7a5f;
     color: #0e8ce4;
   }
 
+  
   .cart_button_checkout {
     display: inline-block;
     border: none;
     font-size: 18px;
     font-weight: 400;
-    line-height: 48px;
+    line-height: 28px;
     color: #ffffff;
     padding-left: 35px;
     padding-right: 35px;
     outline: none;
+    width: 35vh;
     cursor: pointer;
     vertical-align: top;
   }
+
+
 }

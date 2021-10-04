@@ -29,4 +29,10 @@ export const END_POINTS = {
  //POST
   POST_USER_LOGIN: "/user/login",
   POST_USER_SIGNUP: "/user",
+
+  /* STRIPE ROUTES */
+
+  //POST
+  CREATE_PAYMENT_INTENT: "/stripe/create-payment-intent"
 };
+

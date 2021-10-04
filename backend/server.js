@@ -6,6 +6,7 @@ import cors from "cors";
 import connectDB from "./config/db.js";
 import { notFound, errorHandler } from "./middleware/error.middleware.js";
 import productRoutes from "./routes/product.route.js";
+import StripeRoutes from './routes/stripe.route.js'
 import userRoutes from "./routes/user.route.js";
 import orderRoutes from "./routes/order.route.js";
 import { importData, destroyData } from "./seeder.js";
@@ -29,6 +30,7 @@ app.use(productRoutes);
 app.use(orderRoutes);
 
 app.use("/api/user", userRoutes);
+app.use("/api/stripe", StripeRoutes)
 // app.use("/api/orders", orderRoutes);
 // app.use("/api/upload", uploadRoutes);
 
