@@ -34,8 +34,9 @@ export const END_POINTS = {
 
   //POST
   CREATE_PAYMENT_INTENT: "/stripe/create-payment-intent",
-  
+
   /* ORDER ROUTE */
   GET_ORDER_BY_ID: "/orders",
+  UPDATE_ORDER_STATUS: '/orders'
 };
 

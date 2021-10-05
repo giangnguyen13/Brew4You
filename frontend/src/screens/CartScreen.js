@@ -5,6 +5,7 @@ import Header from "../components/Header";
 import CartItem from "../components/CartItem";
 import Session from "../sessionService";
 import OrderPriceSum from "../components/OrderPriceSum";
+import { user_config } from "../config/auth";
 
 const CartScreen = () => {
   const [total, setTotal] = useState(0);
@@ -12,13 +13,8 @@ const CartScreen = () => {
   const [totalItem, setTotalItem] = useState(0);
 
   const handleCheckout = async () => {
-    const config = {
-      headers: {
-        "Content-Type": "application/json",
-      },
-    };
     // return id of the created order
-    const { data } = await axios.post("/api/orders", cart, config);
+    const { data } = await axios.post("/api/orders", cart, user_config);
     window.location.href = `/checkout/${data}`;
   };
 

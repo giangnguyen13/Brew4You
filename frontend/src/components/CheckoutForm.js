@@ -87,9 +87,17 @@ const CheckoutForm = (props) => {
         setSucceeded(true);
         setShouldDisplayNotification(true)
         displayNotification(`Payment Succeeded`, 'success')
-        setTimeout( _ => {
-            window.location = `/track-order?oid=${order._id}`
-        },3000)
+        await api.patch(`${END_POINTS.UPDATE_ORDER_STATUS}/${order._id}?status=paid`, null, user_config).then(response => {
+            if(!response.data.error){
+                setTimeout( _ => {
+                    window.location = `/track-order?oid=${order._id}`
+                },3000)
+            }
+            else {
+                displayNotification(response.data.message, 'info')
+            }
+        })
+       
       }
     };
   
