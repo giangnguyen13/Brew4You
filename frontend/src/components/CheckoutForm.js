@@ -22,6 +22,7 @@ const CheckoutForm = (props) => {
     const [notification, setNotification] = useState()
     const stripe = useStripe();
     const elements = useElements();
+    const {order} = props
 
 
   const displayNotification = (message, variant) => {
@@ -31,7 +32,6 @@ const CheckoutForm = (props) => {
 
     useEffect(() => {
       (async () => {
-            const {order} = props
             if(order.totalPrice) {
                 await api.post(END_POINTS.CREATE_PAYMENT_INTENT, {amount: order.totalPrice }, user_config)
                 .then(response => {
@@ -70,25 +70,25 @@ const CheckoutForm = (props) => {
       ev.preventDefault();
       setProcessing(true);
   
-      const payload = await stripe.confirmCardPayment(clientSecret, {
+      const response = await stripe.confirmCardPayment(clientSecret, {
         payment_method: {
           card: elements.getElement(CardElement)
         }
       });
   
-      if (payload.error) {
-        setError(`Payment failed ${payload.error.message}`);
+      if (response.error ) {
+        setError(`Payment failed ${response.error.message}`);
         setShouldDisplayNotification(true)
         displayNotification(`Payment Failed`, 'danger')
         setProcessing(false);
-      } else {
+      } else if (response.paymentIntent && response.paymentIntent.status === 'succeeded') {
         setError(null);
         setProcessing(false);
         setSucceeded(true);
         setShouldDisplayNotification(true)
         displayNotification(`Payment Succeeded`, 'success')
         setTimeout( _ => {
-            window.location = '/track-order'
+            window.location = `/track-order?oid=${order._id}`
         },3000)
       }
     };

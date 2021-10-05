@@ -14,12 +14,6 @@ const CheckoutScreen = () => {
   const [orderItems, setOrderItems] = useState([]);
   const [order, setOrder] = useState({});
   const [address, setAddress] = useState({})
-  // const user = JSON.parse(localStorage.getItem("userInfo"))
-
-  const handleCheckout = async (e) => {
-    e.preventDefault();
-    console.log("payment screen");
-  };
 
   const getOrder = async (id) => {
     const { data } = await api.get(`/orders/${id}`);
@@ -80,17 +74,6 @@ const CheckoutScreen = () => {
                     <CheckoutForm order={order || {}}/>
 
                     </div>
-
-
-                    {/* <div className='cart_buttons'>
-                      <button
-                        type='button'
-                        className='button cart_button_checkout'
-                        onClick={handleCheckout}
-                      >
-                        Proceed to payment
-                      </button>
-                    </div> */}
                   </div>
                   
                 </div>

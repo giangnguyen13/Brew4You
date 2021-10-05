@@ -181,7 +181,7 @@ const ProfileScreen = () => {
                 <Col style={{ margin: "1rem" }}>
                   <button
                     type='button'
-                    class='btn btn-success btn-md'
+                    class='btn btn-success btn-md m-1'
                     onClick={_handleUpdateProfileInfo}
                   >
                     Save
