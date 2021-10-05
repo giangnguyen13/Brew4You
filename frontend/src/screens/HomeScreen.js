@@ -2,10 +2,12 @@ import React from "react";
 import { Link } from "react-router-dom";
 import frontPageImage from "../images/flat_white.png";
 import FeaturedProducts from "../components/FeaturedProducts";
+import Header from '../components/Header'
 
 const HomeScreen = () => {
   return (
     <div>
+      <Header/>
       <div className='p-5 mb-4 bg-light rounded-3'>
         <div className='container-fluid py-5'>
           <div className='row'>
@@ -18,7 +20,7 @@ const HomeScreen = () => {
                 cupping and testing our blends means consistently amazing
                 coffee, so your morning starts right every time.
               </p>
-              <Link to='/menu' className='btn btn-primary btn-lg'>
+              <Link to='/menu/all' className='btn btn-primary btn-lg'>
                 Shop Now
               </Link>
             </div>

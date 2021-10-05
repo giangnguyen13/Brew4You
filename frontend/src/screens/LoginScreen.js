@@ -1,9 +1,7 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-
 import { login } from "../actions/userActions";
-
-import PageBreadcrumb from "../components/PageBreadcrumb";
+import Header from "../components/Header";
 
 const LoginScreen = () => {
   const [errorMessage, setErrorMessage] = useState("");
@@ -23,8 +21,8 @@ const LoginScreen = () => {
   };
   return (
     <>
-      <PageBreadcrumb />
-      <div className='login-form card'>
+      <Header />
+      <div className='login-form card mt-5'>
         <div className='card-body'>
           <form className='text-center' onSubmit={submitHandler}>
             <h1 className='h3 mb-3 fw-normal'>Sign in</h1>
@@ -39,6 +37,7 @@ const LoginScreen = () => {
                 aria-label='example@example.com'
                 aria-describedby='email'
                 id='email'
+                required
                 name='email'
                 value={credential.email}
                 onChange={handleChange}
@@ -56,6 +55,7 @@ const LoginScreen = () => {
                 aria-describedby='password'
                 id='password'
                 name='password'
+                required
                 value={credential.password}
                 onChange={handleChange}
               />
