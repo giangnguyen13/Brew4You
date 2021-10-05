@@ -14,6 +14,9 @@ export const END_POINTS = {
   // DELETE
   DELETE_PRODUCT_BY_ID: "/products",
 
+  // DELETE
+  POST_PRODUCT_REVIEW: "/products",
+
   /* USER ROUTE */
 
   //GET
@@ -37,6 +40,5 @@ export const END_POINTS = {
 
   /* ORDER ROUTE */
   GET_ORDER_BY_ID: "/orders",
-  UPDATE_ORDER_STATUS: '/orders'
+  UPDATE_ORDER_STATUS: "/orders",
 };
-
