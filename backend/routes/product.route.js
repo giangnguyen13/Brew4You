@@ -1,15 +1,16 @@
-import express from 'express';
+import express from "express";
 
 import {
-    createProduct,
-    // createProductReview,
-    deleteProduct,
-    getProducts,
-    getProductById,
-    // getTopProducts,
-    updateProduct,
-} from '../controllers/product.controller.js';
-// import { protect, admin } from "../middlewares/authMiddleware.js";
+  createProduct,
+  // createProductReview,
+  deleteProduct,
+  getProducts,
+  getProductById,
+  // getTopProducts,
+  updateProduct,
+  createProductReview,
+} from "../controllers/product.controller.js";
+import { protect } from "../middleware/auth.middleware.js";
 
 const router = express.Router();
 
@@ -23,15 +24,19 @@ const router = express.Router();
 
 // router.route("/:id/reviews").post(protect, createProductReview);
 
+router
+  .route("/api/products")
+  .get(getProducts) // list products
+  .post(createProduct); // create a new product
 
-router.route('/api/products')
-  .get(getProducts)             // list products
-  .post(createProduct);       // create a new product
+router
+  .route("/api/products/:productId")
+  .get(getProductById) // get a product by its productId
+  .put(updateProduct) // update a product by its productId
+  .delete(deleteProduct); // delete a product by its productId
 
-
-router.route('/api/products/:productId')
-  .get(getProductById)        // get a product by its productId
-  .put(updateProduct)         // update a product by its productId
-  .delete(deleteProduct);     // delete a product by its productId
+router
+  .route("/api/products/:productId/review")
+  .post(protect, createProductReview);
 
 export default router;
