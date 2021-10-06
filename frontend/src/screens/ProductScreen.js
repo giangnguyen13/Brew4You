@@ -8,10 +8,11 @@ import Session from "../sessionService";
 import { api } from "../services/api/config";
 import { END_POINTS } from "../services/api/endpoints";
 import { getLoggedUserProfile } from "../actions/userActions";
-import Toast from 'react-bootstrap/Toast'
+import Toast from "react-bootstrap/Toast";
 import { MdNotificationsActive } from "react-icons/md";
+import ProductReviewItem from "../components/ProductReviewItem";
 
-const ProductScreen = ({ loggedIn }) => {
+const ProductScreen = (loggedIn) => {
   let cart = Session.getCart();
   const [drinkDetails, setDrinkDetails] = useState([]);
   const [product, setProduct] = useState({});
@@ -19,8 +20,9 @@ const ProductScreen = ({ loggedIn }) => {
   const [quantity, setQuantity] = useState(1);
   const [total, setTotal] = useState(0);
   const { id } = useParams();
-  const [shouldDisplayNotification, setShouldDisplayNotification] = useState(false)
-  const [notification, setNotification] = useState()
+  const [shouldDisplayNotification, setShouldDisplayNotification] =
+    useState(false);
+  const [notification, setNotification] = useState();
 
   const getProductById = async () => {
     await api
@@ -73,45 +75,44 @@ const ProductScreen = ({ loggedIn }) => {
       let initCart = [];
       initCart.push(addedProduct);
       Session.setCart(initCart);
-      displayNotification(`${addedProduct.name} added to cart!`, 'info')
+      displayNotification(`${addedProduct.name} added to cart!`, "info");
     } else {
       cart.push(addedProduct);
       Session.setCart(cart);
-      displayNotification(`${addedProduct.name} added to cart!`, 'info')
+      displayNotification(`${addedProduct.name} added to cart!`, "info");
     }
 
     console.log("Current cart: ", Session.getCart());
   };
 
   const displayNotification = (message, variant) => {
-    setNotification({message, variant})
-    setShouldDisplayNotification(!shouldDisplayNotification)
-  }
+    setNotification({ message, variant });
+    setShouldDisplayNotification(!shouldDisplayNotification);
+  };
 
   const _handleAddToWishlist = async () => {
-    const {_id} = await getLoggedUserProfile() || {}
-    if(_id) {
-      await api.put(END_POINTS.ADD_PRODUCT_WISHLIST, {
-        product,
-        user: _id
-      }).then(response => {
-        if(response?.data?.error && response?.data?.code === 400) {
-          displayNotification(response?.data?.message, 'danger')
-        }
-        else {
-          displayNotification('Product Added To Your Wishlist!', 'info')
-        }
-      }).catch(err => {
-        displayNotification(err.message, 'danger')
-
-      })
+    const { _id } = (await getLoggedUserProfile()) || {};
+    if (_id) {
+      await api
+        .put(END_POINTS.ADD_PRODUCT_WISHLIST, {
+          product,
+          user: _id,
+        })
+        .then((response) => {
+          if (response?.data?.error && response?.data?.code === 400) {
+            displayNotification(response?.data?.message, "danger");
+          } else {
+            displayNotification("Product Added To Your Wishlist!", "info");
+          }
+        })
+        .catch((err) => {
+          displayNotification(err.message, "danger");
+        });
+    } else {
+      displayNotification("Please login to perform this action!", "danger");
     }
-   else {
-    displayNotification('Please login to perform this action!', 'danger')
-   }
-  }
- 
-  
+  };
+
   useEffect(() => {
     getProductById();
   }, []);
@@ -164,7 +165,7 @@ const ProductScreen = ({ loggedIn }) => {
               </a>
             </div>
           </article>
-          <ProductReview loggedIn={loggedIn} />
+          <ProductReview loggedIn={loggedIn} productId={id} />
         </aside>
         <main className='col-md-6 border-left'>
           <article className='content-body'>
@@ -255,25 +256,39 @@ const ProductScreen = ({ loggedIn }) => {
         </main>
       </div>
       <div className='row mt-2'>
-        <div className='col-md-8 offset-md-2'>
+        <div className='col-md-12'>
           <hr />
         </div>
-        <div className='col-md-6 offset-md-3 text-center'>
-          <h3>Customer Reviews</h3>
+        <div className='col-md-6 offset-md-3'>
+          <h3 className='text-center'>Customer Reviews</h3>
+          <div className='review-block'>
+            {product.reviews &&
+              product.reviews.map((review) => (
+                <ProductReviewItem review={review} />
+              ))}
+          </div>
         </div>
       </div>
-      {notification && shouldDisplayNotification &&
-        <div style={{position: 'fixed', bottom: 10, right: 4}}>
-              <Toast  onClose={() => setShouldDisplayNotification(false)} show={shouldDisplayNotification} delay={3000} autohide bg={notification.variant}>
-              <Toast.Header>
-              <MdNotificationsActive/>
-                <strong className="me-auto">Notification</strong>
-                <small>Now</small>
-              </Toast.Header>
-              <Toast.Body className='text-white'>{notification.message}</Toast.Body>
-            </Toast>
-            </div>
-           }
+      {notification && shouldDisplayNotification && (
+        <div style={{ position: "fixed", bottom: 10, right: 4 }}>
+          <Toast
+            onClose={() => setShouldDisplayNotification(false)}
+            show={shouldDisplayNotification}
+            delay={3000}
+            autohide
+            bg={notification.variant}
+          >
+            <Toast.Header>
+              <MdNotificationsActive />
+              <strong className='me-auto'>Notification</strong>
+              <small>Now</small>
+            </Toast.Header>
+            <Toast.Body className='text-white'>
+              {notification.message}
+            </Toast.Body>
+          </Toast>
+        </div>
+      )}
     </div>
   );
 };
