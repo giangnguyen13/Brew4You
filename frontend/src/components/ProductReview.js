@@ -2,15 +2,20 @@ import React, { useState } from "react";
 import Message from "../components/Message";
 import { Link } from "react-router-dom";
 import { ListGroup, Button, Form } from "react-bootstrap";
+import { END_POINTS } from "../services/api/endpoints";
+import { api } from "../services/api/config";
+import { user_config } from "../config/auth";
 import constants from "../config/constants";
 
-const ProductReview = ({ loggedIn }) => {
+const ProductReview = ({ loggedIn, productId }) => {
   const [review, setReview] = useState({
-    userId: "",
+    user: "",
     rating: "",
     comment: "",
   });
-  const [customerReview, setCustomerReview] = useState(5);
+
+  const [error, setError] = useState("");
+  const [customerReview, setCustomerReview] = useState(0);
   const hoverRating = (value) => {
     setCustomerReview(value);
   };
@@ -26,9 +31,25 @@ const ProductReview = ({ loggedIn }) => {
     setReview({ ...review, rating: value });
   };
 
-  const submitHandler = (e) => {
+  const submitHandler = async (e) => {
     e.preventDefault();
-    console.log(review);
+    if (review.rating) {
+      await api
+        .post(
+          `${END_POINTS.POST_PRODUCT_REVIEW}/${productId}/review`,
+          review,
+          user_config
+        )
+        .then((response) => {
+          console.log(response?.data);
+          setError("");
+        })
+        .catch((err) => {
+          alert(err.message);
+        });
+    } else {
+      setError("Please provide your rating before submit the review");
+    }
   };
 
   return (
@@ -39,6 +60,11 @@ const ProductReview = ({ loggedIn }) => {
           <Form onSubmit={submitHandler}>
             <Form.Group className='comment-section'>
               <Form.Label htmlFor='rating'>Rating</Form.Label>
+              {error && (
+                <div className='alert alert-danger' role='alert'>
+                  {error}
+                </div>
+              )}
               <div className='my-3'>
                 {[1, 2, 3, 4, 5].map((value) => (
                   <button

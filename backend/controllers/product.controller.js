@@ -91,10 +91,42 @@ const createProduct = asyncHandler(async (req, res, next) => {
   });
 });
 
+/**
+ * @desc        Create a product review
+ * @route       POST /api/products/:productId/review
+ * @access      Private
+ */
+const createProductReview = asyncHandler(async (req, res, next) => {
+  let query = { _id: req.params.productId };
+  const product = await Product.findById(query);
+  if (product) {
+    let review = {
+      ...req.body,
+      user: req.user._id,
+      name: `${req.user.firstName} ${req.user.lastName}`,
+    };
+    product.reviews.push(review);
+
+    const numReviews = product.reviews.length;
+
+    product.numReviews = numReviews;
+
+    product.rating =
+      product.reviews.reduce((acc, item) => item.rating + acc, 0) / numReviews;
+
+    await product.save();
+    res.status(200).json({ message: "Review created" });
+  } else {
+    res.status(404);
+    throw new Error("Product not found");
+  }
+});
+
 export {
   getProducts,
   getProductById,
   updateProduct,
   deleteProduct,
   createProduct,
+  createProductReview,
 };
