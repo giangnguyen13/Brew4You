@@ -46,7 +46,38 @@ const login = asyncHandler(async (req, res) => {
         })
     }
 
-});
+}); 
+
+
+
+/**
+ * @desc        Add a new product
+ * @route       POST /api/admin/products
+ * @access      Private
+ */
+
+const addProduct = asyncHandler(async (req, res) => {
+    try{
+        if(req.user) {
+            const staff = await Staff.findById(req.user._id)
+            if(staff) {
+                const {title, description, price, category, image} = req.body
+                const newProduct = new Product({title, description, price: +price, category, image, updatedBy: staff})
+                await newProduct.save()
+                res.status(200).json({product: newProduct, success: true, code: 200})
+            }
+            else{
+                res.status(401).json({error: true, code: 401, message: 'Unauthorized'})
+
+            }
+          
+        }
+
+    }catch(err) {
+        res.status(500).json({error: true, code: 500, message: err.message})
+
+    }
+})
 
 /**
  * @desc        List all the products
@@ -82,5 +113,6 @@ const getProducts = asyncHandler(async (req, res) => {
 
 export {
     login,
-    getProducts
-};
+    getProducts,
+    addProduct
+}
