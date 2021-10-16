@@ -2,15 +2,21 @@
 import asyncHandler from "express-async-handler";
 import Product from "../models/product.model.js";
 import ProductAttribute from "../models/productAttribute.model.js";
-
+import Staff from '../models/staff.model.js'
 /**
  * @desc        Fetch all products
  * @route       GET /api/products
  * @access      Public
  */
 const getProducts = asyncHandler(async (req, res) => {
-  const products = await Product.find({});
-  res.status(200).json({ products });
+  try{
+    const products = await Product.find({});
+    res.status(200).json({ products, success: true });
+
+  } catch(err){
+    res.status(500).json({error: true, message: err.message, code: 500});
+  }
+
 });
 
 /**
@@ -19,17 +25,20 @@ const getProducts = asyncHandler(async (req, res) => {
  * @access      Public
  */
 const getProductById = asyncHandler(async (req, res, next) => {
-  const id = req.params.productId;
-  await Product.findOne({ _id: id })
-    .populate("productAttributes")
-    .exec((err, product) => {
-      if (err) {
-        console.log(err);
-        return next(err);
-      } else {
-        res.status(200).json({ product });
-      }
-    });
+  try {
+    const _id = req.params.productId;
+    const product = await Product.findOne({_id}).populate("productAttributes")
+    if(product) {
+      res.status(200).json({ product, success: true, code:200 });
+    }
+    else{
+      res.status(400).json({ message: "Couldn't find product with specified ID.", code: 400, error: true });
+
+    }
+  } catch (err) {
+    res.status(500).json({message: err.message, code: 500, error: true})
+  }
+
 });
 
 /**
@@ -38,21 +47,21 @@ const getProductById = asyncHandler(async (req, res, next) => {
  * @access      Private/admin`
  */
 const updateProduct = asyncHandler(async (req, res, next) => {
-  let query = { _id: req.params.productId };
-
-  await Product.findOneAndUpdate(
-    query,
-    req.body,
-    { new: true },
-    (err, product) => {
-      if (err) {
-        console.log(err);
-        return next(err);
-      } else {
-        res.status(200).json({ product });
-      }
+  try {
+    const staff = await Staff.findById(req.user._id)
+    if(staff) {
+      const _id = req.params.productId
+      const updatedProduct = await Product.findOneAndUpdate({_id}, req.body )
+      res.status(200).json({product: updatedProduct, success: true, code: 200})
+    } else {
+      res.status(401).json({error: true, message: 'Unauthorized', code: 401})
     }
-  );
+
+  } catch(err) {
+    console.log(err.message)
+    res.status(500).json({error: true, message: err.message, code: 500})
+  }
+
 });
 
 /**

@@ -32,7 +32,7 @@ router
 router
   .route("/api/products/:productId")
   .get(getProductById) // get a product by its productId
-  .put(updateProduct) // update a product by its productId
+  .put(protect, updateProduct) // update a product by its productId
   .delete(deleteProduct); // delete a product by its productId
 
 router
