@@ -55,7 +55,7 @@ describe('App', ()=> {
   it('should should show TrackCheckoutScreeningScreen', () => {
     expect(pathMap['/checkout/:id']).toBe(CheckoutScreen);
   });
-  //----
+
   it('should should show CheckoutScreen', () => {
     expect(pathMap['/checkout/:id']).toBe(CheckoutScreen);
   });
@@ -71,9 +71,4 @@ describe('App', ()=> {
   it('should should show ForgotPasswordScreen', () => {
     expect(pathMap['/forgot-password']).toBe(ForgotPasswordScreen);
   });
-
-  it('should should show ProfileScreen', () => {
-    expect(pathMap['/profile']).toBe(ProfileScreen);
-  });
-
 })
