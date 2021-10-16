@@ -1,21 +1,18 @@
-import React from 'react';
-import { render, screen } from '@testing-library/react';
-import { Route } from 'react-router-dom';
+import { render } from '@testing-library/react';
 import { shallow } from 'enzyme';
+import React from 'react';
+import { Route } from 'react-router-dom';
 import App from './App';
-import HomeScreen from "./screens/HomeScreen";
-import ProductListScreen from "./screens/ProductListScreen";
-import LoginScreen from "./screens/LoginScreen";
-import SignUpScreen from "./screens/SignUpScreen";
-import ForgotPasswordScreen from "./screens/ForgotPasswordScreen";
-import ProductScreen from "./screens/ProductScreen";
 import AboutUsScreen from "./screens/AboutUsScreen";
 import CartScreen from "./screens/CartScreen";
-import TrackingScreen from "./screens/TrackingScreen";
-import ProfileScreen from "./screens/ProfileScreen";
 import CheckoutScreen from "./screens/CheckoutScreen";
-import WishListScreen from "./screens/WishListScreen";
-import SecurityScreen from "./screens/SecurityScreen";
+import ForgotPasswordScreen from "./screens/ForgotPasswordScreen";
+import HomeScreen from "./screens/HomeScreen";
+import LoginScreen from "./screens/LoginScreen";
+import ProductListScreen from "./screens/ProductListScreen";
+import ProfileScreen from "./screens/ProfileScreen";
+import SignUpScreen from "./screens/SignUpScreen";
+import TrackingScreen from "./screens/TrackingScreen";
 
 let pathMap = {};
 describe('App', ()=> {
