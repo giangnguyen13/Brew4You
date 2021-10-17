@@ -1,10 +1,7 @@
-import { render } from '@testing-library/react';
 import { shallow } from 'enzyme';
 import React from 'react';
-import { Route } from 'react-router-dom';
-import CartScreen from './CartScreen';
-import axiosMock from 'axios'
 import Session from "../sessionService";
+import CartScreen from './CartScreen';
 
 jest.mock('axios');
 
