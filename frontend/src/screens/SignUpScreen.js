@@ -1,9 +1,7 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-
 import { register } from "../actions/userActions";
-
-import PageBreadcrumb from "../components/PageBreadcrumb";
+import Header from "../components/Header";
 
 const SignUpScreen = () => {
   const [passwordError, setPasswordError] = useState(false);
@@ -47,7 +45,7 @@ const SignUpScreen = () => {
   };
   return (
     <>
-      <PageBreadcrumb />
+      <Header />
       <div className='login-form card'>
         <div className='card-body'>
           <form className='text-center' onSubmit={submitHandler}>
@@ -59,6 +57,7 @@ const SignUpScreen = () => {
               <input
                 name='firstName'
                 onChange={handleChange}
+                required
                 type='text'
                 className='form-control'
                 placeholder='First Name'
@@ -69,6 +68,7 @@ const SignUpScreen = () => {
                 name='lastName'
                 onChange={handleChange}
                 type='text'
+                required
                 className='form-control'
                 placeholder='Last Name  '
                 aria-label='Last Name '
@@ -83,6 +83,7 @@ const SignUpScreen = () => {
                 type='email'
                 name='email'
                 onChange={handleChange}
+                required
                 className='form-control'
                 placeholder='example@example.com'
                 aria-label='example@example.com'
@@ -96,6 +97,7 @@ const SignUpScreen = () => {
               <input
                 type='password'
                 name='password'
+                required
                 onChange={handleChange}
                 className='form-control'
                 placeholder='Enter your password'
@@ -115,6 +117,7 @@ const SignUpScreen = () => {
                 name='confirmPassword'
                 onChange={handleChange}
                 className='form-control'
+                required
                 placeholder='Confirm your password'
                 aria-label='Confirm your password'
                 aria-describedby='password'

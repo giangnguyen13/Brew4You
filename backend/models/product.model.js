@@ -21,19 +21,24 @@ const productSchema = mongoose.Schema(
       required: true,
       ref: "Staff",
     },
-    name: {
+    title: {
+      type: String,
+      required: true,
+      unique: true,
+    },
+    image: {
       type: String,
       required: true,
     },
-    productImage: {
+    category: {
       type: String,
       required: true,
     },
-    // // do we need this?
-    // category: {
-    //   type: String,
-    //   required: true,
-    // },
+    productImageThumbnails: [
+      {
+        type: String,
+      },
+    ],
     description: {
       type: String,
       required: true,
@@ -46,14 +51,20 @@ const productSchema = mongoose.Schema(
     },
     rating: {
       type: Number,
-      required: true,
+      required: false,
       default: 0,
     },
     numReviews: {
       type: Number,
-      required: true,
+      required: false,
       default: 0,
     },
+    productAttributes: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "ProductAttribute",
+      },
+    ],
   },
   {
     timestamps: true,
