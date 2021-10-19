@@ -18,7 +18,11 @@ const ProductReviewItem = (props) => {
             <span>{name}</span>
           </div>
           <div className='review-block-date'>
-            Reviewed on {formatDate(updatedAt, "dddd, MMMM Do YYYY, HH:mm:ss")}
+            Reviewed on{" "}
+            {formatDate(
+              updatedAt ?? new Date().toISOString(),
+              "dddd, MMMM Do YYYY, HH:mm:ss"
+            )}
           </div>
         </div>
         <div className='col-md-8'>
