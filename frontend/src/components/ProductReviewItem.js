@@ -12,6 +12,7 @@ const ProductReviewItem = (props) => {
           <img
             src='https://styles.redditmedia.com/t5_ma1hc/styles/profileIcon_snoo4c2ce00a-2f6b-4615-ba78-23ada548a710-headshot.png'
             className='img-rounded'
+            alt={`avatar of ${name}`}
           />
           <div className='review-block-name'>
             <span>{name}</span>

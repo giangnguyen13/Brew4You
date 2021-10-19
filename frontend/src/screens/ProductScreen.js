@@ -14,6 +14,7 @@ import ProductReviewItem from "../components/ProductReviewItem";
 
 const ProductScreen = (loggedIn) => {
   let cart = Session.getCart();
+  const [isDesktop, setDesktop] = useState(window.innerWidth > 768);
   const [drinkDetails, setDrinkDetails] = useState([]);
   const [product, setProduct] = useState({});
   const [productAttributes, setProductAttributes] = useState([]);
@@ -112,10 +113,18 @@ const ProductScreen = (loggedIn) => {
       displayNotification("Please login to perform this action!", "danger");
     }
   };
+  const updateMedia = () => {
+    setDesktop(window.innerWidth > 1450);
+  };
 
   useEffect(() => {
     getProductById();
   }, []);
+
+  useEffect(() => {
+    window.addEventListener("resize", updateMedia);
+    return () => window.removeEventListener("resize", updateMedia);
+  });
 
   return (
     <div className='card' style={{ border: "none" }}>
@@ -221,6 +230,7 @@ const ProductScreen = (loggedIn) => {
               <div className='col-sm-12'>
                 <div className='d-flex justify-content-center mt-3'>
                   <input
+                    className='me-1'
                     type='number'
                     min={1}
                     step={1}
@@ -235,17 +245,18 @@ const ProductScreen = (loggedIn) => {
                   <button
                     id='addToCartBtn'
                     type='button'
-                    className='btn btn-primary'
+                    className={`btn btn-primary ${!isDesktop ? "btn-sm" : ""}`}
                     onClick={handleAddToCart}
                   >
-                    <i className='fas fa-shopping-cart'></i> Add - {`$${total}`}
+                    <i className='fas fa-shopping-cart'></i>
+                    {`${!isDesktop ? "" : " Add -"}`} {`$${total}`}
                   </button>
                   &nbsp;
                   <button
                     id='addToWishListBtn'
                     onClick={_handleAddToWishlist}
                     type='button'
-                    className='btn btn-primary'
+                    className={`btn btn-primary ${!isDesktop ? "btn-sm" : ""}`}
                   >
                     <i className='fas fa-heart'></i> Wishlist
                   </button>
@@ -256,12 +267,18 @@ const ProductScreen = (loggedIn) => {
         </main>
       </div>
       <div className='row mt-2'>
-        <div className='col-md-12'>
+        <div className='col-md-6 col-lg-4 offset-4'>
           <hr />
         </div>
         <div className='col-md-6 offset-md-3'>
           <h3 className='text-center'>Customer Reviews</h3>
           <div className='review-block'>
+            {product?.reviews?.length == 0 && (
+              <span>
+                There is no comment yet. Be the first customer to review this
+                product
+              </span>
+            )}
             {product.reviews &&
               product.reviews.map((review) => (
                 <ProductReviewItem review={review} />
