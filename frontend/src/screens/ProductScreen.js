@@ -183,7 +183,7 @@ const ProductScreen = (loggedIn) => {
               <Rating rating={3.8} totalReviews={139} />
             </div>
             <div className='mb-3'>
-              <h4>${product.price}</h4>
+              <h4>{`$${product.price}`}</h4>
             </div>
             <p>{product.description}</p>
             <div className='row mb-2'>
@@ -272,17 +272,23 @@ const ProductScreen = (loggedIn) => {
         </div>
         <div className='col-md-6 offset-md-3'>
           <h3 className='text-center'>Customer Reviews</h3>
-          <div className='review-block'>
+          <div
+            className={`review-block ${
+              product?.reviews?.length == 0 ? "text-center" : ""
+            }`}
+          >
             {product?.reviews?.length == 0 && (
-              <span>
+              <h5>
                 There is no comment yet. Be the first customer to review this
                 product
-              </span>
+              </h5>
             )}
             {product.reviews &&
-              product.reviews.map((review) => (
-                <ProductReviewItem review={review} />
-              ))}
+              product.reviews
+                .sort((a, b) => -a.updatedAt.localeCompare(b.updatedAt))
+                .map((review) => (
+                  <ProductReviewItem key={review._id} review={review} />
+                ))}
           </div>
         </div>
       </div>
