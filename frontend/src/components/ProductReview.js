@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import ReactDOMServer from "react-dom/server";
 import Message from "../components/Message";
 import { Link } from "react-router-dom";
 import { ListGroup, Button, Form } from "react-bootstrap";
@@ -6,6 +7,8 @@ import { END_POINTS } from "../services/api/endpoints";
 import { api } from "../services/api/config";
 import { user_config } from "../config/auth";
 import constants from "../config/constants";
+import handleLogin from "../services/utils/handleLogin";
+import ProductReviewItem from "./ProductReviewItem";
 
 const ProductReview = ({ loggedIn, productId }) => {
   const [review, setReview] = useState({
@@ -41,7 +44,15 @@ const ProductReview = ({ loggedIn, productId }) => {
           user_config
         )
         .then((response) => {
-          console.log(response?.data);
+          const review = response?.data;
+          const reactElement = React.createElement(ProductReviewItem, {
+            review: review,
+          });
+          const newHTML = ReactDOMServer.renderToString(reactElement);
+          document
+            .getElementsByClassName("review-block")[0]
+            .insertAdjacentHTML("afterbegin", newHTML);
+
           setError("");
         })
         .catch((err) => {
@@ -103,7 +114,11 @@ const ProductReview = ({ loggedIn, productId }) => {
           </Form>
         ) : (
           <Message>
-            Please <Link to='/login'>sign in</Link> to write your review
+            Please{" "}
+            <Link to='#' onClick={handleLogin}>
+              sign in
+            </Link>{" "}
+            to write your review
           </Message>
         )}
       </ListGroup.Item>
