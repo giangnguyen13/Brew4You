@@ -25,6 +25,6 @@ router.route('/wishlist')
 router.route("/profile")
 .get(protect, getUserProfile)
 .put(protect, updateUserProfile)
-router.route("/sendSubscriptionEmail")
-.post(protect, sendSubscriptionMail)
+router.route("/sendSubscriptionMail")
+.post(sendSubscriptionMail)
 export default router;
