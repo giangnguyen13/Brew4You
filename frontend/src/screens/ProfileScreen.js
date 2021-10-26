@@ -48,9 +48,11 @@ const ProfileScreen = () => {
         city,
         province,
         country,
+        subscribed
       } = formValues;
       const address = { street, postalCode, city, province, country };
-      const profile = { firstName, lastName, address };
+      const profile = { firstName, lastName, address, subscribed, email: formValues.email };
+   
       await api
         .put(END_POINTS.UPDATE_USER_PROFILE, { profile }, { ...user_config })
         .then((response) => {
@@ -73,6 +75,9 @@ const ProfileScreen = () => {
   const _handleCancelProfileUpdate = () => {
     setShouldDisplayProfileInfo(false);
   };
+  const handleSubscribe = (e) => {
+    setFormValues({ ...formValues, subscribed: e.target.checked });
+  }
   useEffect(() => {
     (async () => {
       const profile = await getLoggedUserProfile();
@@ -124,6 +129,11 @@ const ProfileScreen = () => {
                 <Col>
                   <Card.Text> Email </Card.Text>
                   <Form.Control placeholder={formValues.email} disabled />
+                </Col>
+              </Row>
+              <Row style={{margin: "5px 0px"}}>
+                <Col>
+                  <Card.Text><span><input type="checkbox" onChange={handleSubscribe} checked={formValues.subscribed}/></span> Subscribe to receive notifications from us</Card.Text>
                 </Col>
               </Row>
               <Row>
