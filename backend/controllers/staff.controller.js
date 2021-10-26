@@ -82,7 +82,7 @@ const addProduct = asyncHandler(async (req, res) => {
 /**
  * @desc        List all the products
  * @route       POST /api/admin/products
- * @access      Public
+ * @access      private
  */
 const getProducts = asyncHandler(async (req, res) => {
     try {
@@ -110,9 +110,88 @@ const getProducts = asyncHandler(async (req, res) => {
 
 });
 
+/**
+ * @desc        List all the staff
+ * @route       POST /api/admin/staff
+ * @access      private
+ */
+ const getStaff = asyncHandler(async (req, res) => {
+    try {
+        if (req.user) {
+            const staff = await Staff.find({}, {password: 0})
+            console.log(`Staff list: ${JSON.stringify(staff)}`)
+            res.status(200).json({
+                staff,
+                success: true,
+                code: 200
+            })
+        } else {
+            res.status(401).json({
+                error: true,
+                code: 401,
+                message: 'Unauthorized'
+            })
+        }
+    } catch (err) {
+        res.status(err.code || 500).json({
+            error: true,
+            status: err.code || 500,
+            message: err.message
+        })
+    }
+
+});
+
+/**
+ * @desc        Fetch staff by ID
+ * @route       GET /api/admin/:staffId
+ * @access      private
+ */
+ const getStaffById = asyncHandler(async (req, res, next) => {
+    try {
+      const _id = req.params.staffID;
+      const staff = await Staff.findOne({_id})
+      if(staff) {
+        res.status(200).json({ staff, success: true, code:200 });
+      }
+      else{
+        res.status(400).json({ message: "Couldn't find staff with specified ID.", code: 400, error: true });
+  
+      }
+    } catch (err) {
+      res.status(500).json({message: err.message, code: 500, error: true})
+    }
+  
+  });
+
+  /**
+ * @desc        Delete staff by ID
+ * @route       DELETE /api/admin/:staffId
+ * @access      private
+ */
+ const deleteStaffById = asyncHandler(async (req, res, next) => {
+    try {
+      const _id = req.params.staffID;
+      const staff = await Staff.deleteOne({_id})
+      if(staff) {
+        res.status(200).json({success: true, code:200, message: 'Staff deleted' });
+      }
+      else{
+        res.status(400).json({ message: "Couldn't find staff with specified ID.", code: 400, error: true });
+  
+      }
+    } catch (err) {
+      res.status(500).json({message: err.message, code: 500, error: true})
+    }
+  
+  });
+
 
 export {
     login,
     getProducts,
-    addProduct
+    addProduct,
+    getStaff,
+    getStaffById,
+    deleteStaffById
 }
