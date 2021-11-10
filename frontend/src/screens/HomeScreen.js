@@ -4,7 +4,6 @@ import frontPageImage from "../images/flat_white.png";
 import FeaturedProducts from "../components/FeaturedProducts";
 import Header from "../components/Header";
 import { isAuthenticated } from "../actions/userActions";
-import Header from '../components/Header';
 import { END_POINTS } from "../services/api/endpoints";
 import { api } from "../services/api/config";
 import Toast from "react-bootstrap/Toast";
@@ -112,6 +111,26 @@ const HomeScreen = () => {
         </div>
       </div>
       {isAuthenticated() && <FeaturedProducts />}
+      {notification && shouldDisplayNotification && (
+        <div style={{ position: "fixed", bottom: 10, right: 4 }}>
+          <Toast
+            onClose={() => setShouldDisplayNotification(false)}
+            show={shouldDisplayNotification}
+            delay={3000}
+            autohide
+            bg={notification.variant}
+          >
+            <Toast.Header>
+              <MdNotificationsActive />
+              <strong className='me-auto'>Notification</strong>
+              <small>Now</small>
+            </Toast.Header>
+            <Toast.Body className='text-white'>
+              {notification.message}
+            </Toast.Body>
+          </Toast>
+        </div>
+      )}
     </div>
   );
 };
