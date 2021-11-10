@@ -141,7 +141,7 @@ const ProductScreen = (loggedIn) => {
             <div className='img-big-wrap'>
               <a href='/home'>
                 <img
-                  src={`../images/products-img/${product.image}`}
+                  src={`${product.image}`}
                   alt={`${product.image}`}
                   className='mt-3'
                 />
@@ -149,28 +149,16 @@ const ProductScreen = (loggedIn) => {
             </div>
             <div className='thumbs-wrap'>
               <a href='/home' className='item-thumb'>
-                <img
-                  alt={`${product.image}`}
-                  src={`../images/products-img/${product.image}`}
-                />
+                <img alt={`${product.image}`} src={`${product.image}`} />
               </a>
               <a href='/home' className='item-thumb'>
-                <img
-                  alt={`${product.image}`}
-                  src={`../images/products-img/${product.image}`}
-                />
+                <img alt={`${product.image}`} src={`${product.image}`} />
               </a>
               <a href='/home' className='item-thumb'>
-                <img
-                  alt={`${product.image}`}
-                  src={`../images/products-img/${product.image}`}
-                />
+                <img alt={`${product.image}`} src={`${product.image}`} />
               </a>
               <a href='/home' className='item-thumb'>
-                <img
-                  alt={`${product.image}`}
-                  src={`../images/products-img/${product.image}`}
-                />
+                <img alt={`${product.image}`} src={`${product.image}`} />
               </a>
             </div>
           </article>

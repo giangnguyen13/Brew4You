@@ -2,6 +2,8 @@ import React, {useState} from "react";
 import { Link } from "react-router-dom";
 import frontPageImage from "../images/flat_white.png";
 import FeaturedProducts from "../components/FeaturedProducts";
+import Header from "../components/Header";
+import { isAuthenticated } from "../actions/userActions";
 import Header from '../components/Header';
 import { END_POINTS } from "../services/api/endpoints";
 import { api } from "../services/api/config";
@@ -9,6 +11,7 @@ import Toast from "react-bootstrap/Toast";
 import { MdNotificationsActive } from "react-icons/md";
 
 const HomeScreen = () => {
+  console.log(isAuthenticated());
   const [email, setEmail] = useState();
   const [shouldDisplayNotification, setShouldDisplayNotification] = useState(false);
   const [notification, setNotification] = useState();
@@ -37,7 +40,7 @@ const HomeScreen = () => {
 
   return (
     <div>
-      <Header/>
+      <Header />
       <div className='p-5 mb-4 bg-light rounded-3'>
         <div className='container-fluid py-5'>
           <div className='row'>
@@ -108,27 +111,7 @@ const HomeScreen = () => {
           </div>
         </div>
       </div>
-      <FeaturedProducts />
-      {notification && shouldDisplayNotification && (
-        <div style={{ position: "fixed", bottom: 10, right: 4 }}>
-          <Toast
-            onClose={() => setShouldDisplayNotification(false)}
-            show={shouldDisplayNotification}
-            delay={3000}
-            autohide
-            bg={notification.variant}
-          >
-            <Toast.Header>
-              <MdNotificationsActive />
-              <strong className='me-auto'>Notification</strong>
-              <small>Now</small>
-            </Toast.Header>
-            <Toast.Body className='text-white'>
-              {notification.message}
-            </Toast.Body>
-          </Toast>
-        </div>
-      )}
+      {isAuthenticated() && <FeaturedProducts />}
     </div>
   );
 };
