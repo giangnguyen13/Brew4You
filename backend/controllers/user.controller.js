@@ -151,7 +151,6 @@ const updateUserProfile = asyncHandler(async (req, res) => {
     res.status(401);
     throw new Error("Unauthorized");
   }
-
 })
 
 
@@ -309,20 +308,20 @@ const updateUserPassword = asyncHandler(async (req, res) => {
 
 /**
  * @desc        Send subscription
- * @route       patch /api/user/sendSubscriptionMail
+ * @route       patch /api/user/send-subscription-mail
  * @access      Private
  */
 
 const sendSubscriptionMail = asyncHandler(async (req, res) => {
+  const { email } = req.body
   try {
-    const user = await User.findById(req.user._id);
     sendGridMail.setApiKey(process.env.SENDGRID_APIKEY);
     const msg = {
-        to: user.email,
+        to: email,
         from: process.env.SENDGRID_NO_REPLY_EMAIL,
         subject: `Brew4You - Subscription`,
         dynamicTemplateData: {
-            userName: user.firstName
+            userName: email
         },
         templateId: process.env.SENDGRID_SUBSCRIPTION_TEMPLATE_ID
     };
