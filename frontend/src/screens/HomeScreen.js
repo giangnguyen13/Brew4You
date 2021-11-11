@@ -2,12 +2,14 @@ import React from "react";
 import { Link } from "react-router-dom";
 import frontPageImage from "../images/flat_white.png";
 import FeaturedProducts from "../components/FeaturedProducts";
-import Header from '../components/Header'
+import Header from "../components/Header";
+import { isAuthenticated } from "../actions/userActions";
 
 const HomeScreen = () => {
+  console.log(isAuthenticated());
   return (
     <div>
-      <Header/>
+      <Header />
       <div className='p-5 mb-4 bg-light rounded-3'>
         <div className='container-fluid py-5'>
           <div className='row'>
@@ -74,7 +76,7 @@ const HomeScreen = () => {
           </div>
         </div>
       </div>
-      <FeaturedProducts />
+      {isAuthenticated() && <FeaturedProducts />}
     </div>
   );
 };

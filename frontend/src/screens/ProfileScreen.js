@@ -91,7 +91,7 @@ const ProfileScreen = () => {
         {!shouldDisplayProfileInfo && (
           <button
             type='button'
-            class='btn btn-primary btn-md'
+            className='btn btn-primary btn-md'
             onClick={_handleDisplayProfileInfo}
           >
             Edit profile
@@ -181,14 +181,14 @@ const ProfileScreen = () => {
                 <Col style={{ margin: "1rem" }}>
                   <button
                     type='button'
-                    class='btn btn-success btn-md'
+                    className='btn btn-success btn-md m-1'
                     onClick={_handleUpdateProfileInfo}
                   >
                     Save
                   </button>
                   <button
                     type='button'
-                    class='btn btn-secondary btn-md m-1'
+                    className='btn btn-secondary btn-md m-1'
                     onClick={_handleCancelProfileUpdate}
                   >
                     Cancel

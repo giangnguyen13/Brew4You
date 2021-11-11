@@ -1,4 +1,5 @@
 import React from "react";
+import constants from "../config/constants";
 
 const StarRating = ({ rating }) => {
   const starRatingColor = "#fecf0a";
@@ -63,6 +64,10 @@ const StarRating = ({ rating }) => {
               : "far fa-star star-empty"
           }
         ></i>
+      </span>
+      <span className='fw-bold'>
+        {" "}
+        - {constants.PRODUCT_RATING[Math.round(rating)]}
       </span>
     </>
   );

@@ -14,6 +14,9 @@ export const END_POINTS = {
   // DELETE
   DELETE_PRODUCT_BY_ID: "/products",
 
+  // DELETE
+  POST_PRODUCT_REVIEW: "/products",
+
   /* USER ROUTE */
 
   //GET
@@ -30,6 +33,12 @@ export const END_POINTS = {
   POST_USER_LOGIN: "/user/login",
   POST_USER_SIGNUP: "/user",
 
+  /* STRIPE ROUTES */
+
+  //POST
+  CREATE_PAYMENT_INTENT: "/stripe/create-payment-intent",
+
   /* ORDER ROUTE */
   GET_ORDER_BY_ID: "/orders",
+  UPDATE_ORDER_STATUS: "/orders",
 };

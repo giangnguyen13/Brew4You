@@ -1,34 +1,29 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
-import PageBreadcrumb from "../components/PageBreadcrumb";
 import Header from "../components/Header";
 import CartItem from "../components/CartItem";
 import AddressForm from "../components/AddressForm";
 import OrderPriceSum from "../components/OrderPriceSum";
 import { getLoggedUserProfile } from "../actions/userActions";
-
+import CheckoutForm from "../components/CheckoutForm";
+import '../index.scss'
+import { api } from "../services/api/config";
 const CheckoutScreen = () => {
   const { id } = useParams();
   const [orderItems, setOrderItems] = useState([]);
   const [order, setOrder] = useState({});
   const [address, setAddress] = useState({})
-  // const user = JSON.parse(localStorage.getItem("userInfo"))
-
-  const handleCheckout = async (e) => {
-    e.preventDefault();
-    console.log("payment screen");
-  };
 
   const getOrder = async (id) => {
-    const { data } = await axios.get(`/api/orders/${id}`);
+    const { data } = await api.get(`/orders/${id}`);
     setOrder(data);
-    setOrderItems(data.orderItems);
+    setOrderItems(data?.orderItems || []);
   };
 
   useEffect(() => {
-    getOrder(id);
     (async() => {
+      await getOrder(id);
       await getLoggedUserProfile().then(user => {
        setAddress(user?.address)
       })
@@ -40,7 +35,9 @@ const CheckoutScreen = () => {
   return (
     <>
       <Header />
+
       <div className='album'>
+        
         <div className='container'>
           <div className='row'>
             <div className='cart_section'>
@@ -51,7 +48,7 @@ const CheckoutScreen = () => {
                     <div className='cart_title'>
                       <small>Review your order</small>
                     </div>
-                  
+
                     {/* To DO
                       Implement the design for mobile
                     */}
@@ -73,17 +70,14 @@ const CheckoutScreen = () => {
                       text={"Order Total"}
                       amount={order.totalPrice}
                     />
-                    <div className='cart_buttons'>
-                      <button
-                        type='button'
-                        className='button cart_button_checkout'
-                        onClick={handleCheckout}
-                      >
-                        Proceed to payment
-                      </button>
+                    <div style={{margin: '5rem 15rem'}}>
+                    <CheckoutForm order={order || {}}/>
+
                     </div>
                   </div>
+                  
                 </div>
+                
               </div>
             </div>
           </div>

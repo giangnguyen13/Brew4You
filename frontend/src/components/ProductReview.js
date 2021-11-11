@@ -1,16 +1,24 @@
 import React, { useState } from "react";
+import ReactDOMServer from "react-dom/server";
 import Message from "../components/Message";
 import { Link } from "react-router-dom";
 import { ListGroup, Button, Form } from "react-bootstrap";
+import { END_POINTS } from "../services/api/endpoints";
+import { api } from "../services/api/config";
+import { user_config } from "../config/auth";
 import constants from "../config/constants";
+import handleLogin from "../services/utils/handleLogin";
+import ProductReviewItem from "./ProductReviewItem";
 
-const ProductReview = ({ loggedIn }) => {
+const ProductReview = ({ loggedIn, productId }) => {
   const [review, setReview] = useState({
-    userId: "",
+    user: "",
     rating: "",
     comment: "",
   });
-  const [customerReview, setCustomerReview] = useState(5);
+
+  const [error, setError] = useState("");
+  const [customerReview, setCustomerReview] = useState(0);
   const hoverRating = (value) => {
     setCustomerReview(value);
   };
@@ -26,9 +34,33 @@ const ProductReview = ({ loggedIn }) => {
     setReview({ ...review, rating: value });
   };
 
-  const submitHandler = (e) => {
+  const submitHandler = async (e) => {
     e.preventDefault();
-    console.log(review);
+    if (review.rating) {
+      await api
+        .post(
+          `${END_POINTS.POST_PRODUCT_REVIEW}/${productId}/review`,
+          review,
+          user_config
+        )
+        .then((response) => {
+          const review = response?.data;
+          const reactElement = React.createElement(ProductReviewItem, {
+            review: review,
+          });
+          const newHTML = ReactDOMServer.renderToString(reactElement);
+          document
+            .getElementsByClassName("review-block")[0]
+            .insertAdjacentHTML("afterbegin", newHTML);
+
+          setError("");
+        })
+        .catch((err) => {
+          alert(err.message);
+        });
+    } else {
+      setError("Please provide your rating before submit the review");
+    }
   };
 
   return (
@@ -39,6 +71,11 @@ const ProductReview = ({ loggedIn }) => {
           <Form onSubmit={submitHandler}>
             <Form.Group className='comment-section'>
               <Form.Label htmlFor='rating'>Rating</Form.Label>
+              {error && (
+                <div className='alert alert-danger' role='alert'>
+                  {error}
+                </div>
+              )}
               <div className='my-3'>
                 {[1, 2, 3, 4, 5].map((value) => (
                   <button
@@ -77,7 +114,11 @@ const ProductReview = ({ loggedIn }) => {
           </Form>
         ) : (
           <Message>
-            Please <Link to='/login'>sign in</Link> to write your review
+            Please{" "}
+            <Link to='#' onClick={handleLogin}>
+              sign in
+            </Link>{" "}
+            to write your review
           </Message>
         )}
       </ListGroup.Item>

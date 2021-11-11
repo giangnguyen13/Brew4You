@@ -1,36 +1,51 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import formatDate from "../services/utils/formatDate";
 import { Link } from "react-router-dom";
+import { useParams } from "react-router";
 import Header from "../components/Header";
 import { FaCheckCircle } from "react-icons/fa";
 import { api } from "../services/api/config";
 import { END_POINTS } from "../services/api/endpoints";
 
-const ProductListScreen = () => {
+const ProductListScreen = (props) => {
   const [trackingOrder, setTrackingOrder] = useState("");
   const [order, setOrder] = useState(null);
   const [orderFound, setOrderFound] = useState(true);
+  const [orderID, setOrderID] = useState()
+
+  const getOrderTrackingInfo = async (id) => {
+ //API call get status of tracking order
+ await api
+ .get(`${END_POINTS.GET_ORDER_BY_ID}/${id}`)
+ .then((response) => {
+   if (!response?.data?.error) {
+     const data = response.data;
+     console.log(data);
+     setOrder(data);
+     setOrderFound(true);
+     console.log(data.orderItems);
+   }
+ })
+ .catch((err) => {
+   setOrder(null);
+   setOrderFound(false);
+   console.log(err);
+ });
+  }
 
   const handleTracking = async (e) => {
     e.preventDefault();
-    //API call get status of tracking order
-    await api
-      .get(`${END_POINTS.GET_ORDER_BY_ID}/${trackingOrder}`)
-      .then((response) => {
-        if (!response?.data?.error) {
-          const data = response.data;
-          console.log(data);
-          setOrder(data);
-          setOrderFound(true);
-          console.log(data.orderItems);
-        }
-      })
-      .catch((err) => {
-        setOrder(null);
-        setOrderFound(false);
-        console.log(err);
-      });
+   await getOrderTrackingInfo(trackingOrder)
   };
+
+  useEffect(() => {
+    (async () => {
+      if(props?.location?.search) {
+        const orderID = props.location.search.split("=")[1]
+        await getOrderTrackingInfo(orderID)
+      }
+    })()
+  },[])
 
   return (
     <>
