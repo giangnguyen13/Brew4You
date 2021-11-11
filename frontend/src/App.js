@@ -28,7 +28,7 @@ function App() {
   const [loggedIn, setLoggedIn] = useState(isAuthenticated());
   // Set up app name from ENV file
   useEffect(() => {
-    document.title = process.env.REACT_APP_WEBSITE_NAME;
+    document.title = "Brew4You";
   }, []);
   return (
     <Router>
