@@ -1,7 +1,8 @@
-import { shallow, mount } from 'enzyme';
+import { shallow } from 'enzyme';
 import React from 'react';
 import ProfileScreen from '../screens/ProfileScreen';
 const UserAction = require("../actions/userActions");
+jest.useFakeTimers();
 
 jest.mock('axios');
 describe('ProfileScreen', ()=> {

@@ -23,7 +23,7 @@ describe('CartScreen', ()=> {
   it('should calculate total price', () => {
     const addStub = jest.spyOn(Session, 'getCart').mockReturnValueOnce(mockCartData);
     let cartScreen = shallow(<CartScreen/>);
-    cartScreen.update();
+    // cartScreen.update();
     const cartItems = cartScreen.find('CartItem');
     expect(addStub).toHaveBeenCalled();
     expect(cartItems.length).toBe(2);

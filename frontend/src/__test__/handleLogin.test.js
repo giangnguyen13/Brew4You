@@ -8,7 +8,11 @@ describe('handleLogin', ()=> {
         origin: "https://example.com"
       }
     }));
-    handleLogin();
+    try{
+      handleLogin();
+    }catch(e){
+      // console.log(e);//debugging purpose
+    }
     expect(windowSpy).toHaveBeenCalled();
   })
 });
