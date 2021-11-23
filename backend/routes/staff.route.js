@@ -9,7 +9,8 @@ import {
     addProduct,
     getStaff,
     getStaffById,
-    deleteStaffById
+    deleteStaffById,
+    getOrders
 } from "../controllers/staff.controller.js";
 
 
@@ -26,5 +27,8 @@ router.route("/staff")
 router.route("/staff/:staffID")
          .get(protect, getStaffById)
          .delete(protect, deleteStaffById)
+
+router.route("/orders")
+         .get(protect, getOrders)
 
 export default router;
