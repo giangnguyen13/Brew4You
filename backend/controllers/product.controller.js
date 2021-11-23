@@ -72,19 +72,24 @@ const updateProduct = asyncHandler(async (req, res, next) => {
  * @route       DELETE /api/products/:productId
  * @access      Private/admin
  */
-const deleteProduct = asyncHandler(async (req, res, next) => {
-  let query = { _id: req.params.productId };
+ const deleteProduct = asyncHandler(async (req, res, next) => {
+  try {
 
-  await Product.findOneAndDelete(query, (err, product) => {
-    if (err) {
-      console.log(err);
-      return next(err);
-    } else {
-      console.log("product deleted");
-      res.status(200).json({ product });
+    const staff = await Staff.findById(req.user._id)
+    const _id = req.params.productId
+    if(staff) {
+        await Product.deleteOne({_id})
+        res.status(200).json({success: true, code:200, message: 'Product deleted'})
     }
-  });
+    else {
+      res.status(401).json({error: true, message : 'Unauthorized', code: 401})
+    }
+  } catch (err) {
+    res.status(500).json({error: true, message : err.message, code: 500})
+
+  }
 });
+
 
 /**
  * @desc        Create a product
