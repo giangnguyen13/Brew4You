@@ -3,6 +3,7 @@ import User from "../models/user.model.js";
 import generateToken, {
   getExpiredTokenDate
 } from "../utils/generateToken.js";
+import sendGridMail from '@sendgrid/mail';
 
 /**
  * @desc        Auth user & get token
@@ -287,6 +288,29 @@ const updateUserPassword = asyncHandler(async (req, res) => {
   }
 })
 
+const sendSubscriptionMail = asyncHandler(async (req, res) => {
+  try {
+  sendGridMail.setApiKey(process.env.SENDGRID_APIKEY);
+  const msg = {
+      to: "hanghenguyen@gmail.com",
+      from: process.env.SENDGRID_NO_REPLY_EMAIL,
+      subject: `Brew4You - Subscription`,
+      dynamicTemplateData: {
+          userName: "test email"
+      },
+      templateId: process.env.SENDGRID_SUBSCRIPTION_TEMPLATE_ID
+  };
+  sendGridMail.send(msg);
+  } catch (err) {
+    console.log("Error sending the email: " + err);
+    res.json({
+      error: true,
+      message: err.message,
+      code: err.code
+    }).status(err.code);
+  }
+})
+
 export {
   authUser,
   updateUserPassword,
@@ -295,5 +319,6 @@ export {
   updateUserProfile,
   addProductToWishlist,
   getUserWishlist,
-  removeProductFromWishlist
+  removeProductFromWishlist,
+  sendSubscriptionMail
 };

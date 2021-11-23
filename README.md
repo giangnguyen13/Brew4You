@@ -27,3 +27,10 @@ An website of Brew4You coffee shop that allows coffee lovers get the beloved dri
 If you have any other questions/concerns, post in in Microsoft Teams so all the team members can see it
 
 Only create pull request into `develop` branch, `master` branch is stable - workable code. Please branch off from `develop` only.
+
+## Test
+1. npm run test
+- Select f => run all tests
+npm test --runTestsByPath <path-to-file>
+- Single test case
+

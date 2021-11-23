@@ -26,6 +26,7 @@
   },
   "homepage": "https://github.com/giangnguyen13/Brew4You#readme",
   "dependencies": {
+    "@sendgrid/mail": "^7.5.0",
     "bcryptjs": "^2.4.3",
     "cors": "^2.8.5",
     "dotenv": "^8.2.0",

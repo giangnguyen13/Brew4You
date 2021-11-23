@@ -9,7 +9,8 @@ import {
   getUserWishlist,
   removeProductFromWishlist,
   updateUserProfile,
-  updateUserPassword
+  updateUserPassword,
+  sendSubscriptionMail
 } from "../controllers/user.controller.js";
 
 const router = express.Router();
@@ -24,5 +25,6 @@ router.route('/wishlist')
 router.route("/profile")
 .get(protect, getUserProfile)
 .put(protect, updateUserProfile)
-
+router.route("/sendSubscriptionEmail")
+.post(protect, sendSubscriptionMail)
 export default router;

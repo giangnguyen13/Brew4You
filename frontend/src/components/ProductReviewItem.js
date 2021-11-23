@@ -12,12 +12,17 @@ const ProductReviewItem = (props) => {
           <img
             src='https://styles.redditmedia.com/t5_ma1hc/styles/profileIcon_snoo4c2ce00a-2f6b-4615-ba78-23ada548a710-headshot.png'
             className='img-rounded'
+            alt={`avatar of ${name}`}
           />
           <div className='review-block-name'>
             <span>{name}</span>
           </div>
           <div className='review-block-date'>
-            Reviewed on {formatDate(updatedAt, "dddd, MMMM Do YYYY, HH:mm:ss")}
+            Reviewed on{" "}
+            {formatDate(
+              updatedAt ?? new Date().toISOString(),
+              "dddd, MMMM Do YYYY, HH:mm:ss"
+            )}
           </div>
         </div>
         <div className='col-md-8'>
