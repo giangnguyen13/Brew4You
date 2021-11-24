@@ -10,26 +10,26 @@ const Header = (props) => {
   const [isUserAuth, setIsUserAuth] = useState(isAuthenticated());
 
   const appLinks = [
-    {
-      id: 1,
-      url: "/",
-      displayText: "Home",
-    },
+    // {
+    //   id: 1,
+    //   url: "/",
+    //   displayText: "Home",
+    // },
     {
       id: 2,
       url: "/menu/all",
       displayText: "Menu",
     },
-    {
-      id: 3,
-      url: "/about",
-      displayText: "About Us",
-    },
-    {
-      id: 4,
-      url: "/track-order",
-      displayText: "Track Order",
-    },
+    // {
+    //   id: 3,
+    //   url: "/about",
+    //   displayText: "About Us",
+    // },
+    // {
+    //   id: 4,
+    //   url: "/track-order",
+    //   displayText: "Track Order",
+    // },
   ];
   const handleLogout = () => {
     logout();
@@ -43,7 +43,7 @@ const Header = (props) => {
       >
         <img width={40} height={40} src={logo} alt='App logo' />
         &nbsp;
-        <span className='fs-4'>Brew4You</span>
+        <span className='fs-4'>Stream Current</span>
       </a>
 
       <ul className='nav nav-pills' style={{ flexWrap: "nowrap" }}>
@@ -52,7 +52,7 @@ const Header = (props) => {
             <Link
               to={link.url}
               className={`nav-link mx-1 ${
-                link.url === window.location.pathname ? "active" : ""
+                link.url === window.location.pathname || true ? "active" : ""
               }`}
             >
               {link.displayText}

@@ -9,6 +9,10 @@ import { END_POINTS } from "../services/api/endpoints";
 import { getLoggedUserProfile } from "../actions/userActions";
 import { MdNotificationsActive } from "react-icons/md";
 import Toast from "react-bootstrap/Toast";
+import Video from "../components/Video";
+import { products1 } from "../data";
+import { videos } from "../data2";
+import axios from "axios";
 
 const ProductListScreen = () => {
   const [filterBy, setFilterBy] = useState(null);
@@ -70,7 +74,29 @@ const ProductListScreen = () => {
   };
 
   useEffect(() => {
-    getProducts();
+    axios
+      .create({
+        // baseURL: "http://127.0.0.1:5000/api",
+        timeout: 10000,
+        headers: {
+          "X-Requested-Width": "XMLHttpRequest",
+          "Content-Type": "application/json",
+        },
+      })
+      .get(
+        "http://lb-webapiwithpattern-1698811078.us-east-1.elb.amazonaws.com/api/videos"
+      )
+      .then(function (response) {
+        // handle success
+        const data = response.data;
+        setProducts(data);
+        console.log(data);
+      })
+      .catch(function (error) {
+        // handle error
+        setProducts(videos);
+        console.log(error);
+      });
   }, []);
 
   useEffect(() => {
@@ -88,34 +114,14 @@ const ProductListScreen = () => {
               <ProductFilter filter={setFilterBy} />
             </div>
             <div className='col-md-10'>
-              <div className='row row-cols-1 row-cols-sm-2 row-cols-md-2 row-cols-lg-3 row-cols-xl-4 g-3'>
-                {filterBy
-                  ? products.filter(searchFilterProducts).map((product) => {
-                      return (
-                        <Product
-                          product={product}
-                          key={product._id}
-                          onClick={() => _handleAddToWishlist(product)}
-                        />
-                      );
-                    })
-                  : s !== "all"
-                  ? products
-                      .filter(categoryFilterProducts)
-                      .map((product) => (
-                        <Product
-                          product={product}
-                          key={product._id}
-                          onClick={() => _handleAddToWishlist(product)}
-                        />
-                      ))
-                  : products.map((product) => (
-                      <Product
-                        product={product}
-                        key={product._id}
-                        onClick={() => _handleAddToWishlist(product)}
-                      />
-                    ))}
+              <div className='row row-cols-1 row-cols-sm-2 row-cols-md-2 row-cols-lg-2 row-cols-xl-2 g-3'>
+                {products.map((product) => (
+                  <Video
+                    video={product}
+                    key={product.VideoId}
+                    onClick={() => console.log("click")}
+                  />
+                ))}
               </div>
 
               <div className='row'>

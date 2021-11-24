@@ -5,9 +5,9 @@ import { Link } from "react-router-dom";
 const ProductFilter = (props) => {
   const [searchVal, setSearchVal] = useState(null);
 
-const _handleSearch = (e) => {
-  props.filter(searchVal)
-}
+  const _handleSearch = (e) => {
+    props.filter(searchVal);
+  };
 
   return (
     <>
@@ -30,27 +30,6 @@ const _handleSearch = (e) => {
           >
             <i className='fas fa-search'></i>
           </button>
-        </div>
-      </div>
-      <div className='card mb-2'>
-        <h5 className='card-title'>Category</h5>
-        <div className='list-group search-category'>
-          <Link
-            to='/menu/all'
-            className='list-group-item list-group-item-action active'
-            aria-current='true'
-          >
-            All
-          </Link>
-          <Link to='/menu/coffee' className='list-group-item list-group-item-action'>
-            Coffee
-          </Link>
-          <Link to='/menu/tea' className='list-group-item list-group-item-action'>
-            Tea
-          </Link>
-          <Link to='/menu/breakfast' className='list-group-item list-group-item-action'>
-            Breakfast
-          </Link>
         </div>
       </div>
       <div className='card mb-2'>
@@ -81,7 +60,10 @@ const _handleSearch = (e) => {
         </div>
       </div>
       <div className='d-grid gap-2 mb-2'>
-        <button className='btn btn-block btn-danger' onClick={() => props.filter(null)}>
+        <button
+          className='btn btn-block btn-danger'
+          onClick={() => props.filter(null)}
+        >
           Clear filter &nbsp;<i className='fas fa-trash-alt'></i>
         </button>
       </div>

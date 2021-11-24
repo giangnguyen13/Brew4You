@@ -60,7 +60,7 @@ function App() {
               exact
               component={ForgotPasswordScreen}
             />
-            <Route path='/' exact component={HomeScreen} />
+            <Route path='/' exact component={ProductListScreen} />
           </Switch>
         </Container>
       </main>
