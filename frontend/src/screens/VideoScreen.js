@@ -56,18 +56,21 @@ const VideoScreen = () => {
               <iframe
                 width='1080'
                 height='720'
-                // src='https://www.youtube.com/embed/MpYy6wwqxoo'
-                // https://www.youtube.com/watch?v=MpYy6wwqxoo
                 src={video.url?.replace("watch?v=", "embed/")}
-                title='YouTube video player'
+                title={video.title}
                 frameBorder='0'
                 allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture'
                 allowFullScreen
               ></iframe>
             </div>
           </article>
+          <article className='content-body'>
+            <h1 className='product-title'>{video.title}</h1>
+            <p>{video.description}</p>
+          </article>
           <ProductReview loggedIn={true} productId={video.videoId} />
         </aside>
+        <main className='col-md-6 border-left'></main>
       </div>
       <div className='row mt-2'>
         <div className='col-md-6 col-lg-4 offset-4'>

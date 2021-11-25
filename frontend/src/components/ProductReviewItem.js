@@ -46,7 +46,7 @@ const ProductReviewItem = (props) => {
         </div>
         <div className='col-md-8'>
           <div className='review-block-rate'>
-            <StarRating rating={3.5} />
+            {/* <StarRating rating={3.5} /> */}
             <span
               style={{ float: "right" }}
               className='mx-1'

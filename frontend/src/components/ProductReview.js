@@ -66,37 +66,15 @@ const ProductReview = ({ loggedIn, productId }) => {
   return (
     <ListGroup variant='flush'>
       <ListGroup.Item>
-        <h4>Write a Customer Review</h4>
+        <h4>Leave your comment about the video</h4>
         {loggedIn ? (
           <Form onSubmit={submitHandler}>
             <Form.Group className='comment-section'>
-              <Form.Label htmlFor='rating'>Rating</Form.Label>
               {error && (
                 <div className='alert alert-danger' role='alert'>
                   {error}
                 </div>
               )}
-              <div className='my-3'>
-                {[1, 2, 3, 4, 5].map((value) => (
-                  <button
-                    type='button'
-                    key={value}
-                    className='btn'
-                    onMouseOver={() => hoverRating(value)}
-                    onClick={() => handleRatingClick(value)}
-                  >
-                    <i
-                      style={{ color: "#fecf0a" }}
-                      className={`fa-star ${
-                        customerReview >= value
-                          ? "fas star-fill"
-                          : "far star-empty"
-                      }`}
-                    ></i>
-                  </button>
-                ))}
-                &nbsp;- {constants.PRODUCT_RATING[customerReview]}
-              </div>
             </Form.Group>
             <Form.Group className='comment-section'>
               <Form.Label htmlFor='comment'>Comment (optional)</Form.Label>

@@ -18,13 +18,13 @@ const Header = (props) => {
     {
       id: 2,
       url: "/menu/all",
-      displayText: "Menu",
+      displayText: "Videos List",
     },
-    // {
-    //   id: 3,
-    //   url: "/about",
-    //   displayText: "About Us",
-    // },
+    {
+      id: 3,
+      url: "/products/create",
+      displayText: "Upload Video",
+    },
     // {
     //   id: 4,
     //   url: "/track-order",

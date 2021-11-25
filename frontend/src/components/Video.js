@@ -42,7 +42,7 @@ const Video = ({ video, onClick, style }) => {
             <h6 className='text-center'>{title}</h6>
           </Link>
           {/* <Rating rating={averageRating} totalReviews={totalRatings} /> */}
-          <Rating />
+          {/* <Rating /> */}
           <div className='d-flex justify-content-center mt-1'>
             <a
               id='addToWishListBtn'
