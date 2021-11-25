@@ -13,10 +13,12 @@ import Video from "../components/Video";
 import { products1 } from "../data";
 import { videos } from "../data2";
 import axios from "axios";
+import Loader from "../components/Loader";
 
 const ProductListScreen = () => {
   const [filterBy, setFilterBy] = useState(null);
   const [products, setProducts] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
   const [shouldDisplayNotification, setShouldDisplayNotification] =
     useState(false);
   const [notification, setNotification] = useState();
@@ -74,6 +76,7 @@ const ProductListScreen = () => {
   };
 
   useEffect(() => {
+    setIsLoading(true);
     axios
       .create({
         // baseURL: "http://127.0.0.1:5000/api",
@@ -90,12 +93,13 @@ const ProductListScreen = () => {
         // handle success
         const data = response.data;
         setProducts(data);
-        console.log(data);
+        setIsLoading(false);
       })
       .catch(function (error) {
         // handle error
         setProducts(videos);
         console.log(error);
+        setIsLoading(false);
       });
   }, []);
 
@@ -115,15 +119,18 @@ const ProductListScreen = () => {
             </div>
             <div className='col-md-10'>
               <div className='row row-cols-1 row-cols-sm-2 row-cols-md-2 row-cols-lg-2 row-cols-xl-2 g-3'>
-                {products.map((product) => (
-                  <Video
-                    video={product}
-                    key={product.VideoId}
-                    onClick={() => console.log("click")}
-                  />
-                ))}
+                {isLoading ? (
+                  <Loader />
+                ) : (
+                  products.map((product) => (
+                    <Video
+                      video={product}
+                      key={product.videoId}
+                      onClick={() => console.log("click")}
+                    />
+                  ))
+                )}
               </div>
-
               <div className='row'>
                 <Pagination />
               </div>

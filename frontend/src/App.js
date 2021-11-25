@@ -23,6 +23,7 @@ import ProfileScreen from "./screens/ProfileScreen";
 import CheckoutScreen from "./screens/CheckoutScreen";
 import WishListScreen from "./screens/WishListScreen";
 import SecurityScreen from "./screens/SecurityScreen";
+import VideoScreen from "./screens/VideoScreen";
 
 function App() {
   const [loggedIn, setLoggedIn] = useState(isAuthenticated());
@@ -40,10 +41,11 @@ function App() {
             <Route path='/track-order' component={TrackingScreen} />
             <Route path='/carts' component={CartScreen} />
             <Route path='/checkout/:id' component={CheckoutScreen} />
-            <Route
+            {/* <Route
               path='/products/:id'
               component={() => ProductScreen(loggedIn)}
-            />
+            /> */}
+            <Route path='/products/:id' component={VideoScreen} />
             <Route path='/login' exact component={LoginScreen} />
             <Route path='/signup' exact component={SignUpScreen} />
             <Route path='/wishlist' exact>
