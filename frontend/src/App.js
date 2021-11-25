@@ -26,6 +26,7 @@ import SecurityScreen from "./screens/SecurityScreen";
 import VideoScreen from "./screens/VideoScreen";
 import VideoCreate from "./screens/VideoCreate";
 import VideoEdit from "./screens/VideoEdit";
+import EditCommentScreen from "./screens/EditCommentScreen";
 
 function App() {
   const [loggedIn, setLoggedIn] = useState(isAuthenticated());
@@ -49,6 +50,11 @@ function App() {
             /> */}
             <Route path='/products/create' component={VideoCreate} />
             <Route path='/products/:id' exact component={VideoScreen} />
+            <Route
+              path='/products/:id/comments/:commentId'
+              exact
+              component={EditCommentScreen}
+            />
             <Route path='/products/:id/edit' exact component={VideoEdit} />
             <Route path='/login' exact component={LoginScreen} />
             <Route path='/signup' exact component={SignUpScreen} />

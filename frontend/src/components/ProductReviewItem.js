@@ -4,7 +4,7 @@ import formatDate from "../services/utils/formatDate";
 import axios from "axios";
 
 const ProductReviewItem = (props) => {
-  // const { name, rating, comment, updatedAt } = props.review;
+  const { videoId, commentId, content, updatedAt } = props.review;
   const deleteComment = (videoId, commentId) => {
     let url = `http://lb-webapiwithpattern-1698811078.us-east-1.elb.amazonaws.com/api/videos/${videoId}/comments/${commentId}`;
     axios
@@ -24,6 +24,9 @@ const ProductReviewItem = (props) => {
         console.log(error);
       });
   };
+  const editComment = (videoId, commentId) => {
+    document.location.href = `/products/${videoId}/comments/${commentId}`;
+  };
   return (
     <>
       <div className='row'>
@@ -37,11 +40,10 @@ const ProductReviewItem = (props) => {
             <span>Anonymous</span>
           </div>
           <div className='review-block-date'>
-            Reviewed on 2021-11-11
-            {/* {formatDate(
+            {formatDate(
               updatedAt ?? new Date().toISOString(),
               "dddd, MMMM Do YYYY, HH:mm:ss"
-            )} */}
+            )}
           </div>
         </div>
         <div className='col-md-8'>
@@ -50,20 +52,20 @@ const ProductReviewItem = (props) => {
             <span
               style={{ float: "right" }}
               className='mx-1'
-              onClick={() => deleteComment(1, 2)}
+              onClick={() => deleteComment(videoId, commentId)}
             >
               <i className='fas fa-trash'></i>
             </span>
             <span
               style={{ float: "right" }}
               className='mx-1'
-              onClick={() => console.log("edit mode")}
+              onClick={() => editComment(videoId, commentId)}
             >
               <i className='fas fa-edit'></i>
             </span>
           </div>
           {/* <div className='float-left'>this was nice in buy</div> */}
-          <p className='review-block-description'>{"Hello world"}</p>
+          <p className='review-block-description'>{content}</p>
         </div>
       </div>
       <hr />

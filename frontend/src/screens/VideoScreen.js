@@ -93,7 +93,7 @@ const VideoScreen = () => {
               video.comments
                 // .sort((a, b) => -a.updatedAt.localeCompare(b.updatedAt))
                 .map((comment) => (
-                  <ProductReviewItem key={comment.commentId} review={null} />
+                  <ProductReviewItem key={comment.commentId} review={comment} />
                 ))}
           </div>
         </div>

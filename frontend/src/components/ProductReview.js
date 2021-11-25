@@ -12,11 +12,10 @@ import ProductReviewItem from "./ProductReviewItem";
 
 const ProductReview = ({ loggedIn, productId }) => {
   const [review, setReview] = useState({
-    user: "",
-    rating: "",
-    comment: "",
+    Content: "",
+    UpdatedBy: "Anonymous",
+    Rating: 9,
   });
-
   const [error, setError] = useState("");
   const [customerReview, setCustomerReview] = useState(0);
   const hoverRating = (value) => {
@@ -36,24 +35,26 @@ const ProductReview = ({ loggedIn, productId }) => {
 
   const submitHandler = async (e) => {
     e.preventDefault();
-    if (review.rating) {
+    console.log(review);
+    if (review.Content) {
       await api
         .post(
-          `${END_POINTS.POST_PRODUCT_REVIEW}/${productId}/review`,
-          review,
-          user_config
+          `http://lb-webapiwithpattern-1698811078.us-east-1.elb.amazonaws.com/api/videos/${productId}/comments`,
+          // `https://localhost:44323/api/videos/2/comments`,
+          review
         )
         .then((response) => {
           const review = response?.data;
-          const reactElement = React.createElement(ProductReviewItem, {
-            review: review,
-          });
-          const newHTML = ReactDOMServer.renderToString(reactElement);
-          document
-            .getElementsByClassName("review-block")[0]
-            .insertAdjacentHTML("afterbegin", newHTML);
+          console.log(review);
+          // const reactElement = React.createElement(ProductReviewItem, {
+          //   review: review,
+          // });
+          // const newHTML = ReactDOMServer.renderToString(reactElement);
+          // document
+          //   .getElementsByClassName("review-block")[0]
+          //   .insertAdjacentHTML("afterbegin", newHTML);
 
-          setError("");
+          // setError("");
         })
         .catch((err) => {
           alert(err.message);
@@ -81,7 +82,7 @@ const ProductReview = ({ loggedIn, productId }) => {
               <Form.Control
                 as='textarea'
                 row='5'
-                name='comment'
+                name='Content'
                 placeholder='Leave us what you think about this product'
                 onChange={handleChange}
               ></Form.Control>
