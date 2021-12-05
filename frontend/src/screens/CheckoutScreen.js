@@ -29,7 +29,7 @@ const CheckoutScreen = () => {
       })
     })()
     // clear the session to prepare for new order
-    sessionStorage.clear();
+    //sessionStorage.clear();
   }, []);
 
   return (

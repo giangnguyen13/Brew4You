@@ -41,7 +41,7 @@ const CheckoutForm = (props) => {
           });
       }
     })();
-  }, [, props.order]);
+  }, [props.order]);
 
   const cardStyle = {
     style: {
@@ -88,6 +88,8 @@ const CheckoutForm = (props) => {
       setError(null);
       setProcessing(false);
       setSucceeded(true);
+      // clear the session to prepare for new order
+      sessionStorage.clear();
       setShouldDisplayNotification(true);
       displayNotification(`Payment Succeeded`, "success");
       await api
