@@ -5,6 +5,8 @@ export const END_POINTS = {
 
   GET_PRODUCT_BY_ID: "/products",
 
+  GET_RECOMMENDED_PRODUCTS: "/products/recommendation",
+
   // POST
   CREATE_PRODUCT: "/products",
 

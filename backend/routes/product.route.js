@@ -6,6 +6,7 @@ import {
   deleteProduct,
   getProducts,
   getProductById,
+  getProductRecommendation,
   // getTopProducts,
   updateProduct,
   createProductReview,
@@ -28,6 +29,10 @@ router
   .route("/api/products")
   .get(getProducts) // list products
   .post(createProduct); // create a new product
+
+router
+  .route("/api/products/recommendation")
+  .get(protect, getProductRecommendation); // get recommended products
 
 router
   .route("/api/products/:productId")
