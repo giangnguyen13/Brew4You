@@ -45,4 +45,7 @@ export const END_POINTS = {
   /* ORDER ROUTE */
   GET_ORDER_BY_ID: "/orders",
   UPDATE_ORDER_STATUS: "/orders",
+
+  /* ORDER ROUTE */
+  UPDATE_ANONYMOUS_ORDER_STATUS: "/anonymous_orders",
 };
