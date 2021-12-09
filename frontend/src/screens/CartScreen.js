@@ -5,16 +5,29 @@ import Header from "../components/Header";
 import CartItem from "../components/CartItem";
 import Session from "../sessionService";
 import OrderPriceSum from "../components/OrderPriceSum";
+import ConfirmationModal from "../components/ConfirmationModal";
 import { user_config } from "../config/auth";
+import { isAuthenticated } from "../actions/userActions";
 
 const CartScreen = () => {
+  const [modalShow, setModalShow] = useState(false);
+  const [userAction, setUserAction] = useState(null);
   const [total, setTotal] = useState(0);
   const [cart, setCart] = useState(Session.getCart() ?? []);
   const [totalItem, setTotalItem] = useState(0);
 
   const handleCheckout = async () => {
     // return id of the created order
-    const { data } = await axios.post("/api/orders", cart, user_config);
+    if (isAuthenticated()) {
+      const { data } = await axios.post("/api/orders", cart, user_config);
+      window.location.href = `/checkout/${data}`;
+    } else {
+      setModalShow(true);
+    }
+  };
+
+  const anonymousCheckout = async () => {
+    const { data } = await axios.post("/api/anonymous_orders", cart);
     window.location.href = `/checkout/${data}`;
   };
 
@@ -62,12 +75,15 @@ const CartScreen = () => {
                       amount={total}
                     />
                     <div className='cart_buttons'>
-                      <Link to='/menu/all' className='button cart_button_clear'>
+                      <Link
+                        to='/menu/all'
+                        className='btn btn-secondary btn-lg mx-3'
+                      >
                         Continue Shopping
                       </Link>
                       <button
                         type='button'
-                        className='button cart_button_checkout'
+                        className='btn btn-success btn-lg mx-1'
                         onClick={handleCheckout}
                         disabled={totalItem === 0}
                       >
@@ -81,6 +97,12 @@ const CartScreen = () => {
           </div>
         </div>
       </div>
+      <ConfirmationModal
+        show={modalShow}
+        onConfirm={() => (window.location.href = `/login`)}
+        onDecline={anonymousCheckout}
+        onHide={() => setModalShow(false)}
+      />
     </>
   );
 };

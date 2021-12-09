@@ -53,6 +53,7 @@ export const importData = async () => {
 
 export const destroyData = async () => {
   try {
+    await connectDB();
     await Staff.deleteMany({})
       .then()
       .catch((e) => console.info(e.message));
@@ -78,9 +79,7 @@ export const destroyData = async () => {
 
 if (process.argv[2] === "--d") {
   destroyData();
-  process.exit(1);
 }
 if (process.argv[2] === "--i") {
   importData();
-  process.exit(1);
 }
