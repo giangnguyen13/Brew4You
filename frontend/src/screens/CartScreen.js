@@ -83,7 +83,7 @@ const CartScreen = () => {
                       </Link>
                       <button
                         type='button'
-                        className='btn btn-success btn-lg mx-1'
+                        className='btn btn-success btn-lg mx-1 cart_button_checkout'
                         onClick={handleCheckout}
                         disabled={totalItem === 0}
                       >

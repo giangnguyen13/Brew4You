@@ -9,6 +9,7 @@ const LoginScreen = () => {
 
   const submitHandler = (e) => {
     e.preventDefault();
+    console.log('submitHandler has been called??')
     login(credential.email, credential.password);
     // console.log("Dispatch login action");
     // setErrorMessage("Your credentials doesn't match our records");
