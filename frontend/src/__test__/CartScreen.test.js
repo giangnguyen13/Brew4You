@@ -1,17 +1,13 @@
 import { shallow } from 'enzyme';
 import React from 'react';
 import Session from "../sessionService";
-import CartScreen from './CartScreen';
-
+import CartScreen from '../screens/CartScreen';
 jest.mock('axios');
-
-
 
 describe('CartScreen', ()=> {
   let cartScreen; 
   beforeEach(() =>{
     cartScreen = shallow(<CartScreen/>);
-    // console.log(cartScreen.debug());
   });
   
   it('should exsit', () => {
@@ -27,7 +23,7 @@ describe('CartScreen', ()=> {
   it('should calculate total price', () => {
     const addStub = jest.spyOn(Session, 'getCart').mockReturnValueOnce(mockCartData);
     let cartScreen = shallow(<CartScreen/>);
-    cartScreen.update();
+    // cartScreen.update();
     const cartItems = cartScreen.find('CartItem');
     expect(addStub).toHaveBeenCalled();
     expect(cartItems.length).toBe(2);

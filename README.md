@@ -29,8 +29,12 @@ If you have any other questions/concerns, post in in Microsoft Teams so all the 
 Only create pull request into `develop` branch, `master` branch is stable - workable code. Please branch off from `develop` only.
 
 ## Test
-1. npm run test
+* Front-End ( required to change path)
+1. npm run test 
 - Select f => run all tests
 npm test --runTestsByPath <path-to-file>
 - Single test case
 
+* Back-End
+1. npm test 
+- please do not put `run`
