@@ -9,8 +9,10 @@ import { END_POINTS } from "../services/api/endpoints";
 import { getLoggedUserProfile } from "../actions/userActions";
 import { MdNotificationsActive } from "react-icons/md";
 import Toast from "react-bootstrap/Toast";
+import { Link, useHistory, BrowserRouter } from "react-router-dom";
 
 const ProductListScreen = () => {
+  const history = useHistory();
   const [filterBy, setFilterBy] = useState(null);
   const [products, setProducts] = useState([]);
   const [shouldDisplayNotification, setShouldDisplayNotification] =
@@ -18,6 +20,19 @@ const ProductListScreen = () => {
   const [notification, setNotification] = useState();
 
   const { s } = useParams(); //Params filter [Coffee, Tea, Breakfast, all]
+  const [currentPage, setCurrentPage] = useState(1);
+
+  const handlePrevious = () => {
+    currentPage !== 1 && setCurrentPage(currentPage - 1);
+  };
+
+  const handleNext = () => {
+    currentPage !== 3 && setCurrentPage(currentPage + 1);
+  };
+
+  const handleChangePage = (pageNumber) => {
+    setCurrentPage(pageNumber);
+  };
 
   const displayNotification = (message, variant) => {
     setNotification({ message, variant });
@@ -77,6 +92,10 @@ const ProductListScreen = () => {
     setFilterBy();
   }, [s]);
 
+  useEffect(() => {
+    //history.push(`/menu/${currentPage}`)
+  }, [currentPage]);
+
   return (
     <>
       <Header />
@@ -109,7 +128,9 @@ const ProductListScreen = () => {
                           onClick={() => _handleAddToWishlist(product)}
                         />
                       ))
-                  : products.map((product) => (
+                  : products
+                  .slice((currentPage-1)*8, currentPage * 8)
+                  .map((product) => (
                       <Product
                         product={product}
                         key={product._id}
@@ -117,9 +138,50 @@ const ProductListScreen = () => {
                       />
                     ))}
               </div>
-
               <div className='row'>
-                <Pagination />
+              <BrowserRouter>
+                <nav>
+                  <ul className='pagination justify-content-center my-4'>
+                    <li className={currentPage !== 1 ? 'page-item' : 'page-item disabled'}>
+                      <Link
+                       // to={`${currentPage}`}
+                        className='page-link'
+                        onClick={handlePrevious}
+                      >
+                        Previous
+                      </Link>
+                    </li>
+                    {[1, 2, 3].map((item) => (
+                      <li
+                        key={item}
+                        className={
+                          currentPage === item
+                            ? "page-item active"
+                            : "page-item"
+                        }
+                      >
+                        <Link
+                          className='page-link'
+                          //to={`${currentPage}`}
+                          onClick={() => handleChangePage(item)}
+                        >
+                          {item}
+                        </Link>
+                      </li>
+                    ))}
+                    <li className={currentPage !== 3 ? 'page-item' : 'page-item disabled'}>
+                      <Link
+                       // to={`${currentPage}`}
+                        className='page-link'
+                        onClick={handleNext}
+                      >
+                        Next
+                      </Link>
+                    </li>
+                  </ul>
+                </nav>
+                </BrowserRouter>
+                {/* <Pagination /> */}
               </div>
             </div>
           </div>

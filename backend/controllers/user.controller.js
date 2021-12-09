@@ -87,14 +87,16 @@ const getUserProfile = asyncHandler(async (req, res) => {
       lastName,
       email,
       _id,
-      address
+      address,
+      subscribed
     } = user
     res.json({
       firstName,
       lastName,
       email,
       _id,
-      address
+      address,
+      subscribed
     }).status(200);
   } else {
     res.status(404);
@@ -110,11 +112,28 @@ const getUserProfile = asyncHandler(async (req, res) => {
  */
 
 const updateUserProfile = asyncHandler(async (req, res) => {
-  const user = await User.findById(req.user._id)
+  const user = await User.findById(req.user._id);
   if (user) {
     const {
       profile
     } = req.body
+    if(profile.subscribed){
+      try{
+        sendGridMail.setApiKey(process.env.SENDGRID_APIKEY);
+        const msg = {
+            to: profile.email,
+            from: process.env.SENDGRID_NO_REPLY_EMAIL,
+            subject: `Brew4You - Subscription`,
+            dynamicTemplateData: {
+                userName: profile.firstName
+            },
+            templateId: process.env.SENDGRID_SUBSCRIPTION_TEMPLATE_ID
+        };
+        sendGridMail.send(msg);
+      }catch(e){
+        res.status(e.code);
+      }     
+    }
     await User.updateOne({
       _id: user._id
     }, {
@@ -132,7 +151,6 @@ const updateUserProfile = asyncHandler(async (req, res) => {
     res.status(401);
     throw new Error("Unauthorized");
   }
-
 })
 
 
@@ -288,27 +306,38 @@ const updateUserPassword = asyncHandler(async (req, res) => {
   }
 })
 
+/**
+ * @desc        Send subscription
+ * @route       patch /api/user/send-subscription-mail
+ * @access      Private
+ */
+
 const sendSubscriptionMail = asyncHandler(async (req, res) => {
+  const { email } = req.body
   try {
-  sendGridMail.setApiKey(process.env.SENDGRID_APIKEY);
-  const msg = {
-      to: "hanghenguyen@gmail.com",
-      from: process.env.SENDGRID_NO_REPLY_EMAIL,
-      subject: `Brew4You - Subscription`,
-      dynamicTemplateData: {
-          userName: "test email"
-      },
-      templateId: process.env.SENDGRID_SUBSCRIPTION_TEMPLATE_ID
-  };
-  sendGridMail.send(msg);
-  } catch (err) {
-    console.log("Error sending the email: " + err);
+    sendGridMail.setApiKey(process.env.SENDGRID_APIKEY);
+    const msg = {
+        to: email,
+        from: process.env.SENDGRID_NO_REPLY_EMAIL,
+        subject: `Brew4You - Subscription`,
+        dynamicTemplateData: {
+            userName: email
+        },
+        templateId: process.env.SENDGRID_SUBSCRIPTION_TEMPLATE_ID
+    };
+    sendGridMail.send(msg);
     res.json({
-      error: true,
-      message: err.message,
-      code: err.code
-    }).status(err.code);
-  }
+      message: 'Subscription mail sent',
+      code: 200
+    });
+    } catch (err) {
+      console.log("Error sending the email: " + err);
+      res.json({
+        error: true,
+        message: err.message,
+        code: err.code
+      }).status(err.code);
+    }
 })
 
 export {

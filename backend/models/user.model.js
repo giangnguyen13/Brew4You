@@ -24,6 +24,10 @@ const userSchema = mongoose.Schema(
       type: String,
       default: ''
     },
+    subscribed: {
+      type: Boolean,
+      default: false
+    },
     address: {
       type: Object,
       default: {

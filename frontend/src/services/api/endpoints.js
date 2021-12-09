@@ -5,6 +5,8 @@ export const END_POINTS = {
 
   GET_PRODUCT_BY_ID: "/products",
 
+  GET_RECOMMENDED_PRODUCTS: "/products/recommendation",
+
   // POST
   CREATE_PRODUCT: "/products",
 
@@ -22,6 +24,8 @@ export const END_POINTS = {
   //GET
   GET_USER_WISHLIST: "/user/wishlist",
   GET_USER_PROFILE: "/user/profile",
+  SUBSCRIBE_MAIL: "/user/send-subscription-mail",
+
   //PUT
   ADD_PRODUCT_WISHLIST: "/user/wishlist",
   UPDATE_USER_PROFILE: "/user/profile",
@@ -41,4 +45,7 @@ export const END_POINTS = {
   /* ORDER ROUTE */
   GET_ORDER_BY_ID: "/orders",
   UPDATE_ORDER_STATUS: "/orders",
+
+  /* ORDER ROUTE */
+  UPDATE_ANONYMOUS_ORDER_STATUS: "/anonymous_orders",
 };

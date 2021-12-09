@@ -3,6 +3,8 @@ import asyncHandler from "express-async-handler";
 import Product from "../models/product.model.js";
 import ProductAttribute from "../models/productAttribute.model.js";
 import Staff from "../models/staff.model.js";
+import User from "../models/user.model.js";
+import Order from "../models/order.model.js";
 /**
  * @desc        Fetch all products
  * @route       GET /api/products
@@ -31,13 +33,11 @@ const getProductById = asyncHandler(async (req, res, next) => {
     if (product) {
       res.status(200).json({ product, success: true, code: 200 });
     } else {
-      res
-        .status(400)
-        .json({
-          message: "Couldn't find product with specified ID.",
-          code: 400,
-          error: true,
-        });
+      res.status(400).json({
+        message: "Couldn't find product with specified ID.",
+        code: 400,
+        error: true,
+      });
     }
   } catch (err) {
     res.status(500).json({ message: err.message, code: 500, error: true });
@@ -72,24 +72,22 @@ const updateProduct = asyncHandler(async (req, res, next) => {
  * @route       DELETE /api/products/:productId
  * @access      Private/admin
  */
- const deleteProduct = asyncHandler(async (req, res, next) => {
+const deleteProduct = asyncHandler(async (req, res, next) => {
   try {
-
-    const staff = await Staff.findById(req.user._id)
-    const _id = req.params.productId
-    if(staff) {
-        await Product.deleteOne({_id})
-        res.status(200).json({success: true, code:200, message: 'Product deleted'})
-    }
-    else {
-      res.status(401).json({error: true, message : 'Unauthorized', code: 401})
+    const staff = await Staff.findById(req.user._id);
+    const _id = req.params.productId;
+    if (staff) {
+      await Product.deleteOne({ _id });
+      res
+        .status(200)
+        .json({ success: true, code: 200, message: "Product deleted" });
+    } else {
+      res.status(401).json({ error: true, message: "Unauthorized", code: 401 });
     }
   } catch (err) {
-    res.status(500).json({error: true, message : err.message, code: 500})
-
+    res.status(500).json({ error: true, message: err.message, code: 500 });
   }
 });
-
 
 /**
  * @desc        Create a product
@@ -139,6 +137,41 @@ const createProductReview = asyncHandler(async (req, res, next) => {
   }
 });
 
+/**
+ * @desc        Create a product review
+ * @route       POST /api/products/recommendation
+ * @access      Private
+ */
+const getProductRecommendation = asyncHandler(async (req, res, next) => {
+  const user = await User.findById(req.user._id);
+  if (user) {
+    let orders = await Order.find({ user: user._id })
+      .sort({ updatedAt: "asc" })
+      .select("orderItems");
+    let products = [];
+    orders.forEach((o) => {
+      products = [...o.orderItems, ...products];
+    });
+    // If users have not order enough, randomize the recommendation
+    // Otherwise take latest 3 items from users' order
+    if (products.length < 3) {
+      let recommendedProducts = await Product.find({});
+      recommendedProducts = recommendedProducts
+        .sort(() => 0.5 - Math.random())
+        .slice(0, 3);
+      res.status(200).json({ products: recommendedProducts, success: false });
+    } else {
+      const recommendation = products.map((p) => p.product);
+      let recommendedProducts = await Product.find()
+        .where("_id")
+        .in(recommendation.slice(0, 3));
+      res.status(200).json({ products: recommendedProducts, success: true });
+    }
+  } else {
+    res.status(401).json({ error: true, message: `Unauthorized`, code: 401 });
+  }
+});
+
 export {
   getProducts,
   getProductById,
@@ -146,4 +179,5 @@ export {
   deleteProduct,
   createProduct,
   createProductReview,
+  getProductRecommendation,
 };
