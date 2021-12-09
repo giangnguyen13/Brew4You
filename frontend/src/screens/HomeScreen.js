@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import frontPageImage from "../images/flat_white.png";
 import FeaturedProducts from "../components/FeaturedProducts";
@@ -10,9 +10,9 @@ import Toast from "react-bootstrap/Toast";
 import { MdNotificationsActive } from "react-icons/md";
 
 const HomeScreen = () => {
-  console.log(isAuthenticated());
-  const [email, setEmail] = useState();
-  const [shouldDisplayNotification, setShouldDisplayNotification] = useState(false);
+  const [email, setEmail] = useState("");
+  const [shouldDisplayNotification, setShouldDisplayNotification] =
+    useState(false);
   const [notification, setNotification] = useState();
 
   const displayNotification = (message, variant) => {
@@ -22,8 +22,8 @@ const HomeScreen = () => {
 
   const subscribeForPromo = async () => {
     try {
-       await api
-        .post(END_POINTS.SUBSCRIBE_MAIL, { email: email})
+      await api
+        .post(END_POINTS.SUBSCRIBE_MAIL, { email: email })
         .then((response) => {
           if (!response?.data?.error) {
             displayNotification("Mail sent!", "success");
@@ -35,7 +35,7 @@ const HomeScreen = () => {
     } catch (err) {
       displayNotification(err.message, "danger");
     }
-  }
+  };
 
   return (
     <div>
@@ -84,14 +84,12 @@ const HomeScreen = () => {
         <div className='col-md-6'>
           <div className='h-100 p-5 bg-light border rounded-3'>
             <h2>Join our newsletter and get 10% off</h2>
-            <p>
-              Join our newsletter and get 10% off
-            </p>
+            <p>Join our newsletter and get 10% off</p>
             <div className='input-group mb-3'>
               <input
                 value={email}
-                name="email"
-                onChange={(event)=>setEmail(event.target.value)}
+                name='email'
+                onChange={(event) => setEmail(event.target.value)}
                 type='text'
                 className='form-control'
                 placeholder='Enter your email'
